@@ -35,7 +35,12 @@
             this.lb_edges = new System.Windows.Forms.ListBox();
             this.btn_add_edge = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.verticle = new System.Windows.Forms.ListBox();
+            this.lb_verticles = new System.Windows.Forms.ListBox();
+            this.найтиОстовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.методКраскалаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.методПримаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -45,7 +50,10 @@
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bibaToolStripMenuItem});
+            this.bibaToolStripMenuItem,
+            this.найтиОстовToolStripMenuItem,
+            this.помощьToolStripMenuItem,
+            this.оПрограммеToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1006, 28);
@@ -55,8 +63,8 @@
             // bibaToolStripMenuItem
             // 
             this.bibaToolStripMenuItem.Name = "bibaToolStripMenuItem";
-            this.bibaToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
-            this.bibaToolStripMenuItem.Text = "biba";
+            this.bibaToolStripMenuItem.Size = new System.Drawing.Size(175, 24);
+            this.bibaToolStripMenuItem.Text = "Сгенерировать граф...";
             // 
             // panel1
             // 
@@ -72,12 +80,12 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.verticle);
+            this.panel2.Controls.Add(this.lb_verticles);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(858, 28);
+            this.panel2.Location = new System.Drawing.Point(855, 28);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(148, 693);
+            this.panel2.Size = new System.Drawing.Size(151, 693);
             this.panel2.TabIndex = 2;
             // 
             // lb_edges
@@ -106,21 +114,56 @@
             // 
             this.button1.Location = new System.Drawing.Point(3, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(141, 28);
+            this.button1.Size = new System.Drawing.Size(143, 28);
             this.button1.TabIndex = 0;
             this.button1.Text = "Добавить вершину";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // verticle
+            // lb_verticles
             // 
-            this.verticle.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.verticle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.verticle.FormattingEnabled = true;
-            this.verticle.ItemHeight = 25;
-            this.verticle.Location = new System.Drawing.Point(0, 37);
-            this.verticle.Name = "verticle";
-            this.verticle.Size = new System.Drawing.Size(146, 654);
-            this.verticle.TabIndex = 1;
+            this.lb_verticles.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lb_verticles.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lb_verticles.FormattingEnabled = true;
+            this.lb_verticles.ItemHeight = 25;
+            this.lb_verticles.Items.AddRange(new object[] {
+            "нет вершин"});
+            this.lb_verticles.Location = new System.Drawing.Point(0, 37);
+            this.lb_verticles.Name = "lb_verticles";
+            this.lb_verticles.Size = new System.Drawing.Size(149, 654);
+            this.lb_verticles.TabIndex = 1;
+            // 
+            // найтиОстовToolStripMenuItem
+            // 
+            this.найтиОстовToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.методКраскалаToolStripMenuItem,
+            this.методПримаToolStripMenuItem});
+            this.найтиОстовToolStripMenuItem.Name = "найтиОстовToolStripMenuItem";
+            this.найтиОстовToolStripMenuItem.Size = new System.Drawing.Size(109, 24);
+            this.найтиОстовToolStripMenuItem.Text = "Найти остов";
+            // 
+            // методКраскалаToolStripMenuItem
+            // 
+            this.методКраскалаToolStripMenuItem.Name = "методКраскалаToolStripMenuItem";
+            this.методКраскалаToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.методКраскалаToolStripMenuItem.Text = "Метод Краскала";
+            // 
+            // методПримаToolStripMenuItem
+            // 
+            this.методПримаToolStripMenuItem.Name = "методПримаToolStripMenuItem";
+            this.методПримаToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.методПримаToolStripMenuItem.Text = "Метод Прима";
+            // 
+            // помощьToolStripMenuItem
+            // 
+            this.помощьToolStripMenuItem.Name = "помощьToolStripMenuItem";
+            this.помощьToolStripMenuItem.Size = new System.Drawing.Size(83, 24);
+            this.помощьToolStripMenuItem.Text = "Помощь";
+            // 
+            // оПрограммеToolStripMenuItem
+            // 
+            this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(118, 24);
+            this.оПрограммеToolStripMenuItem.Text = "О программе";
             // 
             // Form1
             // 
@@ -132,8 +175,9 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Ostov Demo";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -151,8 +195,13 @@
         private System.Windows.Forms.Button btn_add_edge;
         private System.Windows.Forms.ListBox lb_edges;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.ListBox verticle;
+        private System.Windows.Forms.ListBox lb_verticles;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ToolStripMenuItem найтиОстовToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem методКраскалаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem методПримаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem помощьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
     }
 }
 
