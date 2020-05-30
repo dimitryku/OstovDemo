@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.bibaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.найтиОстовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,10 +41,14 @@
             this.lb_edges = new System.Windows.Forms.ListBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lb_verticle = new System.Windows.Forms.ListBox();
+            this.VerticleContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.переименоватьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.удалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.VerticleContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -108,7 +113,7 @@
             this.panel1.Controls.Add(this.lb_edges);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 24);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(108, 562);
             this.panel1.TabIndex = 1;
@@ -116,7 +121,7 @@
             // btn_add_edge
             // 
             this.btn_add_edge.Location = new System.Drawing.Point(2, 4);
-            this.btn_add_edge.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_add_edge.Margin = new System.Windows.Forms.Padding(2);
             this.btn_add_edge.Name = "btn_add_edge";
             this.btn_add_edge.Size = new System.Drawing.Size(101, 28);
             this.btn_add_edge.TabIndex = 1;
@@ -132,10 +137,11 @@
             this.lb_edges.Items.AddRange(new object[] {
             "нет рёбер"});
             this.lb_edges.Location = new System.Drawing.Point(0, 36);
-            this.lb_edges.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lb_edges.Margin = new System.Windows.Forms.Padding(2);
             this.lb_edges.Name = "lb_edges";
             this.lb_edges.Size = new System.Drawing.Size(106, 524);
             this.lb_edges.TabIndex = 0;
+            this.lb_edges.Leave += new System.EventHandler(this.lb_edges_Leave);
             // 
             // panel2
             // 
@@ -144,13 +150,14 @@
             this.panel2.Controls.Add(this.button1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel2.Location = new System.Drawing.Point(631, 24);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(123, 562);
             this.panel2.TabIndex = 2;
             // 
             // lb_verticle
             // 
+            this.lb_verticle.ContextMenuStrip = this.VerticleContextMenu;
             this.lb_verticle.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lb_verticle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lb_verticle.FormattingEnabled = true;
@@ -158,15 +165,37 @@
             this.lb_verticle.Items.AddRange(new object[] {
             "нет вершин"});
             this.lb_verticle.Location = new System.Drawing.Point(0, 36);
-            this.lb_verticle.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lb_verticle.Margin = new System.Windows.Forms.Padding(2);
             this.lb_verticle.Name = "lb_verticle";
             this.lb_verticle.Size = new System.Drawing.Size(121, 524);
             this.lb_verticle.TabIndex = 1;
+            this.lb_verticle.Leave += new System.EventHandler(this.lb_verticle_Leave);
+            // 
+            // VerticleContextMenu
+            // 
+            this.VerticleContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.переименоватьToolStripMenuItem,
+            this.удалитьToolStripMenuItem});
+            this.VerticleContextMenu.Name = "VerticleContextMenu";
+            this.VerticleContextMenu.Size = new System.Drawing.Size(162, 48);
+            this.VerticleContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.VerticleContextMenu_Opening);
+            // 
+            // переименоватьToolStripMenuItem
+            // 
+            this.переименоватьToolStripMenuItem.Name = "переименоватьToolStripMenuItem";
+            this.переименоватьToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.переименоватьToolStripMenuItem.Text = "Переименовать";
+            // 
+            // удалитьToolStripMenuItem
+            // 
+            this.удалитьToolStripMenuItem.Name = "удалитьToolStripMenuItem";
+            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.удалитьToolStripMenuItem.Text = "Удалить";
             // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(2, 4);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(115, 28);
             this.button1.TabIndex = 0;
@@ -183,14 +212,18 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "Form1";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Ostov Demo";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Click += new System.EventHandler(this.Form1_Click);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.VerticleContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -211,6 +244,9 @@
         private System.Windows.Forms.ToolStripMenuItem методПримаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem помощьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip VerticleContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem переименоватьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem удалитьToolStripMenuItem;
     }
 }
 

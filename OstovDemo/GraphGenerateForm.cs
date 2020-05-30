@@ -16,5 +16,24 @@ namespace OstovDemo
         {
             InitializeComponent();
         }
+
+        public int Count = 4;
+        public bool GenerateEdges = true;
+
+        private void trackBar1_ValueChanged(object sender, EventArgs e)
+        {
+            label_vertCount.Text = tb_vertCount.Value.ToString();
+            Count = tb_vertCount.Value;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+        }
+
+        private void cb_generateEdges_CheckedChanged(object sender, EventArgs e)
+        {
+            GenerateEdges = cb_generateEdges.Checked;
+        }
     }
 }
