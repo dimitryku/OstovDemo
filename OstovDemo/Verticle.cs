@@ -4,13 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 public class Verticle
 {
     private string name;
+    public static int count;
 
     public Verticle()
     {
+        name = "v" + (count + 1).ToString();
+    }
 
+    public Verticle(string _name)
+    {
+        name = _name;
     }
 
     public string GetName()
@@ -25,6 +32,9 @@ public class Verticle
 
     public override bool Equals(object obj)
     {
-        return base.Equals(obj);
+        Verticle newWert = obj as Verticle;
+        if (newWert == null)
+            return false;
+        return this.name.Equals(newWert.GetName());
     }
 }
