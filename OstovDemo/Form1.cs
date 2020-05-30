@@ -16,5 +16,10 @@ namespace OstovDemo
         {
             InitializeComponent();
         }
+
+        private void методToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
