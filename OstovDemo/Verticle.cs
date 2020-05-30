@@ -1,11 +1,11 @@
 ﻿using System;
 
-public class verticle
+public class Verticle
 {
     private string name;
 
-    public verticle()
-	{
+    public Verticle()
+    {
 
     }
 
@@ -24,3 +24,4 @@ public class verticle
         return base.Equals(obj);
     }
 }
+
