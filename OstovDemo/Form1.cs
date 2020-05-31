@@ -46,7 +46,7 @@ namespace OstovDemo
         private void RenewLists()
         {
             var ver = listOfVerticles.Select(verticle => verticle.name).ToList();
-            var edh = listOfEdges.Select(edge => edge.A.name + "-" + edge.B.name + "," + edge.weight).ToList();
+            var edh = listOfEdges.Select(edge => edge.A.name + "-" + edge.B.name + " (" + edge.weight + ")").ToList();
             lb_verticle.Items.Clear();
             lb_edges.Items.Clear();
             foreach (var j in ver)
@@ -107,6 +107,7 @@ namespace OstovDemo
             var newvwrt = new Verticle("V" + ++_maxVertNum);
             listOfVerticles.Add(newvwrt);
             RecalculateDrawingCoordinates();
+            RenewLists();
 
         }
 
@@ -120,6 +121,7 @@ namespace OstovDemo
             if (aef.DialogResult != DialogResult.OK) return;
             listOfEdges.Add(aef.Return);
             RecalculateDrawingCoordinates();
+            RenewLists();
             Drawing_panel.Refresh();
         }
 
