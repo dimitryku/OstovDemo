@@ -10,6 +10,8 @@ public class Verticle
     private string name;
     public static int count;
 
+    // TODO надо добавить координаты центра при рисовании. Должны просчитываться и изменяться извне.
+
     public Verticle()
     {
         name = "v" + (count + 1).ToString();

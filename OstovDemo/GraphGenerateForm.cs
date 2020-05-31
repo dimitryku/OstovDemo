@@ -29,6 +29,7 @@ namespace OstovDemo
         private void button1_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
+            this.Close();
         }
 
         private void cb_generateEdges_CheckedChanged(object sender, EventArgs e)

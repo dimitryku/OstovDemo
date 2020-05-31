@@ -99,12 +99,14 @@
             this.Controls.Add(this.label_vertCount);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tb_vertCount);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "GraphGenerateForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Сгенерировать  граф";
             ((System.ComponentModel.ISupportInitialize)(this.tb_vertCount)).EndInit();
             this.ResumeLayout(false);
