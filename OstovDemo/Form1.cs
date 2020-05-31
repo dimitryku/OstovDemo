@@ -34,7 +34,19 @@ namespace OstovDemo
             for (var i = 0; i < listOfVerticles.Count(); i++)
                 cruscalVertsList[i].Add(listOfVerticles[i]);
 
-
+            //foreach(var edge in listOfEdges)
+            //{
+            //    var firstList = -1;
+            //    var secondList = -1;
+            //    var wasBefore = false;
+            //    foreach(var vList in cruscalVertsList)
+            //    {
+            //        foreach(var vert in vList)
+            //        {
+            //            if(vert.Equals(edge.A)) firstList = 
+            //        }
+            //    }
+            //}
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -125,6 +137,16 @@ namespace OstovDemo
                         if ((rnd.Next() % 100) < 20)
                             listOfEdges.Add(new Edge(listOfVerticles[i], listOfVerticles[j]));
             }
+
+            //foreach(var verticle in listOfVerticles)
+            //{
+            //    if (!verticle.connected)
+            //    {
+            //        Random rnd = new Random();
+            //        var rand = ;
+            //        if()
+            //    }
+            //}
 
             RecalculateDrawingCoordinates();
             RenewLists();

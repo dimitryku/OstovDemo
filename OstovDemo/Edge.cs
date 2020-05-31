@@ -17,7 +17,7 @@ namespace OstovDemo
 
         public Edge(Verticle A, Verticle B)
         {
-            Random rnd = new Random();
+            Random rnd = new Random(DateTime.UtcNow.Millisecond);
             this.weight = rnd.Next() % 50; // maxweight = 50;
             this.A = A;
             this.B = B;
