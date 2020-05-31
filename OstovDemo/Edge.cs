@@ -16,21 +16,20 @@ namespace OstovDemo
 
         public Verticle B { get { return _B; } private set { _B = value; } }
 
-        public Edge(Verticle A1, Verticle B1)
+        public Edge(Verticle A, Verticle B)
         {
             Random rnd = new Random();
             this.weight = rnd.Next() % 50; // maxweigt = 50;
-            this.A = A1;
-            this.B = B1;
+            this.A = A;
+            this.B = B;
         }
 
-        public Edge(Verticle A1, Verticle B1, int _weight)
+        public Edge(Verticle A, Verticle B, int weight)
         {
-            this.weight = _weight;
-            this.A = A1;
-            this.B = B1;
+            this.weight = weight;
+            this.A = A;
+            this.B = B;
         }
-
 
         public Edge(Edge edge)
         {
@@ -42,11 +41,6 @@ namespace OstovDemo
         public int GetWeight()
         {
             return weight;
-        }
-
-        public void SetVerticles(Verticle A, Verticle B)
-        {
-            
         }
 
         public override bool Equals(object obj)

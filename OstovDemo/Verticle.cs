@@ -8,29 +8,28 @@ using System.Drawing;
 
 public class Verticle
 {
-    private string name;
-    private Point point;
+    private string _name;
+    private Point _point;
+
+
     
-    public void SetPosition(int a, int b)
-    {
-        point = new Point(a, b);
-    }
-
-    public Point GetPosition()
-    {
-        return point;
-    }
-
 
     public Verticle()
     {
         name = "v" + (1).ToString(); //добавить номер
     }
 
-    public Verticle(string _name)
+    public Verticle(string name)
     {
-        name = _name;
+        _name = name;
     }
+
+    public Verticle(Verticle verticle)
+    {
+        this.SetName(verticle.GetName());
+        this.SetPosition(verticle.GetPosition());
+    }
+
 
     public string GetName()
     {
@@ -42,7 +41,20 @@ public class Verticle
         this.name = _name;
     }
 
-    
+    public void SetPosition(Point _point)
+    {
+        this.point = new Point(point.X, point.Y);
+    }
+
+    public void SetPosition(int a, int b)
+    {
+        this.point = new Point(a, b);
+    }
+
+    public Point GetPosition()
+    {
+        return point;
+    }
 
     public override bool Equals(object obj)
     {
