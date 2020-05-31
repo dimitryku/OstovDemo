@@ -42,6 +42,8 @@ public class Verticle
         this.name = _name;
     }
 
+    
+
     public override bool Equals(object obj)
     {
         Verticle newWert = obj as Verticle;

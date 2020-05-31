@@ -8,28 +8,35 @@ namespace OstovDemo
 {
     public class Edge
     {
-        private Verticle A, B;
+        private Verticle _A;
+        private Verticle _B;
         private int weight;
 
-        public Edge(Verticle _A, Verticle _B)
+        public Verticle A {get { return _A; } private set{ _A = value; }}
+
+        public Verticle B { get { return _B; } private set { _B = value; } }
+
+        public Edge(Verticle A1, Verticle B1)
         {
             Random rnd = new Random();
-            weight = rnd.Next() % 50; // maxweigt = 50;
-            A = _A;
-            B = _B;
+            this.weight = rnd.Next() % 50; // maxweigt = 50;
+            this.A = A1;
+            this.B = B1;
         }
 
-        public Edge(Verticle _A, Verticle _B, int _weight)
+        public Edge(Verticle A1, Verticle B1, int _weight)
         {
-            weight = _weight;
-            A = _A;
-            B = _B;
+            this.weight = _weight;
+            this.A = A1;
+            this.B = B1;
         }
 
 
         public Edge(Edge edge)
         {
-
+            this.weight = edge.GetWeight();
+            this.A = edge.A;
+            this.B = edge.B;
         }
 
         public int GetWeight()
