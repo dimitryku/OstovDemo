@@ -138,6 +138,16 @@ namespace OstovDemo
                             listOfEdges.Add(new Edge(listOfVerticles[i], listOfVerticles[j]));
             }
 
+            //foreach(var verticle in listOfVerticles)
+            //{
+            //    if (!verticle.connected)
+            //    {
+            //        Random rnd = new Random();
+            //        var rand = ;
+            //        if()
+            //    }
+            //}
+
             RecalculateDrawingCoordinates();
             RenewLists();
 
