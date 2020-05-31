@@ -30,7 +30,10 @@ namespace OstovDemo
         private void методToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // TODO Cruskal method
-            var cruscalVertsList = new List<List<Verticle>>();
+            var cruscalVertsList = new List<List<Verticle>>(listOfVerticles.Count());
+            for (var i = 0; i < listOfVerticles.Count(); i++)
+                cruscalVertsList[i].Add(listOfVerticles[i]);
+
 
         }
 
