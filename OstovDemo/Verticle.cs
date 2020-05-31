@@ -11,8 +11,9 @@ public class Verticle
     private string _name;
     private Point _point;
 
+    public string name { get { return _name; } private set { _name = value; } }
+    public Point point { get { return _point; } private set { point = value; } }
 
-    
 
     public Verticle()
     {
@@ -21,7 +22,7 @@ public class Verticle
 
     public Verticle(string name)
     {
-        _name = name;
+        this.name = name;
     }
 
     public Verticle(Verticle verticle)
@@ -36,12 +37,12 @@ public class Verticle
         return this.name;
     }
 
-    public void SetName(string _name)
+    public void SetName(string name)
     {
-        this.name = _name;
+        this.name = name;
     }
 
-    public void SetPosition(Point _point)
+    public void SetPosition(Point point)
     {
         this.point = new Point(point.X, point.Y);
     }
