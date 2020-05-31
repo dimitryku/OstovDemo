@@ -276,8 +276,9 @@ namespace OstovDemo
                 int x1 = edge.A.point.X, y1 = edge.A.point.Y;
                 int x2 = edge.B.point.X, y2 = edge.B.point.Y;
                 int ax = x2-x1, ay = y2-y1;
+                if (ax == 0) ax = 1;
                 int dx = -ay/ax*8, dy = 8;
-                e.Graphics.DrawString("10", btn_add_edge.Font, 
+                e.Graphics.DrawString(edge.weight.ToString(), btn_add_edge.Font, 
                     new SolidBrush(Color.Black),
                     (float)(x1 + (x2 - x1)*0.3) - dx, (float)(y1 + (y2 - y1)*0.3 - dy));
             }
