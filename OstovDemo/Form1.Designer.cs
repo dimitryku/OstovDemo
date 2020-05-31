@@ -38,7 +38,6 @@
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btn_add_edge = new System.Windows.Forms.Button();
-            this.lb_edges = new System.Windows.Forms.ListBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lb_verticle = new System.Windows.Forms.ListBox();
             this.VerticleContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -47,6 +46,7 @@
             this.AddVerticle_btn = new System.Windows.Forms.Button();
             this.очиститьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Drawing_panel = new System.Windows.Forms.Panel();
+            this.lb_edges = new System.Windows.Forms.ListBox();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -116,8 +116,8 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.btn_add_edge);
             this.panel1.Controls.Add(this.lb_edges);
+            this.panel1.Controls.Add(this.btn_add_edge);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 24);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
@@ -127,29 +127,15 @@
             // 
             // btn_add_edge
             // 
-            this.btn_add_edge.Location = new System.Drawing.Point(3, 4);
+            this.btn_add_edge.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btn_add_edge.Location = new System.Drawing.Point(0, 0);
             this.btn_add_edge.Margin = new System.Windows.Forms.Padding(2);
             this.btn_add_edge.Name = "btn_add_edge";
-            this.btn_add_edge.Size = new System.Drawing.Size(101, 28);
+            this.btn_add_edge.Size = new System.Drawing.Size(106, 28);
             this.btn_add_edge.TabIndex = 1;
             this.btn_add_edge.Text = "Добавить ребро";
             this.btn_add_edge.UseVisualStyleBackColor = true;
             this.btn_add_edge.Click += new System.EventHandler(this.btn_add_edge_Click);
-            // 
-            // lb_edges
-            // 
-            this.lb_edges.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lb_edges.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lb_edges.FormattingEnabled = true;
-            this.lb_edges.ItemHeight = 20;
-            this.lb_edges.Items.AddRange(new object[] {
-            "нет рёбер"});
-            this.lb_edges.Location = new System.Drawing.Point(0, 36);
-            this.lb_edges.Margin = new System.Windows.Forms.Padding(2);
-            this.lb_edges.Name = "lb_edges";
-            this.lb_edges.Size = new System.Drawing.Size(106, 524);
-            this.lb_edges.TabIndex = 0;
-            this.lb_edges.Leave += new System.EventHandler(this.lb_edges_Leave);
             // 
             // panel2
             // 
@@ -166,17 +152,18 @@
             // lb_verticle
             // 
             this.lb_verticle.ContextMenuStrip = this.VerticleContextMenu;
-            this.lb_verticle.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lb_verticle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_verticle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lb_verticle.FormattingEnabled = true;
             this.lb_verticle.ItemHeight = 20;
             this.lb_verticle.Items.AddRange(new object[] {
             "нет вершин"});
-            this.lb_verticle.Location = new System.Drawing.Point(0, 36);
+            this.lb_verticle.Location = new System.Drawing.Point(0, 28);
             this.lb_verticle.Margin = new System.Windows.Forms.Padding(2);
             this.lb_verticle.Name = "lb_verticle";
-            this.lb_verticle.Size = new System.Drawing.Size(121, 524);
+            this.lb_verticle.Size = new System.Drawing.Size(121, 532);
             this.lb_verticle.TabIndex = 1;
+            this.lb_verticle.SelectedIndexChanged += new System.EventHandler(this.lb_verticle_SelectedIndexChanged);
             this.lb_verticle.Leave += new System.EventHandler(this.lb_verticle_Leave);
             // 
             // VerticleContextMenu
@@ -197,15 +184,17 @@
             // удалитьToolStripMenuItem
             // 
             this.удалитьToolStripMenuItem.Name = "удалитьToolStripMenuItem";
-            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.удалитьToolStripMenuItem.Text = "Удалить";
+            this.удалитьToolStripMenuItem.Click += new System.EventHandler(this.удалитьToolStripMenuItem_Click);
             // 
             // AddVerticle_btn
             // 
-            this.AddVerticle_btn.Location = new System.Drawing.Point(2, 4);
+            this.AddVerticle_btn.Dock = System.Windows.Forms.DockStyle.Top;
+            this.AddVerticle_btn.Location = new System.Drawing.Point(0, 0);
             this.AddVerticle_btn.Margin = new System.Windows.Forms.Padding(2);
             this.AddVerticle_btn.Name = "AddVerticle_btn";
-            this.AddVerticle_btn.Size = new System.Drawing.Size(115, 28);
+            this.AddVerticle_btn.Size = new System.Drawing.Size(121, 28);
             this.AddVerticle_btn.TabIndex = 0;
             this.AddVerticle_btn.Text = "Добавить вершину";
             this.AddVerticle_btn.UseVisualStyleBackColor = true;
@@ -220,12 +209,28 @@
             // 
             // Drawing_panel
             // 
+            this.Drawing_panel.ContextMenuStrip = this.VerticleContextMenu;
             this.Drawing_panel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Drawing_panel.Location = new System.Drawing.Point(108, 24);
             this.Drawing_panel.Name = "Drawing_panel";
             this.Drawing_panel.Size = new System.Drawing.Size(523, 562);
             this.Drawing_panel.TabIndex = 3;
             this.Drawing_panel.Paint += new System.Windows.Forms.PaintEventHandler(this.Drawing_panel_Paint);
+            this.Drawing_panel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drawing_panel_MouseDown);
+            // 
+            // lb_edges
+            // 
+            this.lb_edges.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lb_edges.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lb_edges.FormattingEnabled = true;
+            this.lb_edges.ItemHeight = 20;
+            this.lb_edges.Items.AddRange(new object[] {
+            "нет рёбер"});
+            this.lb_edges.Location = new System.Drawing.Point(0, 28);
+            this.lb_edges.Margin = new System.Windows.Forms.Padding(2);
+            this.lb_edges.Name = "lb_edges";
+            this.lb_edges.Size = new System.Drawing.Size(106, 532);
+            this.lb_edges.TabIndex = 2;
             // 
             // Form1
             // 
@@ -237,6 +242,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
+            this.DoubleBuffered = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
@@ -245,6 +251,7 @@
             this.Text = "Ostov Demo";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Click += new System.EventHandler(this.Form1_Click);
+            this.Resize += new System.EventHandler(this.Form1_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -261,7 +268,6 @@
         private System.Windows.Forms.ToolStripMenuItem GenerateGraphToolStripMenuItem;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btn_add_edge;
-        private System.Windows.Forms.ListBox lb_edges;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ListBox lb_verticle;
         private System.Windows.Forms.Button AddVerticle_btn;
@@ -275,6 +281,7 @@
         private System.Windows.Forms.ToolStripMenuItem удалитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem очиститьToolStripMenuItem;
         private System.Windows.Forms.Panel Drawing_panel;
+        private System.Windows.Forms.ListBox lb_edges;
     }
 }
 

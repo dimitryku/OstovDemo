@@ -14,6 +14,10 @@ namespace OstovDemo
 {
     public partial class Form1 : Form
     {
+
+        private int _drawingCentreX, _drawingCentreY;
+        private Verticle _selectedVerticle = null;
+
         public Form1()
         {
             InitializeComponent();
@@ -26,7 +30,13 @@ namespace OstovDemo
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            RecalculateDrawingCoordinates();
+        }
 
+        private void RecalculateDrawingCoordinates()
+        {
+            _drawingCentreX = Drawing_panel.Width / 2;
+            _drawingCentreY = Drawing_panel.Height / 2;
         }
 
         private void lb_verticle_Leave(object sender, EventArgs e)
@@ -38,7 +48,7 @@ namespace OstovDemo
 
         private void VerticleContextMenu_Opening(object sender, CancelEventArgs e)
         {
-            if (lb_verticle.SelectedIndex == -1)
+            if (_selectedVerticle != null)
                 e.Cancel = true;
         }
 
@@ -105,12 +115,12 @@ namespace OstovDemo
             // TODO draw graph
 
             int x1 = 100, y1 = 100, x2 = 400, y2 = 400;
+            string name1 = "1", name2 = "V22";
 
             const int verticleRadius = 20;
             int verticleRadiusDiagonale = verticleRadius * (int)Math.Sqrt(2);
             const float edgeWidth = 2;
             const float verticleBorderWidth = 3;
-            const int vTextOffsetX = 12, vTextOffsetY = 10;
             const int eTextOffsetY = 15;
             
 
@@ -148,16 +158,50 @@ namespace OstovDemo
                 verticleRadius*2, verticleRadius*2);
 
             // VERTICLE CAPTIONS
-            e.Graphics.DrawString("V1", lb_verticle.Font,
+            // TODO 1 or 2 or 3 symbols
+            
+            int vTextOffsetX = 12 + 5*(name1.Length - 2), vTextOffsetY = 10;
+            e.Graphics.DrawString(name1, lb_verticle.Font,
                 new SolidBrush(Color.Black), x1 - vTextOffsetX, y1 - vTextOffsetY);
-            e.Graphics.DrawString("V2", lb_verticle.Font,
+
+            vTextOffsetX = 12 + 5 * (name2.Length - 2);
+            e.Graphics.DrawString(name2, lb_verticle.Font,
                 new SolidBrush(Color.Black), x2 - vTextOffsetX, y2 - vTextOffsetY);
 
             // EDGE CAPTIONS
+            int ax = x2-x1, ay = y2-y1;
+            int dx = -ay/ax*8, dy = 8;
             e.Graphics.DrawString("10", btn_add_edge.Font, 
                 new SolidBrush(Color.Black),
-                (float)(x1 + (x2 - x1)*0.3), (float)(y1 + (y2 - y1)*0.3 - eTextOffsetY));
+                (float)(x1 + (x2 - x1)*0.3) - dx, (float)(y1 + (y2 - y1)*0.3 - dy));
 
+        }
+
+        private void удалитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Удвлить вершину?", "Вы уверены?", MessageBoxButtons.YesNo) ==
+                DialogResult.Yes)
+            {
+                // TODO delete verticle
+            }
+        }
+
+        private void lb_verticle_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(lb_verticle.SelectedIndex == -1) return;
+            // TODO _selectedVerticle = ...
+        }
+
+        private void Drawing_panel_MouseDown(object sender, MouseEventArgs e)
+        {
+            if(e.Button != MouseButtons.Right && e.Button != MouseButtons.Left) return;
+            // TODO check if it was click on verticle
+            
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            RecalculateDrawingCoordinates();
         }
     }
 }

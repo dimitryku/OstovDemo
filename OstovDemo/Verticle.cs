@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 public class Verticle
 {
     private string name;
-    public static int count;
+    public static int count; //nahuya? u nas je budut raznie massivi
 
     // TODO надо добавить координаты центра при рисовании. Должны просчитываться и изменяться извне.
 
