@@ -8,7 +8,8 @@ using System.Drawing;
 
 public class Verticle
 {
-    public string name { get { return name; } set { name = value + ""; } }
+    private string _name;
+    public string name { get { return _name; } set { _name = value + ""; } }
     public Point point { get; set; }
 
     public Verticle(string name)
