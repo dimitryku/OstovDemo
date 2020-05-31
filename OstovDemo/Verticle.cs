@@ -3,18 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 
 public class Verticle
 {
     private string name;
-    public static int count; //nahuya? u nas je budut raznie massivi
+    private Point point;
+    
+    public void SetPosition(int a, int b)
+    {
+        point = new Point(a, b);
+    }
 
-    // TODO надо добавить координаты центра при рисовании. Должны просчитываться и изменяться извне.
+    public Point GetPosition()
+    {
+        return point;
+    }
+
 
     public Verticle()
     {
-        name = "v" + (count + 1).ToString();
+        name = "v" + (1).ToString(); //добавить номер
     }
 
     public Verticle(string _name)
@@ -38,5 +48,13 @@ public class Verticle
         if (newWert == null)
             return false;
         return this.name.Equals(newWert.GetName());
+    }
+
+    public override int GetHashCode()
+    {
+        int code = 0;
+        foreach (char c in name)
+            code += (int)c;
+        return code;
     }
 }
