@@ -47,7 +47,7 @@ namespace OstovDemo
             _drawingCentreX = Drawing_panel.Width / 2;
             _drawingCentreY = Drawing_panel.Height / 2;
             var radius = Math.Min(_drawingCentreX, _drawingCentreY) * 0.8;
-            var deg = 360.0 / listOfVerticles.Count;
+            var deg = Math.PI * 2 / listOfVerticles.Count;
             for (var i = 0; i < listOfVerticles.Count; ++i)
             {
                 var l_deg = i * deg;
@@ -109,6 +109,7 @@ namespace OstovDemo
                 ClearGraph();
                 GenerateGraph(GGForm.Count, GGForm.GenerateEdges);
             }
+            Drawing_panel.Refresh();
         }
 
         private void GenerateGraph(int count, bool gedges)
@@ -151,6 +152,7 @@ namespace OstovDemo
             listOfVerticles.Add(newvwrt);
             RecalculateDrawingCoordinates();
             RenewLists();
+            Drawing_panel.Refresh();
 
         }
 
@@ -312,6 +314,7 @@ namespace OstovDemo
         private void Form1_Resize(object sender, EventArgs e)
         {
             RecalculateDrawingCoordinates();
+            Drawing_panel.Refresh();
         }
     }
 }
