@@ -43,6 +43,15 @@ namespace OstovDemo
         {
             _drawingCentreX = Drawing_panel.Width / 2;
             _drawingCentreY = Drawing_panel.Height / 2;
+            var radius = Math.Min(_drawingCentreX, _drawingCentreY) * 0.8;
+            var deg = 360.0 / listOfVerticles.Count;
+            for (var i = 0; i < listOfVerticles.Count; ++i)
+            {
+                var l_deg = i * deg;
+                var x = _drawingCentreX + radius * Math.Cos(l_deg);
+                var y = _drawingCentreY + radius * Math.Sin(l_deg);
+                listOfVerticles[i].point = new Point((int)x, (int)y);
+            }
         }
 
         private void RenewLists()
