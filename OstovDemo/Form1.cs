@@ -134,15 +134,18 @@ namespace OstovDemo
                 for (var i = 0; i < listOfVerticles.Count() - 1; i++)
                     for (var j = i + 1; j < listOfVerticles.Count(); j++)
                         if ((rnd.Next() % 100) < 20)
-                            listOfEdges.Add(new Edge(listOfVerticles[i], listOfVerticles[j], rnd.Next() % 50));
+                            listOfEdges.Add(new Edge(listOfVerticles[i], listOfVerticles[j], (rnd.Next() % 49) + 1));
 
-            //foreach (var verticle in listOfVerticles)
-            //{
-            //    if (!verticle.connected)
-            //    {
-            //        if ()
-            //    }
-            //}
+            foreach (var verticle in listOfVerticles)
+            {
+                if (verticle.connections == 0)
+                {
+                    var ptr = -1;
+                    while (listOfVerticles[ptr] == verticle || ptr == -1)
+                        ptr = rnd.Next() % listOfVerticles.Count();
+                    listOfEdges.Add(new Edge(verticle, listOfVerticles[ptr], (rnd.Next() % 49) + 1));
+                }
+            }
 
             RecalculateDrawingCoordinates();
             RenewLists();

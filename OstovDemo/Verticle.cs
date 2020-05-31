@@ -11,20 +11,20 @@ public class Verticle
     private string _name;
     public string name { get { return _name; } set { _name = value + ""; } }
     public Point point { get; set; }
-    public bool connected;
+    public int connections;
 
     public Verticle(string name)
     {
         this.name = name;
         point = new Point(0, 0);
-        connected = false;
+        connections = 0;
     }
 
     public Verticle(Verticle verticle)
     {
         this.name = verticle.name;
         this.point = new Point(verticle.point.X, verticle.point.Y);
-        connected = false;
+        connections = 0;
     }
 
     public void SetPoint(int a, int b)
