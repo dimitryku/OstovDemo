@@ -18,7 +18,7 @@ namespace OstovDemo
         public Edge(Verticle A, Verticle B)
         {
             Random rnd = new Random();
-            this.weight = rnd.Next() % 50; // maxweigt = 50;
+            this.weight = rnd.Next() % 50; // maxweight = 50;
             this.A = A;
             this.B = B;
         }
@@ -50,8 +50,9 @@ namespace OstovDemo
         public override int GetHashCode()
         {
             int code = this.weight;
-            foreach (Char c in this.A.name) code += (int)c;
-            foreach (Char c in this.B.name) code += (int)c;
+            int i = 1;
+            foreach (Char c in this.A.name) { code += ((int)c * i); i += 1; }
+            foreach (Char c in this.B.name) { code += ((int)c * i); i += 1; }
             return code;
         }
     }

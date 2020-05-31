@@ -8,18 +8,19 @@ using System.Drawing;
 
 public class Verticle
 {
-    public string name { get; set; }
+    public string name { get { return name; } set { name = value + ""; } }
     public Point point { get; set; }
 
     public Verticle(string name)
     {
         this.name = name;
+        point = new Point(0, 0);
     }
 
     public Verticle(Verticle verticle)
     {
         this.name = verticle.name;
-        this.point = verticle.point;
+        this.point = new Point(verticle.point.X, verticle.point.Y);
     }
 
     public void SetPoint(int a, int b)
