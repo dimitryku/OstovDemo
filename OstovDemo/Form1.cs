@@ -31,6 +31,7 @@ namespace OstovDemo
         {
             // TODO Cruskal method
             List<List<Verticle>> cruscalVertsList = new List<List<Verticle>>();
+            
         } 
 
         private void Form1_Load(object sender, EventArgs e)
@@ -93,8 +94,28 @@ namespace OstovDemo
             var GGForm = new GraphGenerateForm();
             if (GGForm.ShowDialog() == DialogResult.OK)
             {
-                // GenerateGraph(GGForm.Count,GGForm.GenerateEdges);
+                GenerateGraph(GGForm.Count,GGForm.GenerateEdges);
+                //ClearGraph(GGForm.Count)
             }
+        }
+
+        private void GenerateGraph(int count, bool gedges)
+        {
+            for(int i = 0; i < count; i++)
+                listOfVerticles.Add(new Verticle("V" + ++_maxVertNum));
+
+            if (gedges)
+            {
+                Random rnd = new Random();
+                for (int i = 0; i < listOfVerticles.Count() - 1; i++)
+                    for(int j = i + 1; j < listOfVerticles.Count(); j++)
+                        if ((rnd.Next() % 100) < 20)
+                            listOfEdges.Add(new Edge(listOfVerticles[i], listOfVerticles[j]));
+            }
+
+            RecalculateDrawingCoordinates();
+            RenewLists();
+
         }
 
         private void AddVerticle_btn_Click(object sender, EventArgs e)
