@@ -141,7 +141,7 @@ namespace OstovDemo
                 if (verticle.connections == 0)
                 {
                     var ptr = -1;
-                    while (listOfVerticles[ptr] == verticle || ptr == -1)
+                    while (ptr == -1 || listOfVerticles[ptr] == verticle)
                         ptr = rnd.Next() % listOfVerticles.Count();
                     listOfEdges.Add(new Edge(verticle, listOfVerticles[ptr], (rnd.Next() % 49) + 1));
                 }
