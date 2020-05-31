@@ -50,7 +50,7 @@ namespace OstovDemo
 
             foreach (var verticle in Verticles)
             {
-                cb_selectA.Items.Add(verticle.GetName());
+                cb_selectA.Items.Add(verticle.name);
             }
             numericUpDown1.Value = rnd.Next(50);
         }
@@ -71,14 +71,14 @@ namespace OstovDemo
                 !Edges.Any((edge) => Equals(edge.A, selectedVerticle) && Equals(edge.B, verticle) 
                                      || Equals(edge.B, selectedVerticle) && Equals(edge.A, verticle))))
             {
-                cb_selectB.Items.Add(verticle.GetName());
+                cb_selectB.Items.Add(verticle.name);
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var VerticleA = Verticles.First((v) => v.GetName().Equals(cb_selectA.Text));
-            var VerticleB = Verticles.First((v) => v.GetName().Equals(cb_selectB.Text));
+            var VerticleA = Verticles.First((v) => v.name.Equals(cb_selectA.Text));
+            var VerticleB = Verticles.First((v) => v.name.Equals(cb_selectB.Text));
             Return = new Edge(VerticleA, VerticleB, (int)numericUpDown1.Value);
             this.DialogResult = DialogResult.OK;
             this.Close();
