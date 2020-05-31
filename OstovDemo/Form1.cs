@@ -175,14 +175,11 @@ namespace OstovDemo
         {
             // TODO draw graph
 
-            int x1 = 100, y1 = 100, x2 = 400, y2 = 400;
-            string name1 = "1", name2 = "V22";
 
             const int verticleRadius = 20;
             int verticleRadiusDiagonale = verticleRadius * (int)Math.Sqrt(2);
             const float edgeWidth = 2;
             const float verticleBorderWidth = 3;
-            const int eTextOffsetY = 15;
             
 
 
@@ -197,44 +194,75 @@ namespace OstovDemo
 
 
             // EDGES
-            e.Graphics.DrawLine(new Pen(Color.Black, edgeWidth), 
-                x1, y1, 
-                x2, y2);
+            foreach (var edge in listOfEdges)
+            {
+                e.Graphics.DrawLine(new Pen(Color.Black, edgeWidth), 
+                    edge.A.point, 
+                    edge.B.point);
+            }
 
             // VERICLES
-            e.Graphics.FillEllipse(
-                new SolidBrush(Color.White),
-                new Rectangle(x1 - verticleRadiusDiagonale, y1 - verticleRadiusDiagonale,
-                    verticleRadius*2, verticleRadius*2));
-            e.Graphics.FillEllipse(
-                new SolidBrush(Color.White),
-                new Rectangle(x2 - verticleRadiusDiagonale, y2 - verticleRadiusDiagonale,
-                    verticleRadius*2, verticleRadius*2));
+            foreach (var verticle in listOfVerticles)
+            {
+                e.Graphics.FillEllipse(
+                    new SolidBrush(Color.White),
+                    new Rectangle(verticle.point.X - verticleRadiusDiagonale, verticle.point.Y - verticleRadiusDiagonale,
+                        verticleRadius*2, verticleRadius*2));
+                e.Graphics.DrawEllipse(new Pen(Color.Black, verticleBorderWidth),
+                    verticle.point.X - verticleRadiusDiagonale, verticle.point.Y - verticleRadiusDiagonale,
+                    verticleRadius*2, verticleRadius*2);
+            }
 
-            e.Graphics.DrawEllipse(new Pen(Color.Black, verticleBorderWidth),
-                x1 - verticleRadiusDiagonale, y1 - verticleRadiusDiagonale,
-                verticleRadius*2, verticleRadius*2);
-            e.Graphics.DrawEllipse(new Pen(Color.Black, verticleBorderWidth),
-                x2 - verticleRadiusDiagonale, y2 - verticleRadiusDiagonale,
-                verticleRadius*2, verticleRadius*2);
+            //e.Graphics.FillEllipse(
+            //    new SolidBrush(Color.White),
+            //    new Rectangle(x1 - verticleRadiusDiagonale, y1 - verticleRadiusDiagonale,
+            //        verticleRadius*2, verticleRadius*2));
+            //e.Graphics.FillEllipse(
+            //    new SolidBrush(Color.White),
+            //    new Rectangle(x2 - verticleRadiusDiagonale, y2 - verticleRadiusDiagonale,
+            //        verticleRadius*2, verticleRadius*2));
+
+            //e.Graphics.DrawEllipse(new Pen(Color.Black, verticleBorderWidth),
+            //    x1 - verticleRadiusDiagonale, y1 - verticleRadiusDiagonale,
+            //    verticleRadius*2, verticleRadius*2);
+            //e.Graphics.DrawEllipse(new Pen(Color.Black, verticleBorderWidth),
+            //    x2 - verticleRadiusDiagonale, y2 - verticleRadiusDiagonale,
+            //    verticleRadius*2, verticleRadius*2);
 
             // VERTICLE CAPTIONS
-            // TODO 1 or 2 or 3 symbols
-            
-            int vTextOffsetX = 12 + 5*(name1.Length - 2), vTextOffsetY = 10;
-            e.Graphics.DrawString(name1, lb_verticle.Font,
-                new SolidBrush(Color.Black), x1 - vTextOffsetX, y1 - vTextOffsetY);
 
-            vTextOffsetX = 12 + 5 * (name2.Length - 2);
-            e.Graphics.DrawString(name2, lb_verticle.Font,
-                new SolidBrush(Color.Black), x2 - vTextOffsetX, y2 - vTextOffsetY);
+            foreach (var verticle in listOfVerticles)
+            {
+                int vTextOffsetX = 12 + 5*(verticle.name.Length - 2), vTextOffsetY = 10;
+                e.Graphics.DrawString(verticle.name, lb_verticle.Font,
+                    new SolidBrush(Color.Black), verticle.point.X - vTextOffsetX, verticle.point.Y - vTextOffsetY);
+            }
+            
+            //int vTextOffsetX = 12 + 5*(name1.Length - 2), vTextOffsetY = 10;
+            //e.Graphics.DrawString(name1, lb_verticle.Font,
+            //    new SolidBrush(Color.Black), x1 - vTextOffsetX, y1 - vTextOffsetY);
+
+            //vTextOffsetX = 12 + 5 * (name2.Length - 2);
+            //e.Graphics.DrawString(name2, lb_verticle.Font,
+            //    new SolidBrush(Color.Black), x2 - vTextOffsetX, y2 - vTextOffsetY);
 
             // EDGE CAPTIONS
-            int ax = x2-x1, ay = y2-y1;
-            int dx = -ay/ax*8, dy = 8;
-            e.Graphics.DrawString("10", btn_add_edge.Font, 
-                new SolidBrush(Color.Black),
-                (float)(x1 + (x2 - x1)*0.3) - dx, (float)(y1 + (y2 - y1)*0.3 - dy));
+
+            foreach (var edge in listOfEdges)
+            {
+                int x1 = edge.A.point.X, y1 = edge.A.point.Y;
+                int x2 = edge.B.point.X, y2 = edge.B.point.Y;
+                int ax = x2-x1, ay = y2-y1;
+                int dx = -ay/ax*8, dy = 8;
+                e.Graphics.DrawString("10", btn_add_edge.Font, 
+                    new SolidBrush(Color.Black),
+                    (float)(x1 + (x2 - x1)*0.3) - dx, (float)(y1 + (y2 - y1)*0.3 - dy));
+            }
+            //int ax = x2-x1, ay = y2-y1;
+            //int dx = -ay/ax*8, dy = 8;
+            //e.Graphics.DrawString("10", btn_add_edge.Font, 
+            //    new SolidBrush(Color.Black),
+            //    (float)(x1 + (x2 - x1)*0.3) - dx, (float)(y1 + (y2 - y1)*0.3 - dy));
 
         }
 
