@@ -129,22 +129,18 @@ namespace OstovDemo
             for (int i = 0; i < count; i++)
                 listOfVerticles.Add(new Verticle("V" + ++_maxVertNum));
 
+            Random rnd = new Random(DateTime.UtcNow.Millisecond);
             if (gedges)
-            {
-                Random rnd = new Random();
                 for (var i = 0; i < listOfVerticles.Count() - 1; i++)
                     for (var j = i + 1; j < listOfVerticles.Count(); j++)
                         if ((rnd.Next() % 100) < 20)
-                            listOfEdges.Add(new Edge(listOfVerticles[i], listOfVerticles[j]));
-            }
+                            listOfEdges.Add(new Edge(listOfVerticles[i], listOfVerticles[j], rnd.Next() % 50));
 
-            //foreach(var verticle in listOfVerticles)
+            //foreach (var verticle in listOfVerticles)
             //{
             //    if (!verticle.connected)
             //    {
-            //        Random rnd = new Random();
-            //        var rand = ;
-            //        if()
+            //        if ()
             //    }
             //}
 

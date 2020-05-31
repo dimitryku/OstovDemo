@@ -15,13 +15,11 @@ namespace OstovDemo
 
         public int weight { get; set; }
 
-        public Edge(Verticle A, Verticle B)
-        {
-            Random rnd = new Random(DateTime.UtcNow.Millisecond);
-            this.weight = rnd.Next() % 50; // maxweight = 50;
-            this.A = A;
-            this.B = B;
-        }
+        //public Edge(Verticle A, Verticle B)
+        //{
+        //    this.A = A;
+        //    this.B = B;
+        //}
 
         public Edge(Verticle A, Verticle B, int weight)
         {
