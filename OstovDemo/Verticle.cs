@@ -8,17 +8,8 @@ using System.Drawing;
 
 public class Verticle
 {
-    private string _name;
-    private Point _point;
-
-    public string name { get { return _name; } private set { _name = value; } }
-    public Point point { get { return _point; } private set { point = value; } }
-
-
-    public Verticle()
-    {
-        name = "v" + (1).ToString(); //добавить номер
-    }
+    public string name { get; set; }
+    public Point point { get; set; }
 
     public Verticle(string name)
     {
@@ -27,34 +18,13 @@ public class Verticle
 
     public Verticle(Verticle verticle)
     {
-        this.SetName(verticle.GetName());
-        this.SetPosition(verticle.GetPosition());
+        this.name = verticle.name;
+        this.point = verticle.point;
     }
 
-
-    public string GetName()
-    {
-        return this.name;
-    }
-
-    public void SetName(string name)
-    {
-        this.name = name;
-    }
-
-    public void SetPosition(Point point)
-    {
-        this.point = new Point(point.X, point.Y);
-    }
-
-    public void SetPosition(int a, int b)
+    public void SetPoint(int a, int b)
     {
         this.point = new Point(a, b);
-    }
-
-    public Point GetPosition()
-    {
-        return point;
     }
 
     public override bool Equals(object obj)
@@ -62,7 +32,7 @@ public class Verticle
         Verticle newWert = obj as Verticle;
         if (newWert == null)
             return false;
-        return this.name.Equals(newWert.GetName());
+        return (this.name.Equals(newWert.name) || this.point.Equals(newWert.point));
     }
 
     public override int GetHashCode()

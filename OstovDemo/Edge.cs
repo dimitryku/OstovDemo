@@ -8,13 +8,12 @@ namespace OstovDemo
 {
     public class Edge
     {
-        private Verticle _A;
-        private Verticle _B;
-        private int weight;
 
-        public Verticle A {get { return _A; } private set{ _A = value; }}
+        public Verticle A { get; set; }
 
-        public Verticle B { get { return _B; } private set { _B = value; } }
+        public Verticle B { get; set; }
+
+        public int weight { get; set; }
 
         public Edge(Verticle A, Verticle B)
         {
@@ -33,31 +32,27 @@ namespace OstovDemo
 
         public Edge(Edge edge)
         {
-            this.weight = edge.GetWeight();
+            this.weight = edge.weight;
             this.A = edge.A;
             this.B = edge.B;
         }
 
-        public int GetWeight()
-        {
-            return weight;
-        }
-
         public override bool Equals(object obj)
         {
-
-
-            return base.Equals(obj);
+            Edge newEdge = obj as Edge;
+            if (newEdge == null) return false;
+            if ((this.A == newEdge.A && this.B == newEdge.B) || (this.B == newEdge.A && this.A == newEdge.B))
+                return true;
+            else
+                return false;
         }
 
-        //public override int GetHashCode()
-        //{
-        //    return base.GetHashCode();
-        //}
-
-        //public override string ToString()
-        //{
-        //    return base.ToString();
-        //}
+        public override int GetHashCode()
+        {
+            int code = this.weight;
+            foreach (Char c in this.A.name) code += (int)c;
+            foreach (Char c in this.B.name) code += (int)c;
+            return code;
+        }
     }
 }
