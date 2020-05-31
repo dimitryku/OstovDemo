@@ -67,11 +67,18 @@ namespace OstovDemo
             cb_selectB.SelectedIndex = -1;
             cb_selectB.Items.Clear();
             var selectedVerticle = Verticles.First((verticle) => verticle.name == cb_selectA.Text);
-            foreach (var verticle in Verticles.Where(verticle => 
-                !Edges.Any((edge) => Equals(edge.A, selectedVerticle) && Equals(edge.B, verticle) 
-                                     || Equals(edge.B, selectedVerticle) && Equals(edge.A, verticle))))
+            //foreach (var verticle in Verticles.Where(verticle => 
+            //    !Edges.Any((edge) => Equals(edge.A, selectedVerticle) && Equals(edge.B, verticle) 
+            //                         || Equals(edge.B, selectedVerticle) && Equals(edge.A, verticle))))
+            foreach (var verticle in Verticles)
             {
-                cb_selectB.Items.Add(verticle.name);
+                var skip = Edges.Any(edge => (Equals(edge.A.name, verticle.name) && Equals(edge.B.name, selectedVerticle.name)) 
+                                             || (Equals(edge.A.name, selectedVerticle.name) && Equals(edge.B.name, verticle.name)));
+
+                if (Equals(verticle.name, selectedVerticle.name)) skip = true;
+
+                if(!skip)
+                    cb_selectB.Items.Add(verticle.name);
             }
         }
 
