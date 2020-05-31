@@ -30,9 +30,9 @@ namespace OstovDemo
         private void методToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // TODO Cruskal method
-            List<List<Verticle>> cruscalVertsList = new List<List<Verticle>>();
-            
-        } 
+            var cruscalVertsList = new List<List<Verticle>>();
+
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -63,7 +63,7 @@ namespace OstovDemo
 
         private void lb_verticle_Leave(object sender, EventArgs e)
         {
-            if(lb_verticle.SelectedIndex != -1)
+            if (lb_verticle.SelectedIndex != -1)
                 lb_verticle.SetSelected(lb_verticle.SelectedIndex, false);
         }
 
@@ -76,15 +76,15 @@ namespace OstovDemo
 
         private void Form1_Click(object sender, EventArgs e)
         {
-            if(lb_verticle.SelectedIndex != -1)
+            if (lb_verticle.SelectedIndex != -1)
                 lb_verticle.SetSelected(lb_verticle.SelectedIndex, false);
-            if(lb_edges.SelectedIndex != -1)
+            if (lb_edges.SelectedIndex != -1)
                 lb_edges.SetSelected(lb_edges.SelectedIndex, false);
         }
 
         private void lb_edges_Leave(object sender, EventArgs e)
         {
-            if(lb_edges.SelectedIndex != -1)
+            if (lb_edges.SelectedIndex != -1)
                 lb_edges.SetSelected(lb_edges.SelectedIndex, false);
         }
 
@@ -94,26 +94,35 @@ namespace OstovDemo
             var GGForm = new GraphGenerateForm();
             if (GGForm.ShowDialog() == DialogResult.OK)
             {
-                GenerateGraph(GGForm.Count,GGForm.GenerateEdges);
-                //ClearGraph(GGForm.Count)
+                ClearGraph();
+                GenerateGraph(GGForm.Count, GGForm.GenerateEdges);
             }
         }
 
         private void GenerateGraph(int count, bool gedges)
         {
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
                 listOfVerticles.Add(new Verticle("V" + ++_maxVertNum));
 
             if (gedges)
             {
                 Random rnd = new Random();
-                for (int i = 0; i < listOfVerticles.Count() - 1; i++)
-                    for(int j = i + 1; j < listOfVerticles.Count(); j++)
+                for (var i = 0; i < listOfVerticles.Count() - 1; i++)
+                    for (var j = i + 1; j < listOfVerticles.Count(); j++)
                         if ((rnd.Next() % 100) < 20)
                             listOfEdges.Add(new Edge(listOfVerticles[i], listOfVerticles[j]));
             }
 
             RecalculateDrawingCoordinates();
+            RenewLists();
+
+        }
+
+        private void ClearGraph()
+        {
+            listOfEdges.Clear();
+            listOfVerticles.Clear();
+            _maxVertNum = 0;
             RenewLists();
 
         }
