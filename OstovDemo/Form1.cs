@@ -16,7 +16,11 @@ namespace OstovDemo
     {
 
         private int _drawingCentreX, _drawingCentreY;
-        private Verticle _selectedVerticle = null;
+        private Verticle _selectedVerticle = null; // SELECTED
+
+        private int _maxVertNum = 0;
+        private List<Verticle> listOfVerticles = new List<Verticle>();
+        private List<Edge> listOfEdges = new List<Edge>();
 
         public Form1()
         {
@@ -37,6 +41,22 @@ namespace OstovDemo
         {
             _drawingCentreX = Drawing_panel.Width / 2;
             _drawingCentreY = Drawing_panel.Height / 2;
+        }
+
+        private void RenewLists()
+        {
+            var ver = listOfVerticles.Select(verticle => verticle.name).ToList();
+            var edh = listOfEdges.Select(edge => edge.A.name + "-" + edge.B.name + "," + edge.weight).ToList();
+            lb_verticle.Items.Clear();
+            lb_edges.Items.Clear();
+            foreach (var j in ver)
+            {
+                lb_verticle.Items.Add(j);
+            }
+            foreach (var j in edh)
+            {
+                lb_edges.Items.Add(j);
+            }
         }
 
         private void lb_verticle_Leave(object sender, EventArgs e)
@@ -79,11 +99,28 @@ namespace OstovDemo
         private void AddVerticle_btn_Click(object sender, EventArgs e)
         {
             // TODO add verticle
+            if(listOfVerticles.Count >= 15)
+            {
+                AddVerticle_btn.Enabled = false;
+                return;
+            }
+            var newvwrt = new Verticle("V" + ++_maxVertNum);
+            listOfVerticles.Add(newvwrt);
+            RecalculateDrawingCoordinates();
+
         }
 
         private void btn_add_edge_Click(object sender, EventArgs e)
         {
             // TODO add edge
+            var aef = new AddEdgeForm();
+            aef.Verticles = listOfVerticles;
+            aef.Edges = listOfEdges;
+            aef.ShowDialog();
+            if (aef.DialogResult != DialogResult.OK) return;
+            listOfEdges.Add(aef.Return);
+            RecalculateDrawingCoordinates();
+            Drawing_panel.Refresh();
         }
 
         private void методПримаToolStripMenuItem_Click(object sender, EventArgs e)
