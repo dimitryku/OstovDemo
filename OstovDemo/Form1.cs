@@ -34,19 +34,36 @@ namespace OstovDemo
             for (var i = 0; i < listOfVerticles.Count(); i++)
                 cruscalVertsList[i].Add(listOfVerticles[i]);
 
-            //foreach(var edge in listOfEdges)
-            //{
-            //    var firstList = -1;
-            //    var secondList = -1;
-            //    var wasBefore = false;
-            //    foreach(var vList in cruscalVertsList)
-            //    {
-            //        foreach(var vert in vList)
-            //        {
-            //            if(vert.Equals(edge.A)) firstList = 
-            //        }
-            //    }
-            //}
+            // TODO проверить работу.
+            // можно свиснуть код сортировки у .net, они не обидятся :D
+            cruscalVertsList.Sort();
+
+            foreach (var edge in listOfEdges)
+            {
+                var a = false;
+                var b = false;
+                var firstNum = -1;
+                var i = 0;
+
+                for (i = 0; i < cruscalVertsList.Count(); i++)
+                {
+                    a = a == true ? true : cruscalVertsList[i].Contains(edge.A);
+                    b = b == true ? true : cruscalVertsList[i].Contains(edge.B);
+                    if (a != b) firstNum = i;
+                    if (a == b == true) break;
+                }
+
+                if (firstNum == -1) continue;
+                else
+                {
+                    cruscalVertsList[firstNum].AddRange(cruscalVertsList[i]);
+                    cruscalVertsList[i].Clear();
+                    cruscalVertsList.RemoveAt(i);
+                    //TODO подтвердили нахождение подходящего ребра, выполняем вывод на экран.
+                }
+
+                if (cruscalVertsList.Count() == 1) break;
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
