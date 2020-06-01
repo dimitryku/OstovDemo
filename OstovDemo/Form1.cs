@@ -29,7 +29,7 @@ namespace OstovDemo
 
         private void методToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!GraphIsConnected(true))
+            if (GraphIsConnected(true))
             {
                 // TODO Cruskal method
                 var cruscalVertsList = new List<List<Verticle>>();
@@ -104,7 +104,6 @@ namespace OstovDemo
                     if (a != b && firstNum == -1) firstNum = secondNum;
                     if (a == true && b == true) break;
                 }
-                Console.WriteLine(edge.A.name + " " +  edge.B.name + " " + firstNum + " " + secondNum);
 
                 if (firstNum == -1) continue;
                 else
@@ -119,7 +118,7 @@ namespace OstovDemo
 
             bool acceptAuto = true;
             if (askForAccept) { }
-            //TODO вывод предложения переделать автоматически.
+            //TODO вывод предложения добавить автоматически.
 
             if (acceptAuto)
             {
