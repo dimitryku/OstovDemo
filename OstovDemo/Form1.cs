@@ -30,16 +30,22 @@ namespace OstovDemo
         private void методToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // TODO Cruskal method
-            var cruscalVertsList = new List<List<Verticle>>(listOfVerticles.Count());
+            var cruscalVertsList = new List<List<Verticle>>(/*listOfVerticles.Count()*/);
             for (var i = 0; i < listOfVerticles.Count(); i++)
-                cruscalVertsList[i].Add(listOfVerticles[i]);
-
-            // TODO проверить работу.
-            // можно свиснуть код сортировки у .net, они не обидятся :D, а он самый качественный, но сложненький
-            cruscalVertsList.Sort();
-
-            foreach (var edge in listOfEdges)
             {
+                var newlist = new List<Verticle>();
+                newlist.Add(new Verticle(listOfVerticles[i]));
+                cruscalVertsList.Add(newlist);
+            }
+
+            var cruscalEdgesList = new List<Edge>();
+            cruscalEdgesList.AddRange(listOfEdges);
+
+            // TODO сортировка
+
+            foreach (var edge in cruscalEdgesList)
+            {
+                Console.WriteLine(edge.weight);
                 var a = false;
                 var b = false;
                 var firstNum = -1;
@@ -60,6 +66,7 @@ namespace OstovDemo
                     cruscalVertsList[secondNum].Clear();
                     cruscalVertsList.RemoveAt(secondNum);
                     //TODO подтвердили нахождение подходящего ребра, выполняем вывод на экран.
+                    Console.WriteLine(edge.weight);
                 }
 
                 if (cruscalVertsList.Count() == 1) break;
@@ -151,7 +158,11 @@ namespace OstovDemo
                 for (var i = 0; i < listOfVerticles.Count() - 1; i++)
                     for (var j = i + 1; j < listOfVerticles.Count(); j++)
                         if ((rnd.Next() % 100) < 20)
+                        {
                             listOfEdges.Add(new Edge(listOfVerticles[i], listOfVerticles[j], (rnd.Next() % 49) + 1));
+                            ++listOfVerticles[i].connections;
+                            ++listOfVerticles[j].connections;
+                        }
 
             foreach (var verticle in listOfVerticles)
             {
@@ -161,6 +172,8 @@ namespace OstovDemo
                     while (ptr == -1 || listOfVerticles[ptr] == verticle)
                         ptr = rnd.Next() % listOfVerticles.Count();
                     listOfEdges.Add(new Edge(verticle, listOfVerticles[ptr], (rnd.Next() % 49) + 1));
+                    ++verticle.connections;
+                    ++listOfVerticles[ptr].connections;
                 }
             }
 
