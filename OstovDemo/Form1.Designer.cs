@@ -72,8 +72,8 @@
             // GenerateGraphToolStripMenuItem
             // 
             this.GenerateGraphToolStripMenuItem.Name = "GenerateGraphToolStripMenuItem";
-            this.GenerateGraphToolStripMenuItem.Size = new System.Drawing.Size(141, 20);
-            this.GenerateGraphToolStripMenuItem.Text = "Сгенерировать граф...";
+            this.GenerateGraphToolStripMenuItem.Size = new System.Drawing.Size(132, 20);
+            this.GenerateGraphToolStripMenuItem.Text = "Сгенерировать граф";
             this.GenerateGraphToolStripMenuItem.Click += new System.EventHandler(this.bibaToolStripMenuItem_Click);
             // 
             // найтиОстовToolStripMenuItem

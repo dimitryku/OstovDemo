@@ -209,13 +209,12 @@ namespace OstovDemo
 
         private void btn_add_edge_Click(object sender, EventArgs e)
         {
-            // TODO add edge
-            var aef = new AddEdgeForm();
-            aef.Verticles = listOfVerticles;
-            aef.Edges = listOfEdges;
+            var aef = new AddEdgeForm {Verticles = listOfVerticles, Edges = listOfEdges};
             aef.ShowDialog();
             if (aef.DialogResult != DialogResult.OK) return;
             listOfEdges.Add(aef.Return);
+            listOfVerticles.Find(x => x.Equals(aef.Return.A)).connections++;
+            listOfVerticles.Find(x => x.Equals(aef.Return.B)).connections++;
             RecalculateDrawingCoordinates();
             RenewLists();
             Drawing_panel.Refresh();
