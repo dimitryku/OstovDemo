@@ -29,7 +29,7 @@ namespace OstovDemo
 
         private void методToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (GraphIsConnected())
+            if (!GraphIsConnected(true))
             {
                 // TODO Cruskal method
                 var cruscalVertsList = new List<List<Verticle>>();
@@ -43,7 +43,8 @@ namespace OstovDemo
                 var cruscalEdgesList = new List<Edge>();
                 cruscalEdgesList.AddRange(listOfEdges);
 
-                // TODO сортировка
+                // TODO сортировка 
+                SortEdgesList(cruscalEdgesList); //Пузырёк, вроде остальные методы явно быстрее только на больших числах
 
                 foreach (var edge in cruscalEdgesList)
                 {
@@ -57,7 +58,7 @@ namespace OstovDemo
                         a = a == true ? true : cruscalVertsList[secondNum].Contains(edge.A);
                         b = b == true ? true : cruscalVertsList[secondNum].Contains(edge.B);
                         if (a != b && firstNum == -1) firstNum = secondNum;
-                        if (a == b == true) break;
+                        if (a == true && b == true) break;
                     }
 
                     if (firstNum == -1) continue;
@@ -67,27 +68,26 @@ namespace OstovDemo
                         cruscalVertsList[secondNum].Clear();
                         cruscalVertsList.RemoveAt(secondNum);
                         //TODO подтвердили нахождение подходящего ребра, выполняем вывод на экран.
-                        Console.WriteLine(edge.weight); //test, looks like passed
+                        Console.WriteLine(edge.weight + " " + edge.A.name + " " + edge.B.name);
                     }
 
                     if (cruscalVertsList.Count() == 1) break;
                 }
-            }
-            else
-            {
-                // TODO Обработка неполного массива (предложить дополнить или пусть сам)
-                Console.WriteLine("NO WAY!"); // test, passed
+
+                RecalculateDrawingCoordinates();
+                RenewLists();
+                Drawing_panel.Refresh();
             }
         }
 
-        private bool GraphIsConnected()
+        private bool GraphIsConnected(bool askForAccept = false) // по умолчанию генерируется автоматически, не спрашивая
         {
-            var checkList = new List<List<Verticle>>();
+            var checkVertsList = new List<List<Verticle>>();
             for (var i = 0; i < listOfVerticles.Count(); i++)
             {
                 var newlist = new List<Verticle>();
                 newlist.Add(new Verticle(listOfVerticles[i]));
-                checkList.Add(newlist);
+                checkVertsList.Add(newlist);
             }
 
             foreach (var edge in listOfEdges)
@@ -97,26 +97,80 @@ namespace OstovDemo
                 var firstNum = -1;
                 var secondNum = 0;
 
-                for (secondNum = 0; secondNum < checkList.Count(); secondNum++)
+                for (secondNum = 0; secondNum < checkVertsList.Count(); secondNum++)
                 {
-                    a = a == true ? true : checkList[secondNum].Contains(edge.A);
-                    b = b == true ? true : checkList[secondNum].Contains(edge.B);
+                    a = a == true ? true : checkVertsList[secondNum].Contains(edge.A);
+                    b = b == true ? true : checkVertsList[secondNum].Contains(edge.B);
                     if (a != b && firstNum == -1) firstNum = secondNum;
-                    if (a == b == true) break;
+                    if (a == true && b == true) break;
                 }
+                Console.WriteLine(edge.A.name + " " +  edge.B.name + " " + firstNum + " " + secondNum);
 
                 if (firstNum == -1) continue;
                 else
                 {
-                    checkList[firstNum].AddRange(checkList[secondNum]);
-                    checkList[secondNum].Clear();
-                    checkList.RemoveAt(secondNum);
+                    checkVertsList[firstNum].AddRange(checkVertsList[secondNum]);
+                    checkVertsList[secondNum].Clear();
+                    checkVertsList.RemoveAt(secondNum);
                 }
 
-                if (checkList.Count() == 1) return true;
+                if (checkVertsList.Count() == 1) return true;
             }
 
+            bool acceptAuto = true;
+            if (askForAccept) { }
+            //TODO вывод предложения переделать автоматически.
+
+            if (acceptAuto)
+            {
+                Random rnd = new Random(DateTime.UtcNow.Millisecond);
+                for (var i = 0; i < checkVertsList.Count() - 1; i++)
+                {
+                    Console.WriteLine("connecting " + i.ToString());
+                    var iter1 = -1;
+                    var iter2 = -1;
+                    while (iter1 == iter2)
+                    {
+                        iter1 = rnd.Next() % checkVertsList.Count();
+                        iter2 = rnd.Next() % checkVertsList.Count();
+                    }
+                    var a = rnd.Next() % checkVertsList[iter1].Count();
+                    var b = rnd.Next() % checkVertsList[iter2].Count();
+                    listOfEdges.Add(new Edge(checkVertsList[iter1][a], checkVertsList[iter2][b], (rnd.Next() % 49) + 1));
+                    ++checkVertsList[iter1][a].connections;
+                    ++checkVertsList[iter2][b].connections;
+                    checkVertsList[iter1].AddRange(checkVertsList[iter2]);
+                    checkVertsList.RemoveAt(iter2);
+                }
+                RecalculateDrawingCoordinates();
+
+                //Drawing_panel.Refresh();
+                RenewLists();
+                return true;
+
+            }
             return false;
+
+        }
+
+
+        private void SortEdgesList(List<Edge> edges)
+        {
+            var wasChanged = true;
+            while (wasChanged)
+            {
+                wasChanged = false;
+                for(var i = 0; i < edges.Count() - 1; i++)
+                {
+                    if (edges[i].weight > edges[i + 1].weight)
+                    {
+                        Edge temp = new Edge(edges[i]);
+                        edges[i] = new Edge(edges[i + 1]);
+                        edges[i + 1] = new Edge(temp);
+                        wasChanged = true;
+                    }
+                }
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -225,6 +279,8 @@ namespace OstovDemo
 
             RecalculateDrawingCoordinates();
             RenewLists();
+
+            GraphIsConnected();
 
         }
 
