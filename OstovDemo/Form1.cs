@@ -36,7 +36,7 @@ namespace OstovDemo
                 for (var i = 0; i < listOfVerticles.Count(); i++)
                 {
                     var newlist = new List<Verticle>();
-                    newlist.Add(new Verticle(listOfVerticles[i]));
+                    newlist.Add(listOfVerticles[i]);
                     cruscalVertsList.Add(newlist);
                 }
 
@@ -82,13 +82,13 @@ namespace OstovDemo
             }
         }
 
-        private bool GraphIsConnected(bool askForAccept = false) // по умолчанию граф дополняется автоматически, не спрашивая (для автозадания)
+        private bool GraphIsConnected(bool askForAccept = false) // по умолчанию граф дополняется автоматически
         {
             var checkVertsList = new List<List<Verticle>>();
             for (var i = 0; i < listOfVerticles.Count(); i++)
             {
                 var newlist = new List<Verticle>();
-                newlist.Add(new Verticle(listOfVerticles[i]));
+                newlist.Add(listOfVerticles[i]);
                 checkVertsList.Add(newlist);
             }
 
