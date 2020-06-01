@@ -29,32 +29,78 @@ namespace OstovDemo
 
         private void методToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO Cruskal method
-            var cruscalVertsList = new List<List<Verticle>>(/*listOfVerticles.Count()*/);
+            if (GraphIsConnected())
+            {
+                // TODO Cruskal method
+                var cruscalVertsList = new List<List<Verticle>>();
+                for (var i = 0; i < listOfVerticles.Count(); i++)
+                {
+                    var newlist = new List<Verticle>();
+                    newlist.Add(new Verticle(listOfVerticles[i]));
+                    cruscalVertsList.Add(newlist);
+                }
+
+                var cruscalEdgesList = new List<Edge>();
+                cruscalEdgesList.AddRange(listOfEdges);
+
+                // TODO сортировка
+
+                foreach (var edge in cruscalEdgesList)
+                {
+                    var a = false;
+                    var b = false;
+                    var firstNum = -1;
+                    var secondNum = 0;
+
+                    for (secondNum = 0; secondNum < cruscalVertsList.Count(); secondNum++)
+                    {
+                        a = a == true ? true : cruscalVertsList[secondNum].Contains(edge.A);
+                        b = b == true ? true : cruscalVertsList[secondNum].Contains(edge.B);
+                        if (a != b && firstNum == -1) firstNum = secondNum;
+                        if (a == b == true) break;
+                    }
+
+                    if (firstNum == -1) continue;
+                    else
+                    {
+                        cruscalVertsList[firstNum].AddRange(cruscalVertsList[secondNum]);
+                        cruscalVertsList[secondNum].Clear();
+                        cruscalVertsList.RemoveAt(secondNum);
+                        //TODO подтвердили нахождение подходящего ребра, выполняем вывод на экран.
+                        Console.WriteLine(edge.weight); //test, looks like passed
+                    }
+
+                    if (cruscalVertsList.Count() == 1) break;
+                }
+            }
+            else
+            {
+                // TODO Обработка неполного массива (предложить дополнить или пусть сам)
+                Console.WriteLine("NO WAY!"); // test, passed
+            }
+        }
+
+        private bool GraphIsConnected()
+        {
+            var checkList = new List<List<Verticle>>();
             for (var i = 0; i < listOfVerticles.Count(); i++)
             {
                 var newlist = new List<Verticle>();
                 newlist.Add(new Verticle(listOfVerticles[i]));
-                cruscalVertsList.Add(newlist);
+                checkList.Add(newlist);
             }
 
-            var cruscalEdgesList = new List<Edge>();
-            cruscalEdgesList.AddRange(listOfEdges);
-
-            // TODO сортировка
-
-            foreach (var edge in cruscalEdgesList)
+            foreach (var edge in listOfEdges)
             {
-                Console.WriteLine(edge.weight);
                 var a = false;
                 var b = false;
                 var firstNum = -1;
                 var secondNum = 0;
 
-                for (secondNum = 0; secondNum < cruscalVertsList.Count(); secondNum++)
+                for (secondNum = 0; secondNum < checkList.Count(); secondNum++)
                 {
-                    a = a == true ? true : cruscalVertsList[secondNum].Contains(edge.A);
-                    b = b == true ? true : cruscalVertsList[secondNum].Contains(edge.B);
+                    a = a == true ? true : checkList[secondNum].Contains(edge.A);
+                    b = b == true ? true : checkList[secondNum].Contains(edge.B);
                     if (a != b && firstNum == -1) firstNum = secondNum;
                     if (a == b == true) break;
                 }
@@ -62,15 +108,15 @@ namespace OstovDemo
                 if (firstNum == -1) continue;
                 else
                 {
-                    cruscalVertsList[firstNum].AddRange(cruscalVertsList[secondNum]);
-                    cruscalVertsList[secondNum].Clear();
-                    cruscalVertsList.RemoveAt(secondNum);
-                    //TODO подтвердили нахождение подходящего ребра, выполняем вывод на экран.
-                    Console.WriteLine(edge.weight);
+                    checkList[firstNum].AddRange(checkList[secondNum]);
+                    checkList[secondNum].Clear();
+                    checkList.RemoveAt(secondNum);
                 }
 
-                if (cruscalVertsList.Count() == 1) break;
+                if (checkList.Count() == 1) return true;
             }
+
+            return false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
