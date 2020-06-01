@@ -56,7 +56,7 @@ namespace OstovDemo
                 if (firstNum == -1) continue;
                 else
                 {
-                    cruscalVertsList[firstNum].AddRange(cruscalVertsList[i]);
+                    cruscalVertsList[firstNum].AddRange(cruscalVertsList[secondNum]);
                     cruscalVertsList[secondNum].Clear();
                     cruscalVertsList.RemoveAt(secondNum);
                     //TODO подтвердили нахождение подходящего ребра, выполняем вывод на экран.
