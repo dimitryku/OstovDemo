@@ -182,7 +182,7 @@ namespace OstovDemo
         {
             _drawingCentreX = Drawing_panel.Width / 2;
             _drawingCentreY = Drawing_panel.Height / 2;
-            var radius = Math.Min(_drawingCentreX, _drawingCentreY) * 0.8;
+            var radius = Math.Min(_drawingCentreX, _drawingCentreY) * 0.9;
             var deg = Math.PI * 2 / listOfVerticles.Count;
             for (var i = 0; i < listOfVerticles.Count; ++i)
             {
@@ -246,6 +246,14 @@ namespace OstovDemo
                 GenerateGraph(GGForm.Count, GGForm.GenerateEdges);
             }
             Drawing_panel.Refresh();
+            if (GGForm.Count > 10 && this.WindowState != FormWindowState.Maximized)
+            {
+                if (MessageBox.Show("Развернуть окно для лучшего отображения графа?", "Большой граф",
+                        MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    this.WindowState = FormWindowState.Maximized;
+                }
+            }
         }
 
         private void GenerateGraph(int count, bool gedges)
@@ -350,11 +358,15 @@ namespace OstovDemo
         {
             // TODO draw graph
 
-
+            var weightFont = new Font("Courier new", 8F, System.Drawing.
+                FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             const int verticleRadius = 20;
             int verticleRadiusDiagonale = verticleRadius * (int)Math.Sqrt(2);
             const float edgeWidth = 2;
             const float verticleBorderWidth = 3;
+            const float eCaprionOffsetX = 8, eCaptionOffsetY = 7;
+            const int edgeCapRadius = 10;
+            var edgeCpaDiagonale = edgeCapRadius * (int) Math.Sqrt(2);
             
 
 
@@ -422,17 +434,40 @@ namespace OstovDemo
             //    new SolidBrush(Color.Black), x2 - vTextOffsetX, y2 - vTextOffsetY);
 
             // EDGE CAPTIONS
-
+            var rnd = new Random(DateTime.UtcNow.Millisecond);
             foreach (var edge in listOfEdges)
             {
-                int x1 = edge.A.point.X, y1 = edge.A.point.Y;
-                int x2 = edge.B.point.X, y2 = edge.B.point.Y;
-                int ax = x2-x1, ay = y2-y1;
-                if (ax == 0) ax = 1;
-                int dx = -ay/ax*8, dy = 8;
-                e.Graphics.DrawString(edge.weight.ToString(), btn_add_edge.Font, 
+                double x1 = edge.A.point.X, y1 = edge.A.point.Y;
+                double x2 = edge.B.point.X, y2 = edge.B.point.Y;
+                double ax = x2-x1, ay = y2-y1;
+                var len = Math.Sqrt(ax*ax + ay*ay);
+                ax /= len;
+                ay /= len;
+                var dst = rnd.NextDouble();
+                do
+                {
+                    dst = rnd.NextDouble();
+                } while (dst < 0.3 || dst > 0.7);
+                //var x = x1 + (ax) * (1.3 + dst*3) * verticleRadius;
+                //var y = y1 + (ay) * (1.3 + dst*3) * verticleRadius;
+                var x = x1 + (ax) * dst * len + 0*ax*1.3 * verticleRadius;
+                var y = y1 + (ay) * dst * len + 0*ay*1.3 * verticleRadius;
+                
+
+
+                e.Graphics.FillEllipse(
+                    new SolidBrush(Color.White),
+                    new Rectangle((int)x - edgeCpaDiagonale, (int)y - edgeCpaDiagonale,
+                        edgeCapRadius*2, edgeCapRadius*2));
+                e.Graphics.DrawEllipse(new Pen(Color.Black, 1f),
+                    (int)x - edgeCpaDiagonale, (int)y - edgeCpaDiagonale,
+                    edgeCapRadius*2, edgeCapRadius*2);
+
+                e.Graphics.DrawString(edge.weight > 9 ? edge.weight.ToString() : 
+                        "0" + edge.weight, weightFont, 
                     new SolidBrush(Color.Black),
-                    (float)(x1 + (x2 - x1)*0.3) - dx, (float)(y1 + (y2 - y1)*0.3 - dy));
+                    (float)(x - eCaprionOffsetX), 
+                    (float)(y - eCaptionOffsetY));
             }
             //int ax = x2-x1, ay = y2-y1;
             //int dx = -ay/ax*8, dy = 8;
