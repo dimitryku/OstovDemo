@@ -158,7 +158,7 @@ namespace OstovDemo
 
         private void VerticleContextMenu_Opening(object sender, CancelEventArgs e)
         {
-            if (_selectedVerticle != null)
+            if (_selectedVerticle == null)
                 e.Cancel = true;
         }
 
@@ -402,11 +402,20 @@ namespace OstovDemo
             if (MessageBox.Show("Удaлить вершину?", "Вы уверены?", 
                     MessageBoxButtons.YesNo) != DialogResult.Yes) return;
             listOfVerticles.Remove(_selectedVerticle);
-            foreach (var edge in listOfEdges.Where(edge => 
-                edge.A.Equals(_selectedVerticle) || edge.B.Equals(_selectedVerticle)))
+            while (_selectedVerticle.connections > 0)
             {
-                listOfEdges.Remove(edge);
+                var del = listOfEdges.First(x => Equals(x.A, _selectedVerticle)
+                                                 || Equals(x.B, _selectedVerticle));
+                del.A.connections--;
+                del.B.connections--;
+                listOfEdges.Remove(del);
+                
             }
+
+            _selectedVerticle = null;
+            RenewLists();
+            RecalculateDrawingCoordinates();
+            Drawing_panel.Refresh();
         }
 
         private void lb_verticle_SelectedIndexChanged(object sender, EventArgs e)
@@ -421,7 +430,7 @@ namespace OstovDemo
                 lb_verticle.SetSelected(lb_verticle.SelectedIndex, false);
             if (lb_edges.SelectedIndex != -1)
                 lb_edges.SetSelected(lb_edges.SelectedIndex, false);
-            if(e.Button != MouseButtons.Right && e.Button != MouseButtons.Left) return;
+            if(e.Button != MouseButtons.Left) return;
             Verticle select = null;
             foreach (var verticle in listOfVerticles)
             {
