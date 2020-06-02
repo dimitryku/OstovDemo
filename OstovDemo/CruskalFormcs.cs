@@ -38,38 +38,42 @@ namespace OstovDemo
         public List<Edge> Edges;
         private List<List<Verticle>> cruscalVertsList;
         private List<Edge> cruscalEdgesList;
-        private bool 
+        private bool timeDivider; //начинать с true
+        int currentEdge = -1;
 
         private void CruskalFormcs_Load(object sender, EventArgs e)
         {
             // TODO shit
             curMode = DemoMode.Slow;
+            cruscalEdgesList = new List<Edge>();
+            cruscalEdgesList.AddRange(Edges);
+
+            SortEdgesList(cruscalEdgesList);
             PrepareForMethod();
 
-            foreach (var edge in cruscalEdgesList)
-            {
-                bool result = CruscalIterations(cruscalVertsList, edge);
-                if (cruscalVertsList.Count() == 1) break;
-            }
+            //foreach (var edge in cruscalEdgesList)
+            //{
+            //    bool result = CruscalIterations(edge);
+            //    if (cruscalVertsList.Count() == 1) break;
+            //}
 
         }
 
         private void PrepareForMethod()
         {
+            foreach (var ed in Edges) ed.condition = Condition.Waiting;
             cruscalVertsList = new List<List<Verticle>>();
             for (var i = 0; i < Verticles.Count(); i++)
             {
                 var newlist = new List<Verticle> { Verticles[i] };
                 cruscalVertsList.Add(newlist);
             }
-
-            cruscalEdgesList = new List<Edge>();
-            cruscalEdgesList.AddRange(Edges);
-
-            SortEdgesList(cruscalEdgesList);
+            currentEdge = 0;
+            timeDivider = true;
+            drawing_panel.Refresh();
         }
 
-        private bool CruscalIterations(List<List<Verticle>> cruscalVertsList, Edge edge) // возвращает false если не подходит, true если подходит
+        private bool CruscalIterations(Edge edge) // возвращает false если не подходит, true если подходит
         {
             var a = false;
             var b = false;
@@ -120,7 +124,10 @@ namespace OstovDemo
 
         private void button4_Click(object sender, EventArgs e)
         {
-            // TODO reset
+            // TODO reset //протестировать
+            timer1.Stop();
+            PrepareForMethod();
+            drawing_panel.Refresh();
         }
 
         private void next_btn_Click(object sender, EventArgs e)
@@ -143,6 +150,11 @@ namespace OstovDemo
             {
                 case DemoState.NotStarted:
                     // TODO start
+                    PrepareForMethod();
+                    curState = DemoState.Going;
+                    if (curMode != DemoMode.Manual) timer1.Start();
+
+
                     break;
                 case DemoState.Going:
                     // TODO pause
@@ -162,6 +174,19 @@ namespace OstovDemo
         private void timer1_Tick(object sender, EventArgs e)
         {
             // TODO
+            if (currentEdge > -1)
+            {
+                // TODO выделение текущей грани и проверка
+                timeDivider = !timeDivider;
+                cruscalEdgesList[currentEdge].condition = Condition.Checking;
+                drawing_panel.Refresh();
+                CruscalIterations(cruscalEdgesList[currentEdge]);
+            }
+            else
+            {
+                // TODO Результат проверки
+                timeDivider = !timeDivider;
+            }
         }
 
         private void rb_fast_CheckedChanged(object sender, EventArgs e)
