@@ -166,6 +166,7 @@ namespace OstovDemo
             if (rb_fast.Checked)
             {
                 curMode = DemoMode.Fast;
+                timer1.Interval = 250;
                 // TODO
             }
         }
@@ -175,6 +176,7 @@ namespace OstovDemo
             if (rb_slow.Checked)
             {
                 curMode = DemoMode.Slow;
+                timer1.Interval = 750;
                 // TODO
             }
         }
@@ -185,6 +187,7 @@ namespace OstovDemo
             {
                 curMode = DemoMode.Manual;
                 timer1.Stop();
+                
             }
         }
     }
