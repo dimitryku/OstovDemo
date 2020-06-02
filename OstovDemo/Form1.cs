@@ -399,17 +399,20 @@ namespace OstovDemo
 
         private void удалитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Удaлить вершину?", "Вы уверены?", MessageBoxButtons.YesNo) ==
-                DialogResult.Yes)
+            if (MessageBox.Show("Удaлить вершину?", "Вы уверены?", 
+                    MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            listOfVerticles.Remove(_selectedVerticle);
+            foreach (var edge in listOfEdges.Where(edge => 
+                edge.A.Equals(_selectedVerticle) || edge.B.Equals(_selectedVerticle)))
             {
-                // TODO delete verticle
+                listOfEdges.Remove(edge);
             }
         }
 
         private void lb_verticle_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(lb_verticle.SelectedIndex == -1) return;
-            // TODO _selectedVerticle = ...
+            _selectedVerticle = listOfVerticles[lb_verticle.SelectedIndex];
         }
 
         private void Drawing_panel_MouseDown(object sender, MouseEventArgs e)
@@ -437,11 +440,14 @@ namespace OstovDemo
                 if (listOfEdges.Any(ed => Equals(ed.A, @select) && Equals(ed.B, _selectedVerticle)
                                           || Equals(ed.A, _selectedVerticle) && Equals(ed.B, @select))) return;
 
-                var aef = new AddEdgeForm {Verticles = listOfVerticles, 
-                    Edges = listOfEdges};
-                aef.SetDefaultVerticles = true;
-                aef.Va = _selectedVerticle;
-                aef.Vb = select;
+                var aef = new AddEdgeForm
+                {
+                    Verticles = listOfVerticles,
+                    Edges = listOfEdges,
+                    SetDefaultVerticles = true,
+                    Va = _selectedVerticle,
+                    Vb = @select
+                };
                 aef.ShowDialog();
                 if (aef.DialogResult != DialogResult.OK)
                 {
