@@ -70,7 +70,6 @@ namespace OstovDemo
                 cruscalVertsList.Add(newlist);
             }
             currentEdge = 0;
-            numOfApproved = 0;
             drawing_panel.Refresh();
         }
 
