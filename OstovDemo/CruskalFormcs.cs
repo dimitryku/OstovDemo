@@ -33,6 +33,8 @@ namespace OstovDemo
 
         private DemoState curState = DemoState.NotStarted;
         private DemoMode curMode;
+        public List<Verticle> Verticles;
+        public List<Edge> Edges;
 
         private void CruskalFormcs_Load(object sender, EventArgs e)
         {
