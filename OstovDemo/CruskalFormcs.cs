@@ -34,7 +34,7 @@ namespace OstovDemo
 
         private DemoState curState = DemoState.NotStarted;
         private DemoMode curMode;
-        public List<Verticle> Verticles;
+        public List<List<Verticle>> Verticles;
         public List<Edge> Edges;
 
         private void CruskalFormcs_Load(object sender, EventArgs e)
@@ -45,7 +45,7 @@ namespace OstovDemo
             var cruscalVertsList = new List<List<Verticle>>();
             for (var i = 0; i < Verticles.Count(); i++)
             {
-                var newlist = new List<Verticle> { Verticles[i] };
+                //var newlist = new List<Verticle> { ListOfVerticles[i] };
                 cruscalVertsList.Add(newlist);
             }
 
@@ -58,11 +58,18 @@ namespace OstovDemo
 
             foreach (var edge in cruscalEdgesList)
             {
-                CruscalIterations(cruscalVertsList, edge);
+
+
+                bool result = CruscalIterations(cruscalVertsList, edge);
 
                 //Drawing_panel.Refresh();
                 if (cruscalVertsList.Count() == 1) break;
             }
+
+        }
+
+        private void Prepare()
+        {
 
         }
 
