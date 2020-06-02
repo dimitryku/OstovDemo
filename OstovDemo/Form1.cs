@@ -31,61 +31,11 @@ namespace OstovDemo
         {
             if (GraphIsConnected(true))
             {
-                // TODO Cruskal method
-                var cruscalVertsList = new List<List<Verticle>>();
-                for (var i = 0; i < listOfVerticles.Count(); i++)
-                {
-                    var newlist = new List<Verticle> {listOfVerticles[i]};
-                    cruscalVertsList.Add(newlist);
-                }
-
-                var cruscalEdgesList = new List<Edge>();
-                cruscalEdgesList.AddRange(listOfEdges);
-
-                // TODO сортировка 
-                SortEdgesList(cruscalEdgesList); //Пузырёк, вроде остальные методы явно быстрее только на больших числах
-
-
-                foreach (var edge in cruscalEdgesList)
-                {
-                    CruscalIterations(cruscalVertsList, edge);
-
-                    Drawing_panel.Refresh();
-                    if (cruscalVertsList.Count() == 1) break;
-                }
-
-                RecalculateDrawingCoordinates();
-                RenewLists();
-                Drawing_panel.Refresh();
+                // TODO запуск метода крускала
+                
             }
         }
 
-        private bool CruscalIterations(List<List<Verticle>> cruscalVertsList, Edge edge) // возвращает false если не подходит, true если подходит
-        {
-            var a = false;
-            var b = false;
-            var firstNum = -1;
-            var secondNum = 0;
-
-            for (secondNum = 0; secondNum < cruscalVertsList.Count(); secondNum++)
-            {
-                a = a == true || cruscalVertsList[secondNum].Contains(edge.A);
-                b = b == true || cruscalVertsList[secondNum].Contains(edge.B);
-                if (a != b && firstNum == -1) firstNum = secondNum;
-                if (a == true && b == true) break;
-            }
-
-            if (firstNum == -1) return false;
-            else
-            {
-                cruscalVertsList[firstNum].AddRange(cruscalVertsList[secondNum]);
-                cruscalVertsList[secondNum].Clear();
-                cruscalVertsList.RemoveAt(secondNum);
-                //TODO подтвердили нахождение подходящего ребра, пока выводим результат на консоль.
-                //Console.WriteLine(edge.weight + " " + edge.A.name + " " + edge.B.name);
-                return true;
-            }
-        }
 
         private bool GraphIsConnected(bool askForAccept = false) // по умолчанию граф дополняется автоматически
         {
@@ -158,22 +108,6 @@ namespace OstovDemo
 
         }
 
-        private void SortEdgesList(List<Edge> edges)
-        {
-            var wasChanged = true;
-            while (wasChanged)
-            {
-                wasChanged = false;
-                for(var i = 0; i < edges.Count() - 1; i++)
-                {
-                    if (edges[i].weight <= edges[i + 1].weight) continue;
-                    var temp = new Edge(edges[i]);
-                    edges[i] = new Edge(edges[i + 1]);
-                    edges[i + 1] = new Edge(temp);
-                    wasChanged = true;
-                }
-            }
-        }
 
         private void Form1_Load(object sender, EventArgs e)
         {

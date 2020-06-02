@@ -5,16 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public enum Condition
-{
-    Waiting,
-    Checking,
-    Accept,
-};
-
 
 namespace OstovDemo
 {
+    public enum Condition
+    {
+        Waiting,
+        Checking,
+        Accept,
+    };
+
     public class Edge
     {
 
