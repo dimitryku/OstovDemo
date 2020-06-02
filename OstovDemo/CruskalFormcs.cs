@@ -21,7 +21,8 @@ namespace OstovDemo
         {
             NotStarted,
             Going,
-            Paused
+            Paused,
+            End
         }
 
         enum DemoMode
@@ -142,9 +143,13 @@ namespace OstovDemo
                     break;
                 case DemoState.Going:
                     // TODO pause
+
                     break;
                 case DemoState.Paused:
                     // TODO start
+                    break;
+                case DemoState.End:
+                    // TODO nothing
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -179,7 +184,7 @@ namespace OstovDemo
             if (rb_manual.Checked)
             {
                 curMode = DemoMode.Manual;
-                // TODO
+                timer1.Stop();
             }
         }
     }
