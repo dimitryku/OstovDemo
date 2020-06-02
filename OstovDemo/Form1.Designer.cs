@@ -43,7 +43,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.lb_verticle = new System.Windows.Forms.ListBox();
             this.VerticleContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.переименоватьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.удалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AddVerticle_btn = new System.Windows.Forms.Button();
             this.Drawing_panel = new System.Windows.Forms.Panel();
@@ -191,17 +190,10 @@
             // 
             this.VerticleContextMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.VerticleContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.переименоватьToolStripMenuItem,
             this.удалитьToolStripMenuItem});
             this.VerticleContextMenu.Name = "VerticleContextMenu";
-            this.VerticleContextMenu.Size = new System.Drawing.Size(191, 52);
+            this.VerticleContextMenu.Size = new System.Drawing.Size(211, 56);
             this.VerticleContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.VerticleContextMenu_Opening);
-            // 
-            // переименоватьToolStripMenuItem
-            // 
-            this.переименоватьToolStripMenuItem.Name = "переименоватьToolStripMenuItem";
-            this.переименоватьToolStripMenuItem.Size = new System.Drawing.Size(190, 24);
-            this.переименоватьToolStripMenuItem.Text = "Переименовать";
             // 
             // удалитьToolStripMenuItem
             // 
@@ -280,7 +272,6 @@
         private System.Windows.Forms.ToolStripMenuItem помощьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip VerticleContextMenu;
-        private System.Windows.Forms.ToolStripMenuItem переименоватьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem удалитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem очиститьToolStripMenuItem;
         private System.Windows.Forms.Panel Drawing_panel;
