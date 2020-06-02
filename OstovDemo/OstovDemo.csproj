@@ -52,6 +52,12 @@
     <Compile Include="AddEdgeForm.Designer.cs">
       <DependentUpon>AddEdgeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CruskalFormcs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CruskalFormcs.Designer.cs">
+      <DependentUpon>CruskalFormcs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Edge.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -70,6 +76,9 @@
     <Compile Include="Verticle.cs" />
     <EmbeddedResource Include="AddEdgeForm.resx">
       <DependentUpon>AddEdgeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CruskalFormcs.resx">
+      <DependentUpon>CruskalFormcs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

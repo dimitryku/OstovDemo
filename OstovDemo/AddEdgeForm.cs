@@ -26,12 +26,12 @@ namespace OstovDemo
         private void AddEdgeForm_Load(object sender, EventArgs e)
         {
             var rnd = new Random();
-            if (Verticles.Count < 2)
-            {
-                MessageBox.Show("В графе менее 2 вершин, создать ребро нельзя.");
-                this.DialogResult = DialogResult.Cancel;
-                this.Close();
-            }
+            //if (Verticles.Count < 2)
+            //{
+            //    MessageBox.Show("В графе менее 2 вершин, создать ребро нельзя.");
+            //    this.DialogResult = DialogResult.Cancel;
+            //    this.Close();
+            //}
 
             if (SetDefaultVerticles)
             {

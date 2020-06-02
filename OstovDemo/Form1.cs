@@ -264,6 +264,11 @@ namespace OstovDemo
         private void btn_add_edge_Click(object sender, EventArgs e)
         {
             var aef = new AddEdgeForm {Verticles = listOfVerticles, Edges = listOfEdges};
+            if(listOfVerticles.Count < 2)
+            {
+                MessageBox.Show("В графе менее 2 вершин, создать ребро нельзя.");
+                return;
+            }
             aef.ShowDialog();
             if (aef.DialogResult != DialogResult.OK) return;
             listOfEdges.Add(aef.Return);
