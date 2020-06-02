@@ -19,8 +19,8 @@ namespace OstovDemo
         private Verticle _selectedVerticle = null; // SELECTED
 
         private int _maxVertNum = 0;
-        private List<Verticle> listOfVerticles = new List<Verticle>();
-        private List<Edge> listOfEdges = new List<Edge>();
+        public List<Verticle> listOfVerticles = new List<Verticle>();
+        public List<Edge> listOfEdges = new List<Edge>();
 
         public Form1()
         {
@@ -29,10 +29,12 @@ namespace OstovDemo
 
         private void методToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (GraphIsConnected(true))
+            if (!GraphIsConnected(true)) return;
+            var cmForm = new CruskalFormcs();
+            cmForm.ShowDialog();
+            foreach (var edge in listOfEdges)
             {
-                // TODO запуск метода крускала
-                
+                edge.condition = Condition.Waiting;
             }
         }
 
