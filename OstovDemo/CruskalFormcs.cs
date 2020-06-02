@@ -75,6 +75,23 @@ namespace OstovDemo
             drawing_panel.Refresh();
         }
 
+        private void RecalculateDrawingCoordinates()
+        {
+            if(Verticles == null)
+                return;
+            var drawingCentreX = drawing_panel.Width / 2;
+            var drawingCentreY = drawing_panel.Height / 2;
+            var radius = Math.Min(drawingCentreX, drawingCentreY) * 0.85;
+            var deg = Math.PI * 2 / Verticles.Count;
+            for (var i = 0; i < Verticles.Count; ++i)
+            {
+                var l_deg = i * deg;
+                var x = drawingCentreX + radius * Math.Cos(l_deg);
+                var y = drawingCentreY + radius * Math.Sin(l_deg);
+                Verticles[i].point = new Point((int)x, (int)y);
+            }
+        }
+
         private bool CruscalIterations(Edge edge) // возвращает false если не подходит, true если подходит
         {
             var a = false;
@@ -282,6 +299,12 @@ namespace OstovDemo
         private void drawing_panel_Paint(object sender, PaintEventArgs e)
         {
             Form1.DrawGraph(e, Verticles, cruscalEdgesList, false);
+        }
+
+        private void CruskalFormcs_Resize(object sender, EventArgs e)
+        {
+            RecalculateDrawingCoordinates();
+            drawing_panel.Refresh();
         }
     }
 }

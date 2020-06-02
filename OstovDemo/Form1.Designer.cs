@@ -64,7 +64,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1005, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1006, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -137,8 +137,6 @@
             this.lb_edges.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lb_edges.FormattingEnabled = true;
             this.lb_edges.ItemHeight = 25;
-            this.lb_edges.Items.AddRange(new object[] {
-            "нет рёбер"});
             this.lb_edges.Location = new System.Drawing.Point(0, 34);
             this.lb_edges.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lb_edges.Name = "lb_edges";
@@ -163,7 +161,7 @@
             this.panel2.Controls.Add(this.lb_verticle);
             this.panel2.Controls.Add(this.AddVerticle_btn);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(842, 28);
+            this.panel2.Location = new System.Drawing.Point(843, 28);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(163, 693);
@@ -176,8 +174,6 @@
             this.lb_verticle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lb_verticle.FormattingEnabled = true;
             this.lb_verticle.ItemHeight = 25;
-            this.lb_verticle.Items.AddRange(new object[] {
-            "нет вершин"});
             this.lb_verticle.Location = new System.Drawing.Point(0, 34);
             this.lb_verticle.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lb_verticle.Name = "lb_verticle";
@@ -192,13 +188,13 @@
             this.VerticleContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.удалитьToolStripMenuItem});
             this.VerticleContextMenu.Name = "VerticleContextMenu";
-            this.VerticleContextMenu.Size = new System.Drawing.Size(211, 56);
+            this.VerticleContextMenu.Size = new System.Drawing.Size(135, 28);
             this.VerticleContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.VerticleContextMenu_Opening);
             // 
             // удалитьToolStripMenuItem
             // 
             this.удалитьToolStripMenuItem.Name = "удалитьToolStripMenuItem";
-            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(190, 24);
+            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(134, 24);
             this.удалитьToolStripMenuItem.Text = "Удалить";
             this.удалитьToolStripMenuItem.Click += new System.EventHandler(this.удалитьToolStripMenuItem_Click);
             // 
@@ -221,7 +217,7 @@
             this.Drawing_panel.Location = new System.Drawing.Point(143, 28);
             this.Drawing_panel.Margin = new System.Windows.Forms.Padding(4);
             this.Drawing_panel.Name = "Drawing_panel";
-            this.Drawing_panel.Size = new System.Drawing.Size(699, 693);
+            this.Drawing_panel.Size = new System.Drawing.Size(700, 693);
             this.Drawing_panel.TabIndex = 3;
             this.Drawing_panel.Paint += new System.Windows.Forms.PaintEventHandler(this.Drawing_panel_Paint);
             this.Drawing_panel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Drawing_panel_MouseClick);
@@ -232,7 +228,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1005, 721);
+            this.ClientSize = new System.Drawing.Size(1006, 721);
             this.Controls.Add(this.Drawing_panel);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -240,6 +236,7 @@
             this.DoubleBuffered = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MinimumSize = new System.Drawing.Size(1024, 768);
             this.Name = "Form1";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

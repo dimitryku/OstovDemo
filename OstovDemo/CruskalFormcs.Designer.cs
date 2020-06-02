@@ -153,7 +153,6 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Enabled = false;
             this.label1.Location = new System.Drawing.Point(11, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(110, 17);
@@ -186,6 +185,7 @@
             // 
             // drawing_panel
             // 
+            this.drawing_panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.drawing_panel.Controls.Add(this.label_sets);
             this.drawing_panel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.drawing_panel.Location = new System.Drawing.Point(149, 0);
@@ -199,9 +199,9 @@
             // 
             this.label_sets.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.label_sets.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label_sets.Location = new System.Drawing.Point(0, 631);
+            this.label_sets.Location = new System.Drawing.Point(0, 612);
             this.label_sets.Name = "label_sets";
-            this.label_sets.Size = new System.Drawing.Size(627, 23);
+            this.label_sets.Size = new System.Drawing.Size(625, 40);
             this.label_sets.TabIndex = 0;
             this.label_sets.Text = "наборы вершин";
             this.label_sets.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -222,12 +222,14 @@
             this.DoubleBuffered = true;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(950, 700);
             this.Name = "CruskalFormcs";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Метод Крускала";
             this.Load += new System.EventHandler(this.CruskalFormcs_Load);
+            this.Resize += new System.EventHandler(this.CruskalFormcs_Resize);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);

@@ -32,13 +32,15 @@ namespace OstovDemo
         {
             if (!GraphIsConnected(true)) return;
             Drawing_panel.Refresh();
-            var cmForm = new CruskalFormcs {Verticles = listOfVerticles, Edges = listOfEdges, 
-                Size = this.Size, WindowState = WindowState};
+            var cmForm = new CruskalFormcs {Verticles = listOfVerticles, Edges = listOfEdges};
+            cmForm.Size = this.Size;
+            cmForm.WindowState = WindowState;
             cmForm.ShowDialog();
             foreach (var edge in listOfEdges)
             {
                 edge.condition = Condition.Waiting;
             }
+            RecalculateDrawingCoordinates();
         }
 
 
@@ -355,7 +357,7 @@ namespace OstovDemo
                     switch (edge.condition)
                     {
                         case Condition.Waiting: 
-                            eColor = Color.DarkGray;
+                            eColor = Color.LightGray;
                             break;
                         case Condition.Checking:
                             eColor = Color.Red;
