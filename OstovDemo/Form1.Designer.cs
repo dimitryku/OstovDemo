@@ -88,14 +88,14 @@
             // методToolStripMenuItem
             // 
             this.методToolStripMenuItem.Name = "методToolStripMenuItem";
-            this.методToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
+            this.методToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.методToolStripMenuItem.Text = "Метод Краскала";
             this.методToolStripMenuItem.Click += new System.EventHandler(this.методToolStripMenuItem_Click);
             // 
             // методПримаToolStripMenuItem
             // 
             this.методПримаToolStripMenuItem.Name = "методПримаToolStripMenuItem";
-            this.методПримаToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
+            this.методПримаToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.методПримаToolStripMenuItem.Text = "Метод Прима";
             this.методПримаToolStripMenuItem.Click += new System.EventHandler(this.методПримаToolStripMenuItem_Click);
             // 
@@ -232,6 +232,7 @@
             this.Drawing_panel.Size = new System.Drawing.Size(699, 693);
             this.Drawing_panel.TabIndex = 3;
             this.Drawing_panel.Paint += new System.Windows.Forms.PaintEventHandler(this.Drawing_panel_Paint);
+            this.Drawing_panel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Drawing_panel_MouseClick);
             this.Drawing_panel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Drawing_panel_MouseDown);
             // 
             // Form1

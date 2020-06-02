@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace OstovDemo
 {
@@ -30,7 +31,8 @@ namespace OstovDemo
         private void методToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!GraphIsConnected(true)) return;
-            var cmForm = new CruskalFormcs();
+            Drawing_panel.Refresh();
+            var cmForm = new CruskalFormcs{Verticles = listOfVerticles, Edges = listOfEdges};
             cmForm.ShowDialog();
             foreach (var edge in listOfEdges)
             {
@@ -302,12 +304,12 @@ namespace OstovDemo
                 // TODO добавить надписи на нижний уровень, что ничего нет.
             }
         }
-
+        private const int verticleRadius = 20;
         private void Drawing_panel_Paint(object sender, PaintEventArgs e)
         {
             var weightFont = new Font("Courier new", 8F, System.Drawing.
                 FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            const int verticleRadius = 20;
+            
             int verticleRadiusDiagonale = verticleRadius * (int)Math.Sqrt(2);
             const float edgeWidth = 2;
             const float verticleBorderWidth = 3;
@@ -412,9 +414,54 @@ namespace OstovDemo
 
         private void Drawing_panel_MouseDown(object sender, MouseEventArgs e)
         {
+            if (lb_verticle.SelectedIndex != -1)
+                lb_verticle.SetSelected(lb_verticle.SelectedIndex, false);
+            if (lb_edges.SelectedIndex != -1)
+                lb_edges.SetSelected(lb_edges.SelectedIndex, false);
             if(e.Button != MouseButtons.Right && e.Button != MouseButtons.Left) return;
-            // TODO check if it was click on verticle
+            Verticle select = null;
+            foreach (var verticle in listOfVerticles)
+            {
+                int dx = e.X - verticle.point.X, dy = e.Y - verticle.point.Y;
+                if (!(Math.Sqrt(dx * dx + dy * dy) <= verticleRadius)) continue;
+                @select = verticle;
+                break;
+            }
+            if(Equals(_selectedVerticle, @select) || @select == null) return;
+            if (_selectedVerticle == null)
+            {
+                _selectedVerticle = select;
+            }
+            else
+            {
+                if (listOfEdges.Any(ed => Equals(ed.A, @select) && Equals(ed.B, _selectedVerticle)
+                                          || Equals(ed.A, _selectedVerticle) && Equals(ed.B, @select))) return;
+
+                var aef = new AddEdgeForm {Verticles = listOfVerticles, 
+                    Edges = listOfEdges};
+                aef.SetDefaultVerticles = true;
+                aef.Va = _selectedVerticle;
+                aef.Vb = select;
+                aef.ShowDialog();
+                if (aef.DialogResult != DialogResult.OK)
+                {
+                    _selectedVerticle = null;
+                    return;
+                }
+                listOfEdges.Add(aef.Return);
+                listOfVerticles.Find(x => x.Equals(aef.Return.A)).connections++;
+                listOfVerticles.Find(x => x.Equals(aef.Return.B)).connections++;
+                RecalculateDrawingCoordinates();
+                RenewLists();
+                Drawing_panel.Refresh();
+                _selectedVerticle = null;
+            }
             
+        }
+
+        private void Drawing_panel_MouseClick(object sender, MouseEventArgs e)
+        {
+
         }
 
         private void Form1_Resize(object sender, EventArgs e)
