@@ -168,7 +168,6 @@ namespace OstovDemo
             switch (curState)
             {
                 case DemoState.NotStarted: //start
-                    //PrepareForMethod();
                     curState = DemoState.Going;
                     start_btn.Text = "Пауза";
                     if (curMode != DemoMode.Manual) timer1.Start();
@@ -198,16 +197,18 @@ namespace OstovDemo
             // Проверка
             if (firstPart)
             {
-                    cruscalEdgesList[currentEdge].condition = Condition.Checking;
-                    drawing_panel.Refresh();
-                    currentEdgeApproved = CruscalIterations(cruscalEdgesList[currentEdge]);
+                log_tb.Text += cruscalEdgesList[currentEdge].A.name + " - " + cruscalEdgesList[currentEdge].B.name + " (" 
+                    + cruscalEdgesList[currentEdge].weight.ToString() + ") " + Environment.NewLine;
+                cruscalEdgesList[currentEdge].condition = Condition.Checking;
+                drawing_panel.Refresh();
+                currentEdgeApproved = CruscalIterations(cruscalEdgesList[currentEdge]);
 
                 firstPart = !firstPart;
             }
             else
             {
                 // Результат проверки
-                log_tb.Text += cruscalEdgesList[currentEdge].A.name + " - " + cruscalEdgesList[currentEdge].B.name + Environment.NewLine;
+                
                 if (currentEdgeApproved)
                 {
                     cruscalEdgesList[currentEdge].condition = Condition.Accept;
