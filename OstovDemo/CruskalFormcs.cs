@@ -29,7 +29,6 @@ namespace OstovDemo
 
         private void CruskalFormcs_Load(object sender, EventArgs e)
         {
-            // TODO shit
             curMode = DemoMode.Slow;
             timer1.Interval = 750;
             cruscalEdgesList = new List<Edge>();
@@ -154,7 +153,6 @@ namespace OstovDemo
             switch (curState)
             {
                 case DemoState.NotStarted: //start
-                    //PrepareForMethod();
                     curState = DemoState.Going;
                     start_btn.Text = "Пауза";
                     if (curMode != DemoMode.Manual) timer1.Start();
@@ -194,12 +192,11 @@ namespace OstovDemo
             {
                 // Результат проверки
                 log_tb.Text += cruscalEdgesList[currentEdge].A.name + " - " + cruscalEdgesList[currentEdge].B.name +
-                               Environment.NewLine;
+                              " (" + cruscalEdgesList[currentEdge].weight.ToString() + ") " + Environment.NewLine;
                 if (currentEdgeApproved)
                 {
                     cruscalEdgesList[currentEdge].condition = Condition.Accept;
                     log_tb.Text += "Подходит" + Environment.NewLine + Environment.NewLine;
-
                     drawing_panel.Refresh();
                 }
                 else
