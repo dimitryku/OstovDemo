@@ -1,46 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+
+// ReSharper disable ArrangeTypeMemberModifiers
 
 namespace OstovDemo
 {
     public partial class CruskalFormcs : Form
     {
+        private List<Edge> cruscalEdgesList;
+        private List<List<Verticle>> cruscalVertsList;
+        private DemoMode curMode;
+        private int currentEdge = -1;
+        private bool currentEdgeApproved;
+
+        private DemoState curState = DemoState.NotStarted;
+        public List<Edge> Edges;
+        private bool firstPart = true;
+        public List<Verticle> Verticles;
+
         public CruskalFormcs()
         {
             InitializeComponent();
         }
-
-        enum DemoState
-        {
-            NotStarted,
-            Going,
-            Paused,
-            End
-        }
-
-        enum DemoMode
-        {
-            Fast,
-            Slow,
-            Manual
-        }
-
-        private DemoState curState = DemoState.NotStarted;
-        private DemoMode curMode;
-        public List<Verticle> Verticles;
-        public List<Edge> Edges;
-        private List<List<Verticle>> cruscalVertsList;
-        private List<Edge> cruscalEdgesList;
-        private bool currentEdgeApproved;
-        private int currentEdge = -1;
-        private bool firstPart = true;
 
 
         private void CruskalFormcs_Load(object sender, EventArgs e)
@@ -55,7 +39,6 @@ namespace OstovDemo
             PrepareForMethod();
             RecalculateDrawingCoordinates();
             drawing_panel.Refresh();
-
         }
 
         private void PrepareForMethod()
@@ -64,12 +47,13 @@ namespace OstovDemo
             cruscalVertsList = new List<List<Verticle>>();
             for (var i = 0; i < Verticles.Count(); i++)
             {
-                var newlist = new List<Verticle> { Verticles[i] };
+                var newlist = new List<Verticle> {Verticles[i]};
                 cruscalVertsList.Add(newlist);
             }
+
             currentEdge = 0;
-            next_btn.Enabled = (curMode == DemoMode.Manual);
-            start_btn.Enabled = (curMode != DemoMode.Manual);
+            next_btn.Enabled = curMode == DemoMode.Manual;
+            start_btn.Enabled = curMode != DemoMode.Manual;
             curState = DemoState.NotStarted;
             log_tb.Clear();
             firstPart = true;
@@ -80,7 +64,7 @@ namespace OstovDemo
 
         private void RecalculateDrawingCoordinates()
         {
-            if(Verticles == null || cruscalEdgesList ==  null)
+            if (Verticles == null || cruscalEdgesList == null)
                 return;
             var drawingCentreX = drawing_panel.Width / 2;
             var drawingCentreY = drawing_panel.Height / 2;
@@ -91,13 +75,11 @@ namespace OstovDemo
                 var l_deg = i * deg;
                 var x = drawingCentreX + radius * Math.Cos(l_deg);
                 var y = drawingCentreY + radius * Math.Sin(l_deg);
-                Verticles[i].point = new Point((int)x, (int)y);
+                Verticles[i].point = new Point((int) x, (int) y);
             }
+
             var rnd = new Random(DateTime.UtcNow.Millisecond);
-            foreach (var edge in cruscalEdgesList)
-            {
-                edge.weightPosition = 0.3f + 0.4f * (float)rnd.NextDouble();
-            }
+            foreach (var edge in cruscalEdgesList) edge.weightPosition = 0.3f + 0.4f * (float) rnd.NextDouble();
         }
 
         private bool CruscalIterations(Edge edge) // возвращает false если не подходит, true если подходит
@@ -116,16 +98,14 @@ namespace OstovDemo
             }
 
             if (firstNum == -1) return false;
-            else
-            {
-                cruscalVertsList[firstNum].AddRange(cruscalVertsList[secondNum]);
-                cruscalVertsList[secondNum].Clear();
-                cruscalVertsList.RemoveAt(secondNum);
-                return true;
-            }
+
+            cruscalVertsList[firstNum].AddRange(cruscalVertsList[secondNum]);
+            cruscalVertsList[secondNum].Clear();
+            cruscalVertsList.RemoveAt(secondNum);
+            return true;
         }
 
-        private void SortEdgesList(List<Edge> edges)
+        private static void SortEdgesList(IList<Edge> edges)
         {
             var wasChanged = true;
             while (wasChanged)
@@ -161,7 +141,6 @@ namespace OstovDemo
             {
                 if (curMode != DemoMode.Manual) timer1.Start();
             }
-            
         }
 
         private void next_btn_Click(object sender, EventArgs e)
@@ -175,6 +154,7 @@ namespace OstovDemo
             switch (curState)
             {
                 case DemoState.NotStarted: //start
+                    //PrepareForMethod();
                     curState = DemoState.Going;
                     start_btn.Text = "Пауза";
                     if (curMode != DemoMode.Manual) timer1.Start();
@@ -204,8 +184,6 @@ namespace OstovDemo
             // Проверка
             if (firstPart)
             {
-                log_tb.Text += cruscalEdgesList[currentEdge].A.name + " - " + cruscalEdgesList[currentEdge].B.name + " (" 
-                    + cruscalEdgesList[currentEdge].weight.ToString() + ") " + Environment.NewLine;
                 cruscalEdgesList[currentEdge].condition = Condition.Checking;
                 drawing_panel.Refresh();
                 currentEdgeApproved = CruscalIterations(cruscalEdgesList[currentEdge]);
@@ -215,12 +193,13 @@ namespace OstovDemo
             else
             {
                 // Результат проверки
-                
+                log_tb.Text += cruscalEdgesList[currentEdge].A.name + " - " + cruscalEdgesList[currentEdge].B.name +
+                               Environment.NewLine;
                 if (currentEdgeApproved)
                 {
                     cruscalEdgesList[currentEdge].condition = Condition.Accept;
                     log_tb.Text += "Подходит" + Environment.NewLine + Environment.NewLine;
-                    
+
                     drawing_panel.Refresh();
                 }
                 else
@@ -237,12 +216,13 @@ namespace OstovDemo
                     next_btn.Enabled = false;
                     start_btn.Text = "Начать";
                     start_btn.Enabled = false;
-                    if(currentEdge < Edges.Count() - 1)
+                    if (currentEdge < Edges.Count() - 1)
                         log_tb.Text += "Остальные ребра не подходят" + Environment.NewLine;
 
                     MessageBox.Show("Метод завершил свою работу, все вершины присоединены.", "Готово!",
-                    MessageBoxButtons.OK);
+                        MessageBoxButtons.OK);
                 }
+
                 firstPart = !firstPart;
                 ++currentEdge;
             }
@@ -278,7 +258,7 @@ namespace OstovDemo
             {
                 timer1.Stop();
                 curMode = DemoMode.Manual;
-                if(curState != DemoState.End)
+                if (curState != DemoState.End)
                     next_btn.Enabled = true;
                 start_btn.Enabled = false;
             }
@@ -293,6 +273,22 @@ namespace OstovDemo
         {
             RecalculateDrawingCoordinates();
             drawing_panel.Refresh();
+        }
+
+        enum DemoState
+        {
+            NotStarted,
+            Going,
+            Paused,
+            End
+        }
+
+
+        enum DemoMode
+        {
+            Fast,
+            Slow,
+            Manual
         }
     }
 }

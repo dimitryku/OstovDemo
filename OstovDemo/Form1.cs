@@ -1,27 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 
 namespace OstovDemo
 {
     public partial class Form1 : Form
     {
+        private const int verticleRadius = 20;
 
         private int _drawingCentreX, _drawingCentreY;
-        private Verticle _selectedVerticle = null; // SELECTED
 
-        private int _maxVertNum = 0;
-        public List<Verticle> listOfVerticles = new List<Verticle>();
+        private int _maxVertNum;
+        private Verticle _selectedVerticle; // SELECTED
         public List<Edge> listOfEdges = new List<Edge>();
+        public List<Verticle> listOfVerticles = new List<Verticle>();
 
         public Form1()
         {
@@ -33,20 +30,17 @@ namespace OstovDemo
             if (!GraphIsConnected(true)) return;
             Drawing_panel.Refresh();
             var cmForm = new CruskalFormcs {Verticles = listOfVerticles, Edges = listOfEdges};
-            cmForm.Size = this.Size;
+            cmForm.Size = Size;
             cmForm.WindowState = WindowState;
             cmForm.ShowDialog();
-            foreach (var edge in listOfEdges)
-            {
-                edge.condition = Condition.Waiting;
-            }
+            foreach (var edge in listOfEdges) edge.condition = Condition.Waiting;
             RecalculateDrawingCoordinates();
         }
 
 
         private bool GraphIsConnected(bool askForAccept = false) // по умолчанию граф дополняется автоматически
         {
-            if (listOfVerticles.Count() == 0) return false;
+            if (!listOfVerticles.Any()) return false;
             var checkVertsList = new List<List<Verticle>>();
             for (var i = 0; i < listOfVerticles.Count(); i++)
             {
@@ -70,28 +64,25 @@ namespace OstovDemo
                 }
 
                 if (firstNum == -1) continue;
-                else
-                {
-                    checkVertsList[firstNum].AddRange(checkVertsList[secondNum]);
-                    checkVertsList[secondNum].Clear();
-                    checkVertsList.RemoveAt(secondNum);
-                }
+
+                checkVertsList[firstNum].AddRange(checkVertsList[secondNum]);
+                checkVertsList[secondNum].Clear();
+                checkVertsList.RemoveAt(secondNum);
 
                 if (checkVertsList.Count() == 1) return true;
             }
 
             var acceptAuto = !askForAccept; // если есть идеи как будет лучше, ду ит)
             if (askForAccept)
-            {
-                if (MessageBox.Show("Вы хотите, чтобы он был дополнен автоматически?", "Граф не является связным", MessageBoxButtons.YesNo) ==
+                if (MessageBox.Show("Вы хотите, чтобы он был дополнен автоматически?", "Граф не является связным",
+                        MessageBoxButtons.YesNo) ==
                     DialogResult.Yes)
                     acceptAuto = true;
-            }
 
             if (!acceptAuto) return false;
             {
                 var rnd = new Random(DateTime.UtcNow.Millisecond);
-                while(checkVertsList.Count() != 1)
+                while (checkVertsList.Count() != 1)
                 {
                     //Console.WriteLine("connecting " + i.ToString());
                     var iter1 = -1;
@@ -101,19 +92,20 @@ namespace OstovDemo
                         iter1 = rnd.Next() % checkVertsList.Count();
                         iter2 = rnd.Next() % checkVertsList.Count();
                     }
+
                     var a = rnd.Next() % checkVertsList[iter1].Count();
                     var b = rnd.Next() % checkVertsList[iter2].Count();
-                    listOfEdges.Add(new Edge(checkVertsList[iter1][a], checkVertsList[iter2][b], (rnd.Next() % 49) + 1));
+                    listOfEdges.Add(new Edge(checkVertsList[iter1][a], checkVertsList[iter2][b], rnd.Next() % 49 + 1));
                     ++checkVertsList[iter1][a].connections;
                     ++checkVertsList[iter2][b].connections;
                     checkVertsList[iter1].AddRange(checkVertsList[iter2]);
                     checkVertsList.RemoveAt(iter2);
                 }
+
                 RecalculateDrawingCoordinates();
                 RenewLists();
                 return true;
             }
-
         }
 
 
@@ -133,13 +125,11 @@ namespace OstovDemo
                 var l_deg = i * deg;
                 var x = _drawingCentreX + radius * Math.Cos(l_deg);
                 var y = _drawingCentreY + radius * Math.Sin(l_deg);
-                listOfVerticles[i].point = new Point((int)x, (int)y);
+                listOfVerticles[i].point = new Point((int) x, (int) y);
             }
+
             var rnd = new Random(DateTime.UtcNow.Millisecond);
-            foreach (var edge in listOfEdges)
-            {
-                edge.weightPosition = 0.3f + 0.4f * (float)rnd.NextDouble();
-            }
+            foreach (var edge in listOfEdges) edge.weightPosition = 0.3f + 0.4f * (float) rnd.NextDouble();
         }
 
         private void RenewLists()
@@ -148,14 +138,8 @@ namespace OstovDemo
             var edh = listOfEdges.Select(edge => edge.A.name + "-" + edge.B.name + " (" + edge.weight + ")").ToList();
             lb_verticle.Items.Clear();
             lb_edges.Items.Clear();
-            foreach (var j in ver)
-            {
-                lb_verticle.Items.Add(j);
-            }
-            foreach (var j in edh)
-            {
-                lb_edges.Items.Add(j);
-            }
+            foreach (var j in ver) lb_verticle.Items.Add(j);
+            foreach (var j in edh) lb_edges.Items.Add(j);
         }
 
         private void lb_verticle_Leave(object sender, EventArgs e)
@@ -193,13 +177,12 @@ namespace OstovDemo
                 ClearGraph();
                 GenerateGraph(ggForm.Count, ggForm.GenerateEdges);
             }
+
             Drawing_panel.Refresh();
-            if (ggForm.Count <= 10 || this.WindowState == FormWindowState.Maximized) return;
+            if (ggForm.Count <= 10 || WindowState == FormWindowState.Maximized) return;
             if (MessageBox.Show("Развернуть окно для лучшего отображения графа?", "Большой граф",
                     MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                this.WindowState = FormWindowState.Maximized;
-            }
+                WindowState = FormWindowState.Maximized;
         }
 
         private void GenerateGraph(int count, bool gedges)
@@ -210,13 +193,13 @@ namespace OstovDemo
             var rnd = new Random(DateTime.UtcNow.Millisecond);
             if (gedges)
                 for (var i = 0; i < listOfVerticles.Count() - 1; i++)
-                    for (var j = i + 1; j < listOfVerticles.Count(); j++)
-                        if ((rnd.Next() % 100) < 20)
-                        {
-                            listOfEdges.Add(new Edge(listOfVerticles[i], listOfVerticles[j], (rnd.Next() % 49) + 1));
-                            ++listOfVerticles[i].connections;
-                            ++listOfVerticles[j].connections;
-                        }
+                for (var j = i + 1; j < listOfVerticles.Count(); j++)
+                    if (rnd.Next() % 100 < 20)
+                    {
+                        listOfEdges.Add(new Edge(listOfVerticles[i], listOfVerticles[j], rnd.Next() % 49 + 1));
+                        ++listOfVerticles[i].connections;
+                        ++listOfVerticles[j].connections;
+                    }
 
             //foreach (var verticle in listOfVerticles) // по сути эта часть получилась не нужна
             //{
@@ -235,7 +218,6 @@ namespace OstovDemo
             RenewLists();
 
             GraphIsConnected(); // тут генерятся недостающие до полного графа грани. Без подтверждения.
-
         }
 
         private void ClearGraph()
@@ -244,32 +226,32 @@ namespace OstovDemo
             listOfVerticles.Clear();
             _maxVertNum = 0;
             RenewLists();
-
         }
 
         private void AddVerticle_btn_Click(object sender, EventArgs e)
         {
-            if(listOfVerticles.Count >= 15)
+            if (listOfVerticles.Count >= 15)
             {
                 AddVerticle_btn.Enabled = false;
                 return;
             }
+
             var newvwrt = new Verticle("V" + ++_maxVertNum);
             listOfVerticles.Add(newvwrt);
             RecalculateDrawingCoordinates();
             RenewLists();
             Drawing_panel.Refresh();
-
         }
 
         private void btn_add_edge_Click(object sender, EventArgs e)
         {
             var aef = new AddEdgeForm {Verticles = listOfVerticles, Edges = listOfEdges};
-            if(listOfVerticles.Count < 2)
+            if (listOfVerticles.Count < 2)
             {
                 MessageBox.Show("В графе менее 2 вершин, создать ребро нельзя.");
                 return;
             }
+
             aef.ShowDialog();
             if (aef.DialogResult != DialogResult.OK) return;
             listOfEdges.Add(aef.Return);
@@ -283,11 +265,6 @@ namespace OstovDemo
         private void методПримаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // TODO Preem method
-
-
-
-
-
         }
 
         private void помощьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -313,21 +290,22 @@ namespace OstovDemo
                 // TODO добавить надписи на нижний уровень, что ничего нет.
             }
         }
-        private const int verticleRadius = 20;
+
         public void Drawing_panel_Paint(object sender, PaintEventArgs e)
         {
             DrawGraph(e, listOfVerticles, listOfEdges);
         }
 
-        public static void DrawGraph(PaintEventArgs e, List<Verticle> verticles_list, List<Edge> edges_list, bool noColors = true)
+        public static void DrawGraph(PaintEventArgs e, List<Verticle> verticles_list, List<Edge> edges_list,
+            bool noColors = true)
         {
-            var weightFont = new Font("Courier new", 8F, System.Drawing.FontStyle.Regular, 
-                System.Drawing.GraphicsUnit.Point,
-                ((byte) (204)));
+            var weightFont = new Font("Courier new", 8F, FontStyle.Regular,
+                GraphicsUnit.Point,
+                204);
             var vCapFont = new Font("Microsoft Sans Serif", 12f, FontStyle.Regular,
                 GraphicsUnit.Point);
 
-            int verticleRadiusDiagonale = verticleRadius * (int) Math.Sqrt(2);
+            var verticleRadiusDiagonale = verticleRadius * (int) Math.Sqrt(2);
             const float edgeWidth = 2;
             const float verticleBorderWidth = 3;
             const float eCaprionOffsetX = 8, eCaptionOffsetY = 7;
@@ -345,23 +323,18 @@ namespace OstovDemo
 
 
             // EDGES
-            if(noColors)
-            {
+            if (noColors)
                 foreach (var edge in edges_list)
-                {
                     e.Graphics.DrawLine(new Pen(Color.Black, edgeWidth),
                         edge.A.point,
                         edge.B.point);
-                }
-            }
             else
-            {
                 foreach (var edge in edges_list)
                 {
                     Color eColor;
                     switch (edge.condition)
                     {
-                        case Condition.Waiting: 
+                        case Condition.Waiting:
                             eColor = Color.LightGray;
                             break;
                         case Condition.Checking:
@@ -373,18 +346,19 @@ namespace OstovDemo
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
+
                     e.Graphics.DrawLine(new Pen(eColor, edgeWidth),
                         edge.A.point,
                         edge.B.point);
                 }
-            }
 
             // VERICLES
             foreach (var verticle in verticles_list)
             {
                 e.Graphics.FillEllipse(
                     new SolidBrush(Color.White),
-                    new Rectangle(verticle.point.X - verticleRadiusDiagonale, verticle.point.Y - verticleRadiusDiagonale,
+                    new Rectangle(verticle.point.X - verticleRadiusDiagonale,
+                        verticle.point.Y - verticleRadiusDiagonale,
                         verticleRadius * 2, verticleRadius * 2));
                 e.Graphics.DrawEllipse(new Pen(Color.Black, verticleBorderWidth),
                     verticle.point.X - verticleRadiusDiagonale, verticle.point.Y - verticleRadiusDiagonale,
@@ -411,8 +385,8 @@ namespace OstovDemo
                 ay /= len;
                 var dst = edge.weightPosition;
 
-                var x = x1 + (ax) * dst * len + 0 * ax * 1.3 * verticleRadius;
-                var y = y1 + (ay) * dst * len + 0 * ay * 1.3 * verticleRadius;
+                var x = x1 + ax * dst * len + 0 * ax * 1.3 * verticleRadius;
+                var y = y1 + ay * dst * len + 0 * ay * 1.3 * verticleRadius;
 
 
                 e.Graphics.FillEllipse(
@@ -432,7 +406,7 @@ namespace OstovDemo
 
         private void удалитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Удaлить вершину?", "Вы уверены?", 
+            if (MessageBox.Show("Удaлить вершину?", "Вы уверены?",
                     MessageBoxButtons.YesNo) != DialogResult.Yes) return;
             listOfVerticles.Remove(_selectedVerticle);
             while (_selectedVerticle.connections > 0)
@@ -442,7 +416,6 @@ namespace OstovDemo
                 del.A.connections--;
                 del.B.connections--;
                 listOfEdges.Remove(del);
-                
             }
 
             _selectedVerticle = null;
@@ -453,7 +426,7 @@ namespace OstovDemo
 
         private void lb_verticle_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(lb_verticle.SelectedIndex == -1) return;
+            if (lb_verticle.SelectedIndex == -1) return;
             _selectedVerticle = listOfVerticles[lb_verticle.SelectedIndex];
         }
 
@@ -463,24 +436,25 @@ namespace OstovDemo
                 lb_verticle.SetSelected(lb_verticle.SelectedIndex, false);
             if (lb_edges.SelectedIndex != -1)
                 lb_edges.SetSelected(lb_edges.SelectedIndex, false);
-            if(e.Button != MouseButtons.Left) return;
+            if (e.Button != MouseButtons.Left) return;
             Verticle select = null;
             foreach (var verticle in listOfVerticles)
             {
                 int dx = e.X - verticle.point.X, dy = e.Y - verticle.point.Y;
                 if (!(Math.Sqrt(dx * dx + dy * dy) <= verticleRadius)) continue;
-                @select = verticle;
+                select = verticle;
                 break;
             }
-            if(Equals(_selectedVerticle, @select) || @select == null) return;
+
+            if (Equals(_selectedVerticle, select) || select == null) return;
             if (_selectedVerticle == null)
             {
                 _selectedVerticle = select;
             }
             else
             {
-                if (listOfEdges.Any(ed => Equals(ed.A, @select) && Equals(ed.B, _selectedVerticle)
-                                          || Equals(ed.A, _selectedVerticle) && Equals(ed.B, @select))) return;
+                if (listOfEdges.Any(ed => Equals(ed.A, select) && Equals(ed.B, _selectedVerticle)
+                                          || Equals(ed.A, _selectedVerticle) && Equals(ed.B, select))) return;
 
                 var aef = new AddEdgeForm
                 {
@@ -488,7 +462,7 @@ namespace OstovDemo
                     Edges = listOfEdges,
                     SetDefaultVerticles = true,
                     Va = _selectedVerticle,
-                    Vb = @select
+                    Vb = select
                 };
                 aef.ShowDialog();
                 if (aef.DialogResult != DialogResult.OK)
@@ -496,6 +470,7 @@ namespace OstovDemo
                     _selectedVerticle = null;
                     return;
                 }
+
                 listOfEdges.Add(aef.Return);
                 listOfVerticles.Find(x => x.Equals(aef.Return.A)).connections++;
                 listOfVerticles.Find(x => x.Equals(aef.Return.B)).connections++;
@@ -504,12 +479,10 @@ namespace OstovDemo
                 Drawing_panel.Refresh();
                 _selectedVerticle = null;
             }
-            
         }
 
         private void Drawing_panel_MouseClick(object sender, MouseEventArgs e)
         {
-
         }
 
         private void Form1_Resize(object sender, EventArgs e)
