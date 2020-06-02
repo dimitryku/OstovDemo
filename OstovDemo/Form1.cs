@@ -32,7 +32,8 @@ namespace OstovDemo
         {
             if (!GraphIsConnected(true)) return;
             Drawing_panel.Refresh();
-            var cmForm = new CruskalFormcs {Verticles = listOfVerticles, Edges = listOfEdges, Size = this.Size};
+            var cmForm = new CruskalFormcs {Verticles = listOfVerticles, Edges = listOfEdges, 
+                Size = this.Size, WindowState = WindowState};
             cmForm.ShowDialog();
             foreach (var edge in listOfEdges)
             {

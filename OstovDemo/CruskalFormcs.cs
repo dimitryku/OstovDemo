@@ -281,7 +281,7 @@ namespace OstovDemo
 
         private void drawing_panel_Paint(object sender, PaintEventArgs e)
         {
-            Form1.DrawGraph(e, Verticles, Edges, false);
+            Form1.DrawGraph(e, Verticles, cruscalEdgesList, false);
         }
     }
 }
