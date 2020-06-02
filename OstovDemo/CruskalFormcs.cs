@@ -70,6 +70,8 @@ namespace OstovDemo
                 cruscalVertsList.Add(newlist);
             }
             currentEdge = 0;
+            next_btn.Enabled = false;
+            
             drawing_panel.Refresh();
         }
 
@@ -250,9 +252,8 @@ namespace OstovDemo
         {
             if (rb_manual.Checked)
             {
-                curMode = DemoMode.Manual;
                 timer1.Stop();
-                
+                curMode = DemoMode.Manual;
             }
         }
     }
