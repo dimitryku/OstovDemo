@@ -26,11 +26,7 @@ namespace OstovDemo
 
         public Condition condition { get; set; }
 
-        //public Edge(Verticle A, Verticle B)
-        //{
-        //    this.A = A;
-        //    this.B = B;
-        //}
+        public float weightPosition { get; set; }
 
         public Edge(Verticle A, Verticle B, int weight)
         {
