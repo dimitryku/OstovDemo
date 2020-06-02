@@ -4,6 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+public enum Condition
+{
+    Waiting,
+    Checking,
+    Accept,
+};
+
+
 namespace OstovDemo
 {
     public class Edge
@@ -14,6 +23,8 @@ namespace OstovDemo
         public Verticle B { get; set; }
 
         public int weight { get; set; }
+
+        public Condition condition { get; set; }
 
         //public Edge(Verticle A, Verticle B)
         //{
@@ -26,6 +37,7 @@ namespace OstovDemo
             this.weight = weight;
             this.A = A;
             this.B = B;
+            this.condition = Condition.Waiting;
         }
 
         public Edge(Edge edge)
@@ -33,6 +45,7 @@ namespace OstovDemo
             this.weight = edge.weight;
             this.A = edge.A;
             this.B = edge.B;
+            this.condition = Condition.Waiting;
         }
 
         public override bool Equals(object obj)

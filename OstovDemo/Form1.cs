@@ -45,39 +45,45 @@ namespace OstovDemo
                 // TODO сортировка 
                 SortEdgesList(cruscalEdgesList); //Пузырёк, вроде остальные методы явно быстрее только на больших числах
 
+
                 foreach (var edge in cruscalEdgesList)
                 {
-                    var a = false;
-                    var b = false;
-                    var firstNum = -1;
-                    var secondNum = 0;
+                    CruscalIterations(cruscalVertsList, edge);
 
-                    for (secondNum = 0; secondNum < cruscalVertsList.Count(); secondNum++)
-                    {
-                        a = a == true || cruscalVertsList[secondNum].Contains(edge.A);
-                        b = b == true || cruscalVertsList[secondNum].Contains(edge.B);
-                        if (a != b && firstNum == -1) firstNum = secondNum;
-                        if (a == true && b == true) break;
-                    }
-
-                    if (firstNum == -1) continue;
-                    else
-                    {
-                        cruscalVertsList[firstNum].AddRange(cruscalVertsList[secondNum]);
-                        cruscalVertsList[secondNum].Clear();
-                        cruscalVertsList.RemoveAt(secondNum);
-
-                        //TODO подтвердили нахождение подходящего ребра, пока выводим результат на консоль.
-
-                        Console.WriteLine(edge.weight + " " + edge.A.name + " " + edge.B.name);
-                    }
-
+                    Drawing_panel.Refresh();
                     if (cruscalVertsList.Count() == 1) break;
                 }
 
                 RecalculateDrawingCoordinates();
                 RenewLists();
                 Drawing_panel.Refresh();
+            }
+        }
+
+        private bool CruscalIterations(List<List<Verticle>> cruscalVertsList, Edge edge) // возвращает false если не подходит, true если подходит
+        {
+            var a = false;
+            var b = false;
+            var firstNum = -1;
+            var secondNum = 0;
+
+            for (secondNum = 0; secondNum < cruscalVertsList.Count(); secondNum++)
+            {
+                a = a == true || cruscalVertsList[secondNum].Contains(edge.A);
+                b = b == true || cruscalVertsList[secondNum].Contains(edge.B);
+                if (a != b && firstNum == -1) firstNum = secondNum;
+                if (a == true && b == true) break;
+            }
+
+            if (firstNum == -1) return false;
+            else
+            {
+                cruscalVertsList[firstNum].AddRange(cruscalVertsList[secondNum]);
+                cruscalVertsList[secondNum].Clear();
+                cruscalVertsList.RemoveAt(secondNum);
+                //TODO подтвердили нахождение подходящего ребра, пока выводим результат на консоль.
+                //Console.WriteLine(edge.weight + " " + edge.A.name + " " + edge.B.name);
+                return true;
             }
         }
 
@@ -330,6 +336,11 @@ namespace OstovDemo
         private void методПримаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // TODO Preem method
+
+
+
+
+
         }
 
         private void помощьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -450,7 +461,7 @@ namespace OstovDemo
 
         private void удалитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Удвлить вершину?", "Вы уверены?", MessageBoxButtons.YesNo) ==
+            if (MessageBox.Show("Удaлить вершину?", "Вы уверены?", MessageBoxButtons.YesNo) ==
                 DialogResult.Yes)
             {
                 // TODO delete verticle
