@@ -67,6 +67,7 @@ namespace OstovDemo
             }
             currentEdge = 0;
             next_btn.Enabled = (curMode == DemoMode.Manual);
+            start_btn.Enabled = (curMode != DemoMode.Manual);
             curState = DemoState.NotStarted;
             log_tb.Clear();
             firstPart = true;
@@ -117,12 +118,12 @@ namespace OstovDemo
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e) //close
         {
             Close();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e) //reset
         {
             timer1.Stop();
             if (MessageBox.Show("Вы действительно хотите сбросить текущий прогресс?", "Сброс прогресса метода",
@@ -140,17 +141,8 @@ namespace OstovDemo
 
         private void next_btn_Click(object sender, EventArgs e)
         {
-            if (curMode != DemoMode.Manual)
-            {
-                timer1.Stop();
-                timer1_Tick(null, null);
-                timer1.Start();
-            }
-            else
-            {
-                timer1_Tick(null, null);
-                curState = DemoState.Going;
-            }
+            curState = DemoState.Going;
+            timer1_Tick(null, null);
         }
 
         private void start_btn_Click(object sender, EventArgs e)
@@ -158,8 +150,7 @@ namespace OstovDemo
             switch (curState)
             {
                 case DemoState.NotStarted: //start
-                    PrepareForMethod();
-                    next_btn.Enabled = true;
+                    //PrepareForMethod();
                     curState = DemoState.Going;
                     start_btn.Text = "Пауза";
                     if (curMode != DemoMode.Manual) timer1.Start();
@@ -189,19 +180,9 @@ namespace OstovDemo
             // TODO
             if (firstPart)
             {
-                // TODO выделение текущей грани и проверка
-                if (currentEdge < cruscalEdgesList.Count())
-                {
                     cruscalEdgesList[currentEdge].condition = Condition.Checking;
                     drawing_panel.Refresh();
                     currentEdgeApproved = CruscalIterations(cruscalEdgesList[currentEdge]);
-                    
-                }
-                else
-                {
-                    timer1.Stop();
-                    curState = DemoState.End;
-                }
 
                 firstPart = !firstPart;
             }
@@ -248,8 +229,7 @@ namespace OstovDemo
                 curMode = DemoMode.Fast;
                 timer1.Interval = 250;
                 start_btn.Enabled = true;
-                if (curState == DemoState.End || curState == DemoState.NotStarted)
-                    next_btn.Enabled = false;
+                next_btn.Enabled = false;
                 // TODO
             }
         }
@@ -261,8 +241,7 @@ namespace OstovDemo
                 curMode = DemoMode.Slow;
                 timer1.Interval = 750;
                 start_btn.Enabled = true;
-                if (curState == DemoState.End || curState == DemoState.NotStarted)
-                    next_btn.Enabled = false;
+                next_btn.Enabled = false;
 
                 // TODO
             }
