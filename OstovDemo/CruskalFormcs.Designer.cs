@@ -127,6 +127,7 @@
             this.drawing_panel.Name = "drawing_panel";
             this.drawing_panel.Size = new System.Drawing.Size(629, 654);
             this.drawing_panel.TabIndex = 4;
+            this.drawing_panel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawing_panel_Paint);
             // 
             // log_tb
             // 

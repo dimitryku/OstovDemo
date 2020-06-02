@@ -32,7 +32,7 @@ namespace OstovDemo
         {
             if (!GraphIsConnected(true)) return;
             Drawing_panel.Refresh();
-            var cmForm = new CruskalFormcs{Verticles = listOfVerticles, Edges = listOfEdges};
+            var cmForm = new CruskalFormcs {Verticles = listOfVerticles, Edges = listOfEdges, Size = this.Size};
             cmForm.ShowDialog();
             foreach (var edge in listOfEdges)
             {
@@ -305,18 +305,25 @@ namespace OstovDemo
             }
         }
         private const int verticleRadius = 20;
-        private void Drawing_panel_Paint(object sender, PaintEventArgs e)
+        public void Drawing_panel_Paint(object sender, PaintEventArgs e)
         {
-            var weightFont = new Font("Courier new", 8F, System.Drawing.
-                FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            
-            int verticleRadiusDiagonale = verticleRadius * (int)Math.Sqrt(2);
+            DrawGraph(e, listOfVerticles, listOfEdges);
+        }
+
+        public static void DrawGraph(PaintEventArgs e, List<Verticle> verticles_list, List<Edge> edges_list, bool noColors = true)
+        {
+            var weightFont = new Font("Courier new", 8F, System.Drawing.FontStyle.Regular, 
+                System.Drawing.GraphicsUnit.Point,
+                ((byte) (204)));
+            var vCapFont = new Font("Microsoft Sans Serif", 12f, FontStyle.Regular,
+                GraphicsUnit.Point);
+
+            int verticleRadiusDiagonale = verticleRadius * (int) Math.Sqrt(2);
             const float edgeWidth = 2;
             const float verticleBorderWidth = 3;
             const float eCaprionOffsetX = 8, eCaptionOffsetY = 7;
             const int edgeCapRadius = 10;
             var edgeCpaDiagonale = edgeCapRadius * (int) Math.Sqrt(2);
-            
 
 
             // SETTINGS
@@ -328,45 +335,70 @@ namespace OstovDemo
                 InterpolationMode.High;
 
 
-
             // EDGES
-            foreach (var edge in listOfEdges)
+            if(noColors)
             {
-                e.Graphics.DrawLine(new Pen(Color.Black, edgeWidth), 
-                    edge.A.point, 
-                    edge.B.point);
+                foreach (var edge in edges_list)
+                {
+                    e.Graphics.DrawLine(new Pen(Color.Black, edgeWidth),
+                        edge.A.point,
+                        edge.B.point);
+                }
+            }
+            else
+            {
+                foreach (var edge in edges_list)
+                {
+                    Color eColor;
+                    switch (edge.condition)
+                    {
+                        case Condition.Waiting: 
+                            eColor = Color.DarkGray;
+                            break;
+                        case Condition.Checking:
+                            eColor = Color.Red;
+                            break;
+                        case Condition.Accept:
+                            eColor = Color.Black;
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                    e.Graphics.DrawLine(new Pen(eColor, edgeWidth),
+                        edge.A.point,
+                        edge.B.point);
+                }
             }
 
             // VERICLES
-            foreach (var verticle in listOfVerticles)
+            foreach (var verticle in verticles_list)
             {
                 e.Graphics.FillEllipse(
                     new SolidBrush(Color.White),
                     new Rectangle(verticle.point.X - verticleRadiusDiagonale, verticle.point.Y - verticleRadiusDiagonale,
-                        verticleRadius*2, verticleRadius*2));
+                        verticleRadius * 2, verticleRadius * 2));
                 e.Graphics.DrawEllipse(new Pen(Color.Black, verticleBorderWidth),
                     verticle.point.X - verticleRadiusDiagonale, verticle.point.Y - verticleRadiusDiagonale,
-                    verticleRadius*2, verticleRadius*2);
+                    verticleRadius * 2, verticleRadius * 2);
             }
 
 
             // VERTICLE CAPTIONS
-
-            foreach (var verticle in listOfVerticles)
+            foreach (var verticle in verticles_list)
             {
-                int vTextOffsetX = 12 + 5*(verticle.name.Length - 2), vTextOffsetY = 10;
-                e.Graphics.DrawString(verticle.name, lb_verticle.Font,
+                int vTextOffsetX = 12 + 5 * (verticle.name.Length - 2), vTextOffsetY = 10;
+                e.Graphics.DrawString(verticle.name, vCapFont,
                     new SolidBrush(Color.Black), verticle.point.X - vTextOffsetX, verticle.point.Y - vTextOffsetY);
             }
-            
+
             // EDGE CAPTIONS
             var rnd = new Random(DateTime.UtcNow.Millisecond);
-            foreach (var edge in listOfEdges)
+            foreach (var edge in edges_list)
             {
                 double x1 = edge.A.point.X, y1 = edge.A.point.Y;
                 double x2 = edge.B.point.X, y2 = edge.B.point.Y;
-                double ax = x2-x1, ay = y2-y1;
-                var len = Math.Sqrt(ax*ax + ay*ay);
+                double ax = x2 - x1, ay = y2 - y1;
+                var len = Math.Sqrt(ax * ax + ay * ay);
                 ax /= len;
                 ay /= len;
                 var dst = rnd.NextDouble();
@@ -374,27 +406,24 @@ namespace OstovDemo
                 {
                     dst = rnd.NextDouble();
                 } while (dst < 0.3 || dst > 0.7);
-                var x = x1 + (ax) * dst * len + 0*ax*1.3 * verticleRadius;
-                var y = y1 + (ay) * dst * len + 0*ay*1.3 * verticleRadius;
-                
+
+                var x = x1 + (ax) * dst * len + 0 * ax * 1.3 * verticleRadius;
+                var y = y1 + (ay) * dst * len + 0 * ay * 1.3 * verticleRadius;
 
 
                 e.Graphics.FillEllipse(
                     new SolidBrush(Color.White),
-                    new Rectangle((int)x - edgeCpaDiagonale, (int)y - edgeCpaDiagonale,
-                        edgeCapRadius*2, edgeCapRadius*2));
+                    new Rectangle((int) x - edgeCpaDiagonale, (int) y - edgeCpaDiagonale,
+                        edgeCapRadius * 2, edgeCapRadius * 2));
                 e.Graphics.DrawEllipse(new Pen(Color.Black, 1f),
-                    (int)x - edgeCpaDiagonale, (int)y - edgeCpaDiagonale,
-                    edgeCapRadius*2, edgeCapRadius*2);
+                    (int) x - edgeCpaDiagonale, (int) y - edgeCpaDiagonale,
+                    edgeCapRadius * 2, edgeCapRadius * 2);
 
-                e.Graphics.DrawString(edge.weight > 9 ? edge.weight.ToString() : 
-                        "0" + edge.weight, weightFont, 
+                e.Graphics.DrawString(edge.weight > 9 ? edge.weight.ToString() : "0" + edge.weight, weightFont,
                     new SolidBrush(Color.Black),
-                    (float)(x - eCaprionOffsetX), 
-                    (float)(y - eCaptionOffsetY));
+                    (float) (x - eCaprionOffsetX),
+                    (float) (y - eCaptionOffsetY));
             }
-            
-
         }
 
         private void удалитьToolStripMenuItem_Click(object sender, EventArgs e)
