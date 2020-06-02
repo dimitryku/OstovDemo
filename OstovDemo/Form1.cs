@@ -347,9 +347,8 @@ namespace OstovDemo
             if (MessageBox.Show("Удалить все элементы графа?", "Вы уверены?", MessageBoxButtons.YesNo) ==
                 DialogResult.Yes)
             {
-                
-                listOfEdges = new List<Edge>();
-                listOfVerticles = new List<Verticle>();
+                listOfEdges.Clear();
+                listOfVerticles.Clear();
                 RenewLists();
                 Drawing_panel.Refresh();
 
