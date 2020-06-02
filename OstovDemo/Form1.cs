@@ -29,21 +29,22 @@ namespace OstovDemo
 
         private void методToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (GraphIsConnected())
+            if (GraphIsConnected(true))
             {
                 // TODO Cruskal method
                 var cruscalVertsList = new List<List<Verticle>>();
                 for (var i = 0; i < listOfVerticles.Count(); i++)
                 {
                     var newlist = new List<Verticle>();
-                    newlist.Add(new Verticle(listOfVerticles[i]));
+                    newlist.Add(listOfVerticles[i]);
                     cruscalVertsList.Add(newlist);
                 }
 
                 var cruscalEdgesList = new List<Edge>();
                 cruscalEdgesList.AddRange(listOfEdges);
 
-                // TODO сортировка
+                // TODO сортировка 
+                SortEdgesList(cruscalEdgesList); //Пузырёк, вроде остальные методы явно быстрее только на больших числах
 
                 foreach (var edge in cruscalEdgesList)
                 {
@@ -57,7 +58,7 @@ namespace OstovDemo
                         a = a == true ? true : cruscalVertsList[secondNum].Contains(edge.A);
                         b = b == true ? true : cruscalVertsList[secondNum].Contains(edge.B);
                         if (a != b && firstNum == -1) firstNum = secondNum;
-                        if (a == b == true) break;
+                        if (a == true && b == true) break;
                     }
 
                     if (firstNum == -1) continue;
@@ -66,28 +67,29 @@ namespace OstovDemo
                         cruscalVertsList[firstNum].AddRange(cruscalVertsList[secondNum]);
                         cruscalVertsList[secondNum].Clear();
                         cruscalVertsList.RemoveAt(secondNum);
-                        //TODO подтвердили нахождение подходящего ребра, выполняем вывод на экран.
-                        Console.WriteLine(edge.weight); //test, looks like passed
+
+                        //TODO подтвердили нахождение подходящего ребра, пока выводим результат на консоль.
+
+                        Console.WriteLine(edge.weight + " " + edge.A.name + " " + edge.B.name);
                     }
 
                     if (cruscalVertsList.Count() == 1) break;
                 }
-            }
-            else
-            {
-                // TODO Обработка неполного массива (предложить дополнить или пусть сам)
-                Console.WriteLine("NO WAY!"); // test, passed
+
+                RecalculateDrawingCoordinates();
+                RenewLists();
+                Drawing_panel.Refresh();
             }
         }
 
-        private bool GraphIsConnected()
+        private bool GraphIsConnected(bool askForAccept = false) // по умолчанию граф дополняется автоматически
         {
-            var checkList = new List<List<Verticle>>();
+            var checkVertsList = new List<List<Verticle>>();
             for (var i = 0; i < listOfVerticles.Count(); i++)
             {
                 var newlist = new List<Verticle>();
-                newlist.Add(new Verticle(listOfVerticles[i]));
-                checkList.Add(newlist);
+                newlist.Add(listOfVerticles[i]);
+                checkVertsList.Add(newlist);
             }
 
             foreach (var edge in listOfEdges)
@@ -97,26 +99,79 @@ namespace OstovDemo
                 var firstNum = -1;
                 var secondNum = 0;
 
-                for (secondNum = 0; secondNum < checkList.Count(); secondNum++)
+                for (secondNum = 0; secondNum < checkVertsList.Count(); secondNum++)
                 {
-                    a = a == true ? true : checkList[secondNum].Contains(edge.A);
-                    b = b == true ? true : checkList[secondNum].Contains(edge.B);
+                    a = a == true ? true : checkVertsList[secondNum].Contains(edge.A);
+                    b = b == true ? true : checkVertsList[secondNum].Contains(edge.B);
                     if (a != b && firstNum == -1) firstNum = secondNum;
-                    if (a == b == true) break;
+                    if (a == true && b == true) break;
                 }
 
                 if (firstNum == -1) continue;
                 else
                 {
-                    checkList[firstNum].AddRange(checkList[secondNum]);
-                    checkList[secondNum].Clear();
-                    checkList.RemoveAt(secondNum);
+                    checkVertsList[firstNum].AddRange(checkVertsList[secondNum]);
+                    checkVertsList[secondNum].Clear();
+                    checkVertsList.RemoveAt(secondNum);
                 }
 
-                if (checkList.Count() == 1) return true;
+                if (checkVertsList.Count() == 1) return true;
+            }
+
+            bool acceptAuto = !askForAccept; // если есть идеи как будет лучше, ду ит)
+            if (askForAccept)
+            {
+                if (MessageBox.Show("Вы хотите, чтобы он был дополнен автоматически?", "Граф не является связным", MessageBoxButtons.YesNo) ==
+                    DialogResult.Yes)
+                    acceptAuto = true;
+            }
+
+            if (acceptAuto)
+            {
+                Random rnd = new Random(DateTime.UtcNow.Millisecond);
+                while(checkVertsList.Count() != 1)
+                {
+                    //Console.WriteLine("connecting " + i.ToString());
+                    var iter1 = -1;
+                    var iter2 = -1;
+                    while (iter1 == iter2)
+                    {
+                        iter1 = rnd.Next() % checkVertsList.Count();
+                        iter2 = rnd.Next() % checkVertsList.Count();
+                    }
+                    var a = rnd.Next() % checkVertsList[iter1].Count();
+                    var b = rnd.Next() % checkVertsList[iter2].Count();
+                    listOfEdges.Add(new Edge(checkVertsList[iter1][a], checkVertsList[iter2][b], (rnd.Next() % 49) + 1));
+                    ++checkVertsList[iter1][a].connections;
+                    ++checkVertsList[iter2][b].connections;
+                    checkVertsList[iter1].AddRange(checkVertsList[iter2]);
+                    checkVertsList.RemoveAt(iter2);
+                }
+                RecalculateDrawingCoordinates();
+                RenewLists();
+                return true;
             }
 
             return false;
+        }
+
+        private void SortEdgesList(List<Edge> edges)
+        {
+            var wasChanged = true;
+            while (wasChanged)
+            {
+                wasChanged = false;
+                for(var i = 0; i < edges.Count() - 1; i++)
+                {
+                    if (edges[i].weight > edges[i + 1].weight)
+                    {
+                        Edge temp = new Edge(edges[i]);
+                        edges[i] = new Edge(edges[i + 1]);
+                        edges[i + 1] = new Edge(temp);
+                        wasChanged = true;
+                    }
+                }
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -218,21 +273,23 @@ namespace OstovDemo
                             ++listOfVerticles[j].connections;
                         }
 
-            foreach (var verticle in listOfVerticles)
-            {
-                if (verticle.connections == 0)
-                {
-                    var ptr = -1;
-                    while (ptr == -1 || listOfVerticles[ptr] == verticle)
-                        ptr = rnd.Next() % listOfVerticles.Count();
-                    listOfEdges.Add(new Edge(verticle, listOfVerticles[ptr], (rnd.Next() % 49) + 1));
-                    ++verticle.connections;
-                    ++listOfVerticles[ptr].connections;
-                }
-            }
+            //foreach (var verticle in listOfVerticles) // по сути эта часть получилась не нужна
+            //{
+            //    if (verticle.connections == 0)
+            //    {
+            //        var ptr = -1;
+            //        while (ptr == -1 || listOfVerticles[ptr] == verticle)
+            //            ptr = rnd.Next() % listOfVerticles.Count();
+            //        listOfEdges.Add(new Edge(verticle, listOfVerticles[ptr], (rnd.Next() % 49) + 1));
+            //        ++verticle.connections;
+            //        ++listOfVerticles[ptr].connections;
+            //    }
+            //}
 
             RecalculateDrawingCoordinates();
             RenewLists();
+
+            GraphIsConnected(); // тут генерятся недостающие до полного графа грани. Без подтверждения.
 
         }
 
@@ -296,10 +353,16 @@ namespace OstovDemo
 
         private void очиститьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Удвлить все элементы графа?", "Вы уверены?", MessageBoxButtons.YesNo) ==
+            if (MessageBox.Show("Удалить все элементы графа?", "Вы уверены?", MessageBoxButtons.YesNo) ==
                 DialogResult.Yes)
             {
                 // TODO clear graph
+                listOfEdges = new List<Edge>();
+                listOfVerticles = new List<Verticle>();
+                RenewLists();
+                Drawing_panel.Refresh();
+
+                // TODO добавить надписи на нижний уровень, что ничего нет.
             }
         }
 
