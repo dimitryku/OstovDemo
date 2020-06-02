@@ -38,8 +38,9 @@ namespace OstovDemo
         public List<Edge> Edges;
         private List<List<Verticle>> cruscalVertsList;
         private List<Edge> cruscalEdgesList;
-        private bool timeDivider; //начинать с true
-        int currentEdge = -1;
+        private bool currentEdgeApproved;
+        private int currentEdge = -1;
+
 
         private void CruskalFormcs_Load(object sender, EventArgs e)
         {
@@ -69,7 +70,7 @@ namespace OstovDemo
                 cruscalVertsList.Add(newlist);
             }
             currentEdge = 0;
-            timeDivider = true;
+            numOfApproved = 0;
             drawing_panel.Refresh();
         }
 
@@ -177,15 +178,32 @@ namespace OstovDemo
             if (currentEdge > -1)
             {
                 // TODO выделение текущей грани и проверка
-                timeDivider = !timeDivider;
                 cruscalEdgesList[currentEdge].condition = Condition.Checking;
                 drawing_panel.Refresh();
-                CruscalIterations(cruscalEdgesList[currentEdge]);
+                currentEdgeApproved = CruscalIterations(cruscalEdgesList[currentEdge]);
             }
             else
             {
                 // TODO Результат проверки
-                timeDivider = !timeDivider;
+                if (currentEdgeApproved)
+                {
+                    cruscalEdgesList[currentEdge].condition = Condition.Accept;
+                    drawing_panel.Refresh();
+                    //TODO добавление в списочек справа
+                    if (cruscalVertsList.Count() == 1)
+                    {
+                        timer1.Stop();
+                        MessageBox.Show("Метод завершил свою работу, все вершины присоединены.", "Готово!",
+                        MessageBoxButtons.OK);
+                    }
+                }
+                else
+                {
+                    cruscalEdgesList[currentEdge].condition = Condition.Waiting;
+                    drawing_panel.Refresh();
+                }
+
+                ++currentEdge;
             }
         }
 
