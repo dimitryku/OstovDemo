@@ -35,8 +35,7 @@ namespace OstovDemo
                 var cruscalVertsList = new List<List<Verticle>>();
                 for (var i = 0; i < listOfVerticles.Count(); i++)
                 {
-                    var newlist = new List<Verticle>();
-                    newlist.Add(listOfVerticles[i]);
+                    var newlist = new List<Verticle> {listOfVerticles[i]};
                     cruscalVertsList.Add(newlist);
                 }
 
@@ -55,8 +54,8 @@ namespace OstovDemo
 
                     for (secondNum = 0; secondNum < cruscalVertsList.Count(); secondNum++)
                     {
-                        a = a == true ? true : cruscalVertsList[secondNum].Contains(edge.A);
-                        b = b == true ? true : cruscalVertsList[secondNum].Contains(edge.B);
+                        a = a == true || cruscalVertsList[secondNum].Contains(edge.A);
+                        b = b == true || cruscalVertsList[secondNum].Contains(edge.B);
                         if (a != b && firstNum == -1) firstNum = secondNum;
                         if (a == true && b == true) break;
                     }
@@ -87,8 +86,7 @@ namespace OstovDemo
             var checkVertsList = new List<List<Verticle>>();
             for (var i = 0; i < listOfVerticles.Count(); i++)
             {
-                var newlist = new List<Verticle>();
-                newlist.Add(listOfVerticles[i]);
+                var newlist = new List<Verticle> {listOfVerticles[i]};
                 checkVertsList.Add(newlist);
             }
 
@@ -101,8 +99,8 @@ namespace OstovDemo
 
                 for (secondNum = 0; secondNum < checkVertsList.Count(); secondNum++)
                 {
-                    a = a == true ? true : checkVertsList[secondNum].Contains(edge.A);
-                    b = b == true ? true : checkVertsList[secondNum].Contains(edge.B);
+                    a = a == true || checkVertsList[secondNum].Contains(edge.A);
+                    b = b == true || checkVertsList[secondNum].Contains(edge.B);
                     if (a != b && firstNum == -1) firstNum = secondNum;
                     if (a == true && b == true) break;
                 }
@@ -118,7 +116,7 @@ namespace OstovDemo
                 if (checkVertsList.Count() == 1) return true;
             }
 
-            bool acceptAuto = !askForAccept; // если есть идеи как будет лучше, ду ит)
+            var acceptAuto = !askForAccept; // если есть идеи как будет лучше, ду ит)
             if (askForAccept)
             {
                 if (MessageBox.Show("Вы хотите, чтобы он был дополнен автоматически?", "Граф не является связным", MessageBoxButtons.YesNo) ==
@@ -126,9 +124,9 @@ namespace OstovDemo
                     acceptAuto = true;
             }
 
-            if (acceptAuto)
+            if (!acceptAuto) return false;
             {
-                Random rnd = new Random(DateTime.UtcNow.Millisecond);
+                var rnd = new Random(DateTime.UtcNow.Millisecond);
                 while(checkVertsList.Count() != 1)
                 {
                     //Console.WriteLine("connecting " + i.ToString());
@@ -152,7 +150,6 @@ namespace OstovDemo
                 return true;
             }
 
-            return false;
         }
 
         private void SortEdgesList(List<Edge> edges)
@@ -163,13 +160,11 @@ namespace OstovDemo
                 wasChanged = false;
                 for(var i = 0; i < edges.Count() - 1; i++)
                 {
-                    if (edges[i].weight > edges[i + 1].weight)
-                    {
-                        Edge temp = new Edge(edges[i]);
-                        edges[i] = new Edge(edges[i + 1]);
-                        edges[i + 1] = new Edge(temp);
-                        wasChanged = true;
-                    }
+                    if (edges[i].weight <= edges[i + 1].weight) continue;
+                    var temp = new Edge(edges[i]);
+                    edges[i] = new Edge(edges[i + 1]);
+                    edges[i + 1] = new Edge(temp);
+                    wasChanged = true;
                 }
             }
         }
@@ -239,30 +234,27 @@ namespace OstovDemo
 
         private void bibaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //Сгенерировать граф
-            var GGForm = new GraphGenerateForm();
-            if (GGForm.ShowDialog() == DialogResult.OK)
+            var ggForm = new GraphGenerateForm();
+            if (ggForm.ShowDialog() == DialogResult.OK)
             {
                 ClearGraph();
-                GenerateGraph(GGForm.Count, GGForm.GenerateEdges);
+                GenerateGraph(ggForm.Count, ggForm.GenerateEdges);
             }
             Drawing_panel.Refresh();
-            if (GGForm.Count > 10 && this.WindowState != FormWindowState.Maximized)
+            if (ggForm.Count <= 10 || this.WindowState == FormWindowState.Maximized) return;
+            if (MessageBox.Show("Развернуть окно для лучшего отображения графа?", "Большой граф",
+                    MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                if (MessageBox.Show("Развернуть окно для лучшего отображения графа?", "Большой граф",
-                        MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    this.WindowState = FormWindowState.Maximized;
-                }
+                this.WindowState = FormWindowState.Maximized;
             }
         }
 
         private void GenerateGraph(int count, bool gedges)
         {
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
                 listOfVerticles.Add(new Verticle("V" + ++_maxVertNum));
 
-            Random rnd = new Random(DateTime.UtcNow.Millisecond);
+            var rnd = new Random(DateTime.UtcNow.Millisecond);
             if (gedges)
                 for (var i = 0; i < listOfVerticles.Count() - 1; i++)
                     for (var j = i + 1; j < listOfVerticles.Count(); j++)
@@ -304,7 +296,6 @@ namespace OstovDemo
 
         private void AddVerticle_btn_Click(object sender, EventArgs e)
         {
-            // TODO add verticle
             if(listOfVerticles.Count >= 15)
             {
                 AddVerticle_btn.Enabled = false;
@@ -356,7 +347,7 @@ namespace OstovDemo
             if (MessageBox.Show("Удалить все элементы графа?", "Вы уверены?", MessageBoxButtons.YesNo) ==
                 DialogResult.Yes)
             {
-                // TODO clear graph
+                
                 listOfEdges = new List<Edge>();
                 listOfVerticles = new List<Verticle>();
                 RenewLists();
@@ -368,8 +359,6 @@ namespace OstovDemo
 
         private void Drawing_panel_Paint(object sender, PaintEventArgs e)
         {
-            // TODO draw graph
-
             var weightFont = new Font("Courier new", 8F, System.Drawing.
                 FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             const int verticleRadius = 20;
@@ -412,21 +401,6 @@ namespace OstovDemo
                     verticleRadius*2, verticleRadius*2);
             }
 
-            //e.Graphics.FillEllipse(
-            //    new SolidBrush(Color.White),
-            //    new Rectangle(x1 - verticleRadiusDiagonale, y1 - verticleRadiusDiagonale,
-            //        verticleRadius*2, verticleRadius*2));
-            //e.Graphics.FillEllipse(
-            //    new SolidBrush(Color.White),
-            //    new Rectangle(x2 - verticleRadiusDiagonale, y2 - verticleRadiusDiagonale,
-            //        verticleRadius*2, verticleRadius*2));
-
-            //e.Graphics.DrawEllipse(new Pen(Color.Black, verticleBorderWidth),
-            //    x1 - verticleRadiusDiagonale, y1 - verticleRadiusDiagonale,
-            //    verticleRadius*2, verticleRadius*2);
-            //e.Graphics.DrawEllipse(new Pen(Color.Black, verticleBorderWidth),
-            //    x2 - verticleRadiusDiagonale, y2 - verticleRadiusDiagonale,
-            //    verticleRadius*2, verticleRadius*2);
 
             // VERTICLE CAPTIONS
 
@@ -437,14 +411,6 @@ namespace OstovDemo
                     new SolidBrush(Color.Black), verticle.point.X - vTextOffsetX, verticle.point.Y - vTextOffsetY);
             }
             
-            //int vTextOffsetX = 12 + 5*(name1.Length - 2), vTextOffsetY = 10;
-            //e.Graphics.DrawString(name1, lb_verticle.Font,
-            //    new SolidBrush(Color.Black), x1 - vTextOffsetX, y1 - vTextOffsetY);
-
-            //vTextOffsetX = 12 + 5 * (name2.Length - 2);
-            //e.Graphics.DrawString(name2, lb_verticle.Font,
-            //    new SolidBrush(Color.Black), x2 - vTextOffsetX, y2 - vTextOffsetY);
-
             // EDGE CAPTIONS
             var rnd = new Random(DateTime.UtcNow.Millisecond);
             foreach (var edge in listOfEdges)
@@ -460,8 +426,6 @@ namespace OstovDemo
                 {
                     dst = rnd.NextDouble();
                 } while (dst < 0.3 || dst > 0.7);
-                //var x = x1 + (ax) * (1.3 + dst*3) * verticleRadius;
-                //var y = y1 + (ay) * (1.3 + dst*3) * verticleRadius;
                 var x = x1 + (ax) * dst * len + 0*ax*1.3 * verticleRadius;
                 var y = y1 + (ay) * dst * len + 0*ay*1.3 * verticleRadius;
                 
@@ -481,11 +445,7 @@ namespace OstovDemo
                     (float)(x - eCaprionOffsetX), 
                     (float)(y - eCaptionOffsetY));
             }
-            //int ax = x2-x1, ay = y2-y1;
-            //int dx = -ay/ax*8, dy = 8;
-            //e.Graphics.DrawString("10", btn_add_edge.Font, 
-            //    new SolidBrush(Color.Black),
-            //    (float)(x1 + (x2 - x1)*0.3) - dx, (float)(y1 + (y2 - y1)*0.3 - dy));
+            
 
         }
 
