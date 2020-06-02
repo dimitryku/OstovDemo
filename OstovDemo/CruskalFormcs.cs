@@ -54,12 +54,6 @@ namespace OstovDemo
             SortEdgesList(cruscalEdgesList);
             PrepareForMethod();
 
-            //foreach (var edge in cruscalEdgesList)
-            //{
-            //    bool result = CruscalIterations(edge);
-            //    if (cruscalVertsList.Count() == 1) break;
-            //}
-
         }
 
         private void PrepareForMethod()
@@ -102,8 +96,6 @@ namespace OstovDemo
                 cruscalVertsList[firstNum].AddRange(cruscalVertsList[secondNum]);
                 cruscalVertsList[secondNum].Clear();
                 cruscalVertsList.RemoveAt(secondNum);
-                //TODO подтвердили нахождение подходящего ребра, пока выводим результат на консоль.
-                //Console.WriteLine(edge.weight + " " + edge.A.name + " " + edge.B.name);
                 return true;
             }
         }
@@ -132,7 +124,6 @@ namespace OstovDemo
 
         private void button4_Click(object sender, EventArgs e)
         {
-            // TODO reset //протестировать
             timer1.Stop();
             if (MessageBox.Show("Вы действительно хотите сбросить текущий прогресс?", "Сброс прогресса метода",
                     MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -166,34 +157,27 @@ namespace OstovDemo
         {
             switch (curState)
             {
-                case DemoState.NotStarted:
-                    // TODO start
+                case DemoState.NotStarted: //start
                     PrepareForMethod();
                     next_btn.Enabled = true;
                     curState = DemoState.Going;
                     start_btn.Text = "Пауза";
                     if (curMode != DemoMode.Manual) timer1.Start();
-
-
                     break;
-                case DemoState.Going:
-                    // TODO pause
+
+                case DemoState.Going: //pause
                     timer1.Stop();
                     curState = DemoState.Paused;
                     start_btn.Text = "Продолжить";
-
-
                     break;
-                case DemoState.Paused:
-                    // TODO continue
+
+                case DemoState.Paused: //continue
                     start_btn.Text = "Пауза";
                     curState = DemoState.Going;
                     if (curMode != DemoMode.Manual) timer1.Start();
-
-
                     break;
-                case DemoState.End:
-                    // TODO nothing
+
+                case DemoState.End: //ended already
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -224,25 +208,31 @@ namespace OstovDemo
             else
             {
                 // TODO Результат проверки
+                log_tb.Text += cruscalEdgesList[currentEdge].A.name + " - " + cruscalEdgesList[currentEdge].B.name + Environment.NewLine;
                 if (currentEdgeApproved)
                 {
                     cruscalEdgesList[currentEdge].condition = Condition.Accept;
-                    log_tb.Text += cruscalEdgesList[currentEdge].A.name + " - " + cruscalEdgesList[currentEdge].B.name + Environment.NewLine;
+                    log_tb.Text += "Подходит" + Environment.NewLine + Environment.NewLine;
+                    
                     drawing_panel.Refresh();
                 }
                 else
                 {
+                    log_tb.Text += "Не подходит" + Environment.NewLine + Environment.NewLine;
                     cruscalEdgesList[currentEdge].condition = Condition.Waiting;
                     drawing_panel.Refresh();
                 }
 
-                if (cruscalVertsList.Count() == 1 || currentEdge == cruscalEdgesList.Count())
+                if (cruscalVertsList.Count() == 1)
                 {
                     timer1.Stop();
                     curState = DemoState.End;
                     next_btn.Enabled = false;
                     start_btn.Text = "Начать";
                     start_btn.Enabled = false;
+                    if(currentEdge < Edges.Count() - 1)
+                        log_tb.Text += "Остальные ребра не подходят" + Environment.NewLine;
+
                     MessageBox.Show("Метод завершил свою работу, все вершины присоединены.", "Готово!",
                     MessageBoxButtons.OK);
                 }

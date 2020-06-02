@@ -43,6 +43,7 @@ namespace OstovDemo
 
         private bool GraphIsConnected(bool askForAccept = false) // по умолчанию граф дополняется автоматически
         {
+            if (listOfVerticles.Count() == 0) return false;
             var checkVertsList = new List<List<Verticle>>();
             for (var i = 0; i < listOfVerticles.Count(); i++)
             {
