@@ -57,10 +57,10 @@ namespace OstovDemo
 
                 for (secondNum = 0; secondNum < checkVertsList.Count(); secondNum++)
                 {
-                    a = a == true || checkVertsList[secondNum].Contains(edge.A);
-                    b = b == true || checkVertsList[secondNum].Contains(edge.B);
+                    a = a || checkVertsList[secondNum].Contains(edge.A);
+                    b = b || checkVertsList[secondNum].Contains(edge.B);
                     if (a != b && firstNum == -1) firstNum = secondNum;
-                    if (a == true && b == true) break;
+                    if (a && b) break;
                 }
 
                 if (firstNum == -1) continue;

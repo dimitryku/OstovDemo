@@ -34,43 +34,39 @@ namespace OstovDemo
 
         private DemoState curState = DemoState.NotStarted;
         private DemoMode curMode;
-        public List<List<Verticle>> Verticles;
+        public List<Verticle> Verticles;
         public List<Edge> Edges;
+        private List<List<Verticle>> cruscalVertsList;
+        private List<Edge> cruscalEdgesList;
+        private bool 
 
         private void CruskalFormcs_Load(object sender, EventArgs e)
         {
             // TODO shit
             curMode = DemoMode.Slow;
-
-            var cruscalVertsList = new List<List<Verticle>>();
-            for (var i = 0; i < Verticles.Count(); i++)
-            {
-                //var newlist = new List<Verticle> { ListOfVerticles[i] };
-                cruscalVertsList.Add(newlist);
-            }
-
-            var cruscalEdgesList = new List<Edge>();
-            cruscalEdgesList.AddRange(Edges);
-
-            // TODO сортировка 
-            SortEdgesList(cruscalEdgesList); //Пузырёк, вроде остальные методы явно быстрее только на больших числах
-
+            PrepareForMethod();
 
             foreach (var edge in cruscalEdgesList)
             {
-
-
                 bool result = CruscalIterations(cruscalVertsList, edge);
-
-                //Drawing_panel.Refresh();
                 if (cruscalVertsList.Count() == 1) break;
             }
 
         }
 
-        private void Prepare()
+        private void PrepareForMethod()
         {
+            cruscalVertsList = new List<List<Verticle>>();
+            for (var i = 0; i < Verticles.Count(); i++)
+            {
+                var newlist = new List<Verticle> { Verticles[i] };
+                cruscalVertsList.Add(newlist);
+            }
 
+            cruscalEdgesList = new List<Edge>();
+            cruscalEdgesList.AddRange(Edges);
+
+            SortEdgesList(cruscalEdgesList);
         }
 
         private bool CruscalIterations(List<List<Verticle>> cruscalVertsList, Edge edge) // возвращает false если не подходит, true если подходит
@@ -82,10 +78,10 @@ namespace OstovDemo
 
             for (secondNum = 0; secondNum < cruscalVertsList.Count(); secondNum++)
             {
-                a = a == true || cruscalVertsList[secondNum].Contains(edge.A);
-                b = b == true || cruscalVertsList[secondNum].Contains(edge.B);
+                a = a || cruscalVertsList[secondNum].Contains(edge.A);
+                b = b || cruscalVertsList[secondNum].Contains(edge.B);
                 if (a != b && firstNum == -1) firstNum = secondNum;
-                if (a == true && b == true) break;
+                if (a && b) break;
             }
 
             if (firstNum == -1) return false;
