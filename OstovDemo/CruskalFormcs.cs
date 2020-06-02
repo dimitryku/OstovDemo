@@ -126,8 +126,17 @@ namespace OstovDemo
         {
             // TODO reset //протестировать
             timer1.Stop();
-            PrepareForMethod();
-            drawing_panel.Refresh();
+            if (MessageBox.Show("Вы действительно хотите сбросить текущий прогресс?", "Сброс прогресса метода",
+                    MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                PrepareForMethod();
+                drawing_panel.Refresh();
+            }
+            else
+            {
+                if (curMode != DemoMode.Manual) timer1.Start();
+            }
+            
         }
 
         private void next_btn_Click(object sender, EventArgs e)
@@ -152,16 +161,26 @@ namespace OstovDemo
                     // TODO start
                     PrepareForMethod();
                     curState = DemoState.Going;
+                    start_btn.Text = "Pause";
                     if (curMode != DemoMode.Manual) timer1.Start();
 
 
                     break;
                 case DemoState.Going:
                     // TODO pause
+                    timer1.Stop();
+                    curState = DemoState.Paused;
+                    start_btn.Text = "Continue";
+
 
                     break;
                 case DemoState.Paused:
-                    // TODO start
+                    // TODO continue
+                    start_btn.Text = "Pause";
+                    curState = DemoState.Going;
+                    if (curMode != DemoMode.Manual) timer1.Start();
+
+
                     break;
                 case DemoState.End:
                     // TODO nothing
@@ -192,6 +211,7 @@ namespace OstovDemo
                     if (cruscalVertsList.Count() == 1)
                     {
                         timer1.Stop();
+                        curState = DemoState.End;
                         MessageBox.Show("Метод завершил свою работу, все вершины присоединены.", "Готово!",
                         MessageBoxButtons.OK);
                     }
