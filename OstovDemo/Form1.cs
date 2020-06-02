@@ -135,6 +135,11 @@ namespace OstovDemo
                 var y = _drawingCentreY + radius * Math.Sin(l_deg);
                 listOfVerticles[i].point = new Point((int)x, (int)y);
             }
+            var rnd = new Random(DateTime.UtcNow.Millisecond);
+            foreach (var edge in listOfEdges)
+            {
+                edge.weightPosition = 0.3f + 0.4f * (float)rnd.NextDouble();
+            }
         }
 
         private void RenewLists()
@@ -396,7 +401,6 @@ namespace OstovDemo
             }
 
             // EDGE CAPTIONS
-            var rnd = new Random(DateTime.UtcNow.Millisecond);
             foreach (var edge in edges_list)
             {
                 double x1 = edge.A.point.X, y1 = edge.A.point.Y;
@@ -405,11 +409,7 @@ namespace OstovDemo
                 var len = Math.Sqrt(ax * ax + ay * ay);
                 ax /= len;
                 ay /= len;
-                var dst = rnd.NextDouble();
-                do
-                {
-                    dst = rnd.NextDouble();
-                } while (dst < 0.3 || dst > 0.7);
+                var dst = edge.weightPosition;
 
                 var x = x1 + (ax) * dst * len + 0 * ax * 1.3 * verticleRadius;
                 var y = y1 + (ay) * dst * len + 0 * ay * 1.3 * verticleRadius;

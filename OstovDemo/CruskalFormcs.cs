@@ -53,6 +53,8 @@ namespace OstovDemo
 
             SortEdgesList(cruscalEdgesList);
             PrepareForMethod();
+            RecalculateDrawingCoordinates();
+            drawing_panel.Refresh();
 
         }
 
@@ -78,7 +80,7 @@ namespace OstovDemo
 
         private void RecalculateDrawingCoordinates()
         {
-            if(Verticles == null)
+            if(Verticles == null || cruscalEdgesList ==  null)
                 return;
             var drawingCentreX = drawing_panel.Width / 2;
             var drawingCentreY = drawing_panel.Height / 2;
@@ -90,6 +92,11 @@ namespace OstovDemo
                 var x = drawingCentreX + radius * Math.Cos(l_deg);
                 var y = drawingCentreY + radius * Math.Sin(l_deg);
                 Verticles[i].point = new Point((int)x, (int)y);
+            }
+            var rnd = new Random(DateTime.UtcNow.Millisecond);
+            foreach (var edge in cruscalEdgesList)
+            {
+                edge.weightPosition = 0.3f + 0.4f * (float)rnd.NextDouble();
             }
         }
 
