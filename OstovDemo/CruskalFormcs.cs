@@ -147,6 +147,7 @@ namespace OstovDemo
                     MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 PrepareForMethod();
+                foreach (var edge in cruscalEdgesList) edge.condition = Condition.Waiting;
                 drawing_panel.Refresh();
             }
             else
@@ -194,7 +195,7 @@ namespace OstovDemo
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            // TODO
+            // Проверка
             if (firstPart)
             {
                     cruscalEdgesList[currentEdge].condition = Condition.Checking;
@@ -205,7 +206,7 @@ namespace OstovDemo
             }
             else
             {
-                // TODO Результат проверки
+                // Результат проверки
                 log_tb.Text += cruscalEdgesList[currentEdge].A.name + " - " + cruscalEdgesList[currentEdge].B.name + Environment.NewLine;
                 if (currentEdgeApproved)
                 {
@@ -245,9 +246,9 @@ namespace OstovDemo
             {
                 curMode = DemoMode.Fast;
                 timer1.Interval = 250;
-                start_btn.Enabled = true;
+                if (curState != DemoState.End)
+                    start_btn.Enabled = true;
                 next_btn.Enabled = false;
-                // TODO
             }
         }
 
@@ -257,10 +258,9 @@ namespace OstovDemo
             {
                 curMode = DemoMode.Slow;
                 timer1.Interval = 750;
-                start_btn.Enabled = true;
+                if (curState != DemoState.End)
+                    start_btn.Enabled = true;
                 next_btn.Enabled = false;
-
-                // TODO
             }
         }
 
@@ -270,7 +270,8 @@ namespace OstovDemo
             {
                 timer1.Stop();
                 curMode = DemoMode.Manual;
-                next_btn.Enabled = true;
+                if(curState != DemoState.End)
+                    next_btn.Enabled = true;
                 start_btn.Enabled = false;
             }
         }
