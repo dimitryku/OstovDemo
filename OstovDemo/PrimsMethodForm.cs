@@ -136,6 +136,7 @@ namespace OstovDemo
                     {
                         AvailableEdges.Add(primEdges[i]);
                         primEdges.Remove(primEdges[i]);
+                        --i;
                     }
                 }
                 AvailableEdges.RemoveAt(currentEdge);
