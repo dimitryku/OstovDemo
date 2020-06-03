@@ -44,7 +44,7 @@ namespace OstovDemo
                 cb_selectB.Enabled = false;
 
                 button1.Enabled = true;
-                numericUpDown1.Value = rnd.Next(50);
+                numericUpDown1.Value = 1 + rnd.Next(50);
                 return;
             }
 
@@ -52,7 +52,7 @@ namespace OstovDemo
             {
                 cb_selectA.Items.Add(verticle.name);
             }
-            numericUpDown1.Value = rnd.Next(50);
+            numericUpDown1.Value = 1 + rnd.Next(50);
         }
 
         private void cb_selectB_SelectedIndexChanged(object sender, EventArgs e)

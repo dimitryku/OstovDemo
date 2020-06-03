@@ -199,11 +199,15 @@ namespace OstovDemo
                 {
                     cruscalEdgesList[currentEdge].condition = Condition.Accept;
                     log_tb.Text += "Подходит" + Environment.NewLine + Environment.NewLine;
+                    log_tb.SelectionStart = log_tb.Text.Length;
+                    log_tb.ScrollToCaret();
                 }
                 else
                 {
                     log_tb.Text += "Не подходит" + Environment.NewLine + Environment.NewLine;
                     cruscalEdgesList[currentEdge].condition = Condition.Waiting;
+                    log_tb.SelectionStart = log_tb.Text.Length;
+                    log_tb.ScrollToCaret();
                 }
                 if(curMode != DemoMode.NoAnime)
                     drawing_panel.Invalidate();
@@ -220,6 +224,8 @@ namespace OstovDemo
                     if (currentEdge < Edges.Count() - 1)
                         log_tb.Text += "Остальные ребра не подходят" + Environment.NewLine;
                     else log_tb.Text += "Конец списка рёбер" + Environment.NewLine;
+                    log_tb.SelectionStart = log_tb.Text.Length;
+                    log_tb.ScrollToCaret();
 
                     if (curMode != DemoMode.NoAnime)
                         MessageBox.Show("Метод завершил свою работу, все вершины присоединены.", "Готово!",
