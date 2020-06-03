@@ -184,7 +184,10 @@ namespace OstovDemo
             if (firstPart)
             {
                 cruscalEdgesList[currentEdge].condition = Condition.Checking;
-                drawing_panel.Refresh();
+                log_tb.Text += cruscalEdgesList[currentEdge].A.name + " - " + cruscalEdgesList[currentEdge].B.name +
+                              " (" + cruscalEdgesList[currentEdge].weight.ToString() + ") " + Environment.NewLine;
+                if(curMode != DemoMode.NoAnime)
+                    drawing_panel.Refresh();
                 currentEdgeApproved = CruscalIterations(cruscalEdgesList[currentEdge]);
 
                 firstPart = !firstPart;
@@ -192,20 +195,19 @@ namespace OstovDemo
             else
             {
                 // Результат проверки
-                log_tb.Text += cruscalEdgesList[currentEdge].A.name + " - " + cruscalEdgesList[currentEdge].B.name +
-                              " (" + cruscalEdgesList[currentEdge].weight.ToString() + ") " + Environment.NewLine;
+                
                 if (currentEdgeApproved)
                 {
                     cruscalEdgesList[currentEdge].condition = Condition.Accept;
                     log_tb.Text += "Подходит" + Environment.NewLine + Environment.NewLine;
-                    drawing_panel.Refresh();
                 }
                 else
                 {
                     log_tb.Text += "Не подходит" + Environment.NewLine + Environment.NewLine;
                     cruscalEdgesList[currentEdge].condition = Condition.Waiting;
-                    drawing_panel.Refresh();
                 }
+                if(curMode != DemoMode.NoAnime)
+                    drawing_panel.Invalidate();
 
                 if (cruscalVertsList.Count() == 1)
                 {
@@ -217,8 +219,10 @@ namespace OstovDemo
                     if (currentEdge < Edges.Count() - 1)
                         log_tb.Text += "Остальные ребра не подходят" + Environment.NewLine;
 
-                    MessageBox.Show("Метод завершил свою работу, все вершины присоединены.", "Готово!",
+                    if(curMode != DemoMode.NoAnime)
+                        MessageBox.Show("Метод завершил свою работу, все вершины присоединены.", "Готово!",
                         MessageBoxButtons.OK);
+                    drawing_panel.Invalidate();
                 }
 
                 firstPart = !firstPart;
@@ -286,12 +290,26 @@ namespace OstovDemo
         {
             Fast,
             Slow,
-            Manual
+            Manual,
+            NoAnime
         }
 
         private void CruskalFormcs_FormClosing(object sender, FormClosingEventArgs e)
         {
             timer1.Stop();
+        }
+
+        private void rb_noanime_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rb_noanime.Checked)
+            {
+                curMode = DemoMode.NoAnime;
+                timer1.Interval = 1;
+                // TODO
+                if (curState != DemoState.End)
+                    start_btn.Enabled = true;
+                next_btn.Enabled = false;
+            }
         }
     }
 }

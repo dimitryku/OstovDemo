@@ -43,6 +43,7 @@
             this.drawing_panel = new System.Windows.Forms.Panel();
             this.label_sets = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.rb_noanime = new System.Windows.Forms.RadioButton();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.drawing_panel.SuspendLayout();
@@ -51,6 +52,7 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.rb_noanime);
             this.panel2.Controls.Add(this.button4);
             this.panel2.Controls.Add(this.next_btn);
             this.panel2.Controls.Add(this.start_btn);
@@ -80,7 +82,7 @@
             // 
             // next_btn
             // 
-            this.next_btn.Location = new System.Drawing.Point(11, 213);
+            this.next_btn.Location = new System.Drawing.Point(11, 230);
             this.next_btn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.next_btn.Name = "next_btn";
             this.next_btn.Size = new System.Drawing.Size(117, 57);
@@ -91,7 +93,7 @@
             // 
             // start_btn
             // 
-            this.start_btn.Location = new System.Drawing.Point(11, 153);
+            this.start_btn.Location = new System.Drawing.Point(11, 170);
             this.start_btn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.start_btn.Name = "start_btn";
             this.start_btn.Size = new System.Drawing.Size(117, 54);
@@ -115,7 +117,7 @@
             // rb_manual
             // 
             this.rb_manual.AutoSize = true;
-            this.rb_manual.Location = new System.Drawing.Point(11, 89);
+            this.rb_manual.Location = new System.Drawing.Point(11, 86);
             this.rb_manual.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rb_manual.Name = "rb_manual";
             this.rb_manual.Size = new System.Drawing.Size(86, 21);
@@ -128,7 +130,7 @@
             // 
             this.rb_slow.AutoSize = true;
             this.rb_slow.Checked = true;
-            this.rb_slow.Location = new System.Drawing.Point(11, 62);
+            this.rb_slow.Location = new System.Drawing.Point(11, 60);
             this.rb_slow.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rb_slow.Name = "rb_slow";
             this.rb_slow.Size = new System.Drawing.Size(96, 21);
@@ -211,6 +213,18 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // rb_noanime
+            // 
+            this.rb_noanime.AutoSize = true;
+            this.rb_noanime.Location = new System.Drawing.Point(11, 112);
+            this.rb_noanime.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rb_noanime.Name = "rb_noanime";
+            this.rb_noanime.Size = new System.Drawing.Size(122, 21);
+            this.rb_noanime.TabIndex = 8;
+            this.rb_noanime.Text = "Без анимации";
+            this.rb_noanime.UseVisualStyleBackColor = true;
+            this.rb_noanime.CheckedChanged += new System.EventHandler(this.rb_noanime_CheckedChanged);
+            // 
             // CruskalFormcs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -257,5 +271,6 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button next_btn;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.RadioButton rb_noanime;
     }
 }
