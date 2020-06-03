@@ -109,6 +109,7 @@
             this.rb_noanime.TabIndex = 8;
             this.rb_noanime.Text = "Без анимации";
             this.rb_noanime.UseVisualStyleBackColor = true;
+            this.rb_noanime.CheckedChanged += new System.EventHandler(this.rb_noanime_CheckedChanged);
             // 
             // button4
             // 
@@ -120,6 +121,7 @@
             this.button4.TabIndex = 7;
             this.button4.Text = "Сброс в начало";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // next_btn
             // 
@@ -130,6 +132,7 @@
             this.next_btn.TabIndex = 6;
             this.next_btn.Text = "Далее";
             this.next_btn.UseVisualStyleBackColor = true;
+            this.next_btn.Click += new System.EventHandler(this.next_btn_Click);
             // 
             // start_btn
             // 
@@ -140,6 +143,7 @@
             this.start_btn.TabIndex = 5;
             this.start_btn.Text = "Начать";
             this.start_btn.UseVisualStyleBackColor = true;
+            this.start_btn.Click += new System.EventHandler(this.start_btn_Click);
             // 
             // button1
             // 
@@ -151,6 +155,7 @@
             this.button1.TabIndex = 4;
             this.button1.Text = "Закрыть";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // rb_manual
             // 
@@ -162,6 +167,7 @@
             this.rb_manual.TabIndex = 3;
             this.rb_manual.Text = "Вручную";
             this.rb_manual.UseVisualStyleBackColor = true;
+            this.rb_manual.CheckedChanged += new System.EventHandler(this.rb_manual_CheckedChanged);
             // 
             // rb_slow
             // 
@@ -175,6 +181,7 @@
             this.rb_slow.TabStop = true;
             this.rb_slow.Text = "Медленно";
             this.rb_slow.UseVisualStyleBackColor = true;
+            this.rb_slow.CheckedChanged += new System.EventHandler(this.rb_slow_CheckedChanged);
             // 
             // rb_fast
             // 
@@ -186,6 +193,7 @@
             this.rb_fast.TabIndex = 1;
             this.rb_fast.Text = "Быстро";
             this.rb_fast.UseVisualStyleBackColor = true;
+            this.rb_fast.CheckedChanged += new System.EventHandler(this.rb_fast_CheckedChanged);
             // 
             // label1
             // 
@@ -200,11 +208,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(958, 701);
             this.Controls.Add(this.drawing_panel);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
+            this.MinimizeBox = false;
             this.Name = "PrimsMethodForm";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Text = "PrimsMethodForm";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
