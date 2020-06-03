@@ -254,7 +254,7 @@ namespace OstovDemo
             var aef = new AddEdgeForm {Verticles = listOfVerticles, Edges = listOfEdges};
             if (listOfVerticles.Count < 2)
             {
-                MessageBox.Show("В графе менее 2 вершин, создать ребро нельзя.");
+                MessageBox.Show("В графе менее 2 вершин, создать ребро нельзя.", "Ошибка!");
                 return;
             }
 
