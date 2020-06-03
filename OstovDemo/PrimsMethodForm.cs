@@ -20,7 +20,7 @@ namespace OstovDemo
         private bool firstPart = true;
         private List<Edge> AvailableEdges;
         private HashSet<Edge> UsedEdges;
-        private List<Verticle> UsedVerticles;
+        private HashSet<Verticle> UsedVerticles;
 
         private void PrimsMethodForm_Load(object sender, EventArgs e)
         {
