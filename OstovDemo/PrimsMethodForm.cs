@@ -54,7 +54,8 @@ namespace OstovDemo
             next_btn.Enabled = curMode == DemoMode.Manual;
             start_btn.Enabled = curMode != DemoMode.Manual;
             curState = DemoState.NotStarted;
-            firstPart = true;
+            firstPart = false;
+            currentEdge = 0;
 
             log_tb.Clear();
             start_btn.Text = "Начать";
