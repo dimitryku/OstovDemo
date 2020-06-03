@@ -43,13 +43,17 @@
             this.rb_fast = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.обновитьПоложениеВесовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // drawing_panel
             // 
             this.drawing_panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.drawing_panel.ContextMenuStrip = this.contextMenuStrip1;
             this.drawing_panel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.drawing_panel.Location = new System.Drawing.Point(149, 0);
             this.drawing_panel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -211,6 +215,21 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.обновитьПоложениеВесовToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(276, 56);
+            // 
+            // обновитьПоложениеВесовToolStripMenuItem
+            // 
+            this.обновитьПоложениеВесовToolStripMenuItem.Name = "обновитьПоложениеВесовToolStripMenuItem";
+            this.обновитьПоложениеВесовToolStripMenuItem.Size = new System.Drawing.Size(275, 24);
+            this.обновитьПоложениеВесовToolStripMenuItem.Text = "Обновить положение весов";
+            this.обновитьПоложениеВесовToolStripMenuItem.Click += new System.EventHandler(this.обновитьПоложениеВесовToolStripMenuItem_Click);
+            // 
             // PrimsMethodForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -234,6 +253,7 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -254,5 +274,7 @@
         private System.Windows.Forms.RadioButton rb_fast;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem обновитьПоложениеВесовToolStripMenuItem;
     }
 }
