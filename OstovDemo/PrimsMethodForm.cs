@@ -115,15 +115,9 @@ namespace OstovDemo
                 }
 
                 if (currentEdge != -1)
-                {
                     AvailableEdges[currentEdge].condition = Condition.Checking;
-                    EdgeApproved = (UsedVerticles.Contains(AvailableEdges[currentEdge].A) !=
-                        UsedVerticles.Contains(AvailableEdges[currentEdge].B));
-                }
                 else
-                {
                     TheEnd();
-                }
                 drawing_panel.Refresh();
                 firstPart = !firstPart;
             }
@@ -137,8 +131,8 @@ namespace OstovDemo
                 drawing_panel.Refresh();
                 for(int i = 0; i < primEdges.Count(); i++)
                 {
-                    if(primEdges[i].A == AvailableEdges[currentEdge].A || primEdges[i].A == AvailableEdges[currentEdge].B ||
-                    primEdges[i].B == AvailableEdges[currentEdge].B || primEdges[i].B == AvailableEdges[currentEdge].A)
+                    if(primEdges[i].A.Equals(AvailableEdges[currentEdge].A) || primEdges[i].A.Equals(AvailableEdges[currentEdge].B) ||
+                    primEdges[i].B.Equals(AvailableEdges[currentEdge].B) || primEdges[i].B.Equals(AvailableEdges[currentEdge].A))
                     {
                         AvailableEdges.Add(primEdges[i]);
                         primEdges.Remove(primEdges[i]);
