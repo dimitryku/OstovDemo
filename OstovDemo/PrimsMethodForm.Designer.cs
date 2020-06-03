@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.drawing_panel = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.log_tb = new System.Windows.Forms.TextBox();
@@ -41,6 +42,7 @@
             this.rb_slow = new System.Windows.Forms.RadioButton();
             this.rb_fast = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -241,5 +243,6 @@
         private System.Windows.Forms.RadioButton rb_slow;
         private System.Windows.Forms.RadioButton rb_fast;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
