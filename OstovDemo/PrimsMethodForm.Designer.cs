@@ -51,20 +51,21 @@
             // 
             this.drawing_panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.drawing_panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.drawing_panel.Location = new System.Drawing.Point(112, 0);
-            this.drawing_panel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.drawing_panel.Location = new System.Drawing.Point(149, 0);
+            this.drawing_panel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.drawing_panel.Name = "drawing_panel";
-            this.drawing_panel.Size = new System.Drawing.Size(478, 570);
+            this.drawing_panel.Size = new System.Drawing.Size(637, 702);
             this.drawing_panel.TabIndex = 7;
+            this.drawing_panel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawing_panel_Paint);
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.log_tb);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(590, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Location = new System.Drawing.Point(786, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(128, 570);
+            this.panel1.Size = new System.Drawing.Size(171, 702);
             this.panel1.TabIndex = 6;
             // 
             // log_tb
@@ -74,12 +75,12 @@
             this.log_tb.Dock = System.Windows.Forms.DockStyle.Fill;
             this.log_tb.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.log_tb.Location = new System.Drawing.Point(0, 0);
-            this.log_tb.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.log_tb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.log_tb.Multiline = true;
             this.log_tb.Name = "log_tb";
             this.log_tb.ReadOnly = true;
             this.log_tb.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.log_tb.Size = new System.Drawing.Size(128, 570);
+            this.log_tb.Size = new System.Drawing.Size(171, 702);
             this.log_tb.TabIndex = 0;
             // 
             // panel2
@@ -96,18 +97,18 @@
             this.panel2.Controls.Add(this.label1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(112, 570);
+            this.panel2.Size = new System.Drawing.Size(149, 702);
             this.panel2.TabIndex = 5;
             // 
             // rb_noanime
             // 
             this.rb_noanime.AutoSize = true;
-            this.rb_noanime.Location = new System.Drawing.Point(8, 69);
-            this.rb_noanime.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rb_noanime.Location = new System.Drawing.Point(11, 85);
+            this.rb_noanime.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rb_noanime.Name = "rb_noanime";
-            this.rb_noanime.Size = new System.Drawing.Size(97, 17);
+            this.rb_noanime.Size = new System.Drawing.Size(122, 21);
             this.rb_noanime.TabIndex = 8;
             this.rb_noanime.Text = "Без анимации";
             this.rb_noanime.UseVisualStyleBackColor = true;
@@ -116,10 +117,10 @@
             // button4
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button4.Location = new System.Drawing.Point(8, 494);
-            this.button4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button4.Location = new System.Drawing.Point(11, 609);
+            this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(88, 37);
+            this.button4.Size = new System.Drawing.Size(117, 46);
             this.button4.TabIndex = 7;
             this.button4.Text = "Сброс в начало";
             this.button4.UseVisualStyleBackColor = true;
@@ -127,10 +128,10 @@
             // 
             // next_btn
             // 
-            this.next_btn.Location = new System.Drawing.Point(8, 187);
-            this.next_btn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.next_btn.Location = new System.Drawing.Point(11, 230);
+            this.next_btn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.next_btn.Name = "next_btn";
-            this.next_btn.Size = new System.Drawing.Size(88, 46);
+            this.next_btn.Size = new System.Drawing.Size(117, 57);
             this.next_btn.TabIndex = 6;
             this.next_btn.Text = "Далее";
             this.next_btn.UseVisualStyleBackColor = true;
@@ -138,10 +139,10 @@
             // 
             // start_btn
             // 
-            this.start_btn.Location = new System.Drawing.Point(8, 138);
-            this.start_btn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.start_btn.Location = new System.Drawing.Point(11, 170);
+            this.start_btn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.start_btn.Name = "start_btn";
-            this.start_btn.Size = new System.Drawing.Size(88, 44);
+            this.start_btn.Size = new System.Drawing.Size(117, 54);
             this.start_btn.TabIndex = 5;
             this.start_btn.Text = "Начать";
             this.start_btn.UseVisualStyleBackColor = true;
@@ -150,10 +151,10 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(8, 535);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Location = new System.Drawing.Point(11, 659);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(88, 24);
+            this.button1.Size = new System.Drawing.Size(117, 30);
             this.button1.TabIndex = 4;
             this.button1.Text = "Закрыть";
             this.button1.UseVisualStyleBackColor = true;
@@ -162,10 +163,10 @@
             // rb_manual
             // 
             this.rb_manual.AutoSize = true;
-            this.rb_manual.Location = new System.Drawing.Point(8, 89);
-            this.rb_manual.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rb_manual.Location = new System.Drawing.Point(11, 110);
+            this.rb_manual.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rb_manual.Name = "rb_manual";
-            this.rb_manual.Size = new System.Drawing.Size(67, 17);
+            this.rb_manual.Size = new System.Drawing.Size(86, 21);
             this.rb_manual.TabIndex = 3;
             this.rb_manual.Text = "Вручную";
             this.rb_manual.UseVisualStyleBackColor = true;
@@ -175,10 +176,10 @@
             // 
             this.rb_slow.AutoSize = true;
             this.rb_slow.Checked = true;
-            this.rb_slow.Location = new System.Drawing.Point(8, 49);
-            this.rb_slow.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rb_slow.Location = new System.Drawing.Point(11, 60);
+            this.rb_slow.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rb_slow.Name = "rb_slow";
-            this.rb_slow.Size = new System.Drawing.Size(76, 17);
+            this.rb_slow.Size = new System.Drawing.Size(96, 21);
             this.rb_slow.TabIndex = 2;
             this.rb_slow.TabStop = true;
             this.rb_slow.Text = "Медленно";
@@ -188,10 +189,10 @@
             // rb_fast
             // 
             this.rb_fast.AutoSize = true;
-            this.rb_fast.Location = new System.Drawing.Point(8, 28);
-            this.rb_fast.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rb_fast.Location = new System.Drawing.Point(11, 34);
+            this.rb_fast.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rb_fast.Name = "rb_fast";
-            this.rb_fast.Size = new System.Drawing.Size(63, 17);
+            this.rb_fast.Size = new System.Drawing.Size(78, 21);
             this.rb_fast.TabIndex = 1;
             this.rb_fast.Text = "Быстро";
             this.rb_fast.UseVisualStyleBackColor = true;
@@ -200,10 +201,9 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 7);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(11, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(86, 13);
+            this.label1.Size = new System.Drawing.Size(110, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "Демонстрация:";
             // 
@@ -213,19 +213,20 @@
             // 
             // PrimsMethodForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(718, 570);
+            this.ClientSize = new System.Drawing.Size(957, 702);
             this.Controls.Add(this.drawing_panel);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MinimizeBox = false;
             this.Name = "PrimsMethodForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "PrimsMethodForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Метод Прима";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);

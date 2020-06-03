@@ -305,7 +305,14 @@ namespace OstovDemo
 
         private void методПримаToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO Preem method
+            if (!GraphIsConnected(true)) return;
+            Drawing_panel.Refresh();
+            var pForm = new PrimsMethodForm {Verticles = listOfVerticles, Edges = listOfEdges};
+            pForm.Size = Size;
+            pForm.WindowState = WindowState;
+            pForm.ShowDialog();
+            foreach (var edge in listOfEdges) edge.condition = Condition.Waiting;
+            RecalculateDrawingCoordinates();
         }
 
         private void помощьToolStripMenuItem_Click(object sender, EventArgs e)
