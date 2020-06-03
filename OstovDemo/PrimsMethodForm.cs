@@ -16,18 +16,39 @@ namespace OstovDemo
         public List<Verticle> Verticles;
         private DemoState curState = DemoState.NotStarted;
         private DemoMode curMode;
+
+        private List<Edge> AvailableEdges;
+        private List<Edge> UsedEdges;
+        private List<Verticle> UsedVerticles;
+
         public PrimsMethodForm()
         {
             InitializeComponent();
+        }
+
+        private void PrepareForMethod()
+        {
+            foreach (var ed in Edges) ed.condition = Condition.Waiting;
+            next_btn.Enabled = curMode == DemoMode.Manual;
+            start_btn.Enabled = curMode != DemoMode.Manual;
+            curState = DemoState.NotStarted;
+            log_tb.Clear();
+            start_btn.Text = "Начать";
+            drawing_panel.Refresh();
+        }
+
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+
         }
 
         private void rb_fast_CheckedChanged(object sender, EventArgs e)
         {
             if (rb_fast.Checked)
             {
-                //curMode = DemoMode.Fast;
+                curMode = DemoMode.Fast;
                 timer1.Interval = 250;
-                //if (curState != DemoState.End)
+                if (curState != DemoState.End)
                     start_btn.Enabled = true;
                 next_btn.Enabled = false;
             }
@@ -37,9 +58,9 @@ namespace OstovDemo
         {
             if (rb_slow.Checked)
             {
-                //curMode = DemoMode.Slow;
+                curMode = DemoMode.Slow;
                 timer1.Interval = 750;
-                //if (curState != DemoState.End)
+                if (curState != DemoState.End)
                     start_btn.Enabled = true;
                 next_btn.Enabled = false;
             }
@@ -49,9 +70,9 @@ namespace OstovDemo
         {
             if (rb_noanime.Checked)
             {
-                //curMode = DemoMode.NoAnime;
+                curMode = DemoMode.NoAnime;
                 timer1.Interval = 1;
-                //if (curState != DemoState.End)
+                if (curState != DemoState.End)
                     start_btn.Enabled = true;
                 next_btn.Enabled = false;
             }
@@ -62,8 +83,8 @@ namespace OstovDemo
             if (rb_manual.Checked)
             {
                 timer1.Stop();
-                //curMode = DemoMode.Manual;
-                //if (curState != DemoState.End)
+                curMode = DemoMode.Manual;
+                if (curState != DemoState.End)
                     next_btn.Enabled = true;
                 start_btn.Enabled = false;
             }
@@ -72,19 +93,48 @@ namespace OstovDemo
         private void start_btn_Click(object sender, EventArgs e)
         {
             //TODO start
+            switch (curState)
+            {
+                case DemoState.NotStarted: //start
+                    curState = DemoState.Going;
+                    start_btn.Text = "Пауза";
+                    if (curMode != DemoMode.Manual) timer1.Start();
+                    break;
+
+                case DemoState.Going: //pause
+                    timer1.Stop();
+                    curState = DemoState.Paused;
+                    start_btn.Text = "Продолжить";
+                    break;
+
+                case DemoState.Paused: //continue
+                    start_btn.Text = "Пауза";
+                    curState = DemoState.Going;
+                    if (curMode != DemoMode.Manual) timer1.Start();
+                    break;
+
+                case DemoState.End: //ended already
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private void next_btn_Click(object sender, EventArgs e)
         {
-            //TODO next
+            curState = DemoState.Going;
+            Timer1_Tick(null, null);
         }
 
         private void button4_Click(object sender, EventArgs e) //reset
         {
+            timer1.Stop();
             if (MessageBox.Show("Вы действительно хотите сбросить текущий прогресс?", "Сброс прогресса метода",
                     MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 //TODO reset
+                PrepareForMethod();
+
             }
         }
 
@@ -92,5 +142,6 @@ namespace OstovDemo
         {
             Close();
         }
+
     }
 }
