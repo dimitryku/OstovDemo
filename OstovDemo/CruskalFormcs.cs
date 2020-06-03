@@ -288,5 +288,10 @@ namespace OstovDemo
             Slow,
             Manual
         }
+
+        private void CruskalFormcs_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            timer1.Stop();
+        }
     }
 }
