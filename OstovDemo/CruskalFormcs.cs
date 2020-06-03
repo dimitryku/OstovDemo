@@ -8,18 +8,35 @@ using System.Windows.Forms;
 
 namespace OstovDemo
 {
+    enum DemoState
+    {
+        NotStarted,
+        Going,
+        Paused,
+        End
+    }
+
+
+    enum DemoMode
+    {
+        Fast,
+        Slow,
+        Manual,
+        NoAnime
+    }
+
     public partial class CruskalFormcs : Form
     {
-        private List<Edge> cruscalEdgesList;
-        private List<List<Verticle>> cruscalVertsList;
+        public List<Edge> Edges;
+        public List<Verticle> Verticles;
         private DemoMode curMode;
+        private DemoState curState = DemoState.NotStarted;
         private int currentEdge = -1;
         private bool currentEdgeApproved;
 
-        private DemoState curState = DemoState.NotStarted;
-        public List<Edge> Edges;
+        private List<Edge> cruscalEdgesList;
+        private List<List<Verticle>> cruscalVertsList;
         private bool firstPart = true;
-        public List<Verticle> Verticles;
 
         public CruskalFormcs()
         {
@@ -306,22 +323,7 @@ namespace OstovDemo
             label_sets.Text = s;
         }
 
-        enum DemoState
-        {
-            NotStarted,
-            Going,
-            Paused,
-            End
-        }
-
-
-        enum DemoMode
-        {
-            Fast,
-            Slow,
-            Manual,
-            NoAnime
-        }
+        
 
         private void CruskalFormcs_FormClosing(object sender, FormClosingEventArgs e)
         {
