@@ -51,6 +51,7 @@ namespace OstovDemo
             currentEdge = 0;
 
             log_tb.Clear();
+            log_tb.AppendText("Начало:" + Environment.NewLine + "Ребро " + Edges[currentEdge].ToString() + Environment.NewLine + Environment.NewLine);
             start_btn.Text = "Начать";
             drawing_panel.Refresh();
 
@@ -112,6 +113,9 @@ namespace OstovDemo
                     TheEnd();
                 if (curMode != DemoMode.NoAnime)
                     drawing_panel.Refresh();
+                log_tb.AppendText("Доступное ребро с наименьшим весом:" + Environment.NewLine +
+                    AvailableEdges[currentEdge].ToString() + Environment.NewLine + Environment.NewLine);
+
                 firstPart = !firstPart;
             }
             else
@@ -204,7 +208,6 @@ namespace OstovDemo
 
         private void start_btn_Click(object sender, EventArgs e)
         {
-            //TODO start
             switch (curState)
             {
                 case DemoState.NotStarted: //start

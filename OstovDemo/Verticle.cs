@@ -4,6 +4,7 @@ public class Verticle
 {
     private string _name;
     public int connections;
+    public bool isSelected;
 
     public Verticle(string name)
     {
