@@ -249,13 +249,13 @@ namespace OstovDemo
             if (MessageBox.Show("Вы действительно хотите сбросить текущий прогресс?", "Сброс прогресса метода",
                     MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                //TODO reset
                 PrepareForMethod();
             }
         }
 
         private void button1_Click(object sender, EventArgs e) //close
         {
+            GC.Collect();
             Close();
         }
 
