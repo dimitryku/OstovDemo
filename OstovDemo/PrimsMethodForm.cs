@@ -17,6 +17,7 @@ namespace OstovDemo
         private DemoState curState = DemoState.NotStarted;
         private DemoMode curMode;
         private int numOfMinEdge = 0;
+        private int currentEdge = -1;
         private bool firstPart = true;
         private List<Edge> AvailableEdges;
         private HashSet<Edge> UsedEdges;
@@ -24,9 +25,13 @@ namespace OstovDemo
 
         private void PrimsMethodForm_Load(object sender, EventArgs e)
         {
+            UsedEdges = new HashSet<Edge>();
+            UsedVerticles = new HashSet<Verticle>();
+            AvailableEdges = new List<Edge>();
             curMode = DemoMode.Slow;
             timer1.Interval = 750;
             numOfMinEdge = SearchForMinEdge(Edges);
+            PrepareForMethod();
         }
 
         public PrimsMethodForm()
@@ -37,7 +42,9 @@ namespace OstovDemo
         private void PrepareForMethod()
         {
             firstPart = true;
-            AvailableEdges.Clear();
+            if (AvailableEdges.Count() > 0) AvailableEdges.Clear();
+            if (UsedEdges.Count() > 0)  UsedEdges.Clear();
+            if (UsedVerticles.Count() > 0)  UsedVerticles.Clear();
             AvailableEdges.Add(Edges[numOfMinEdge]);
             foreach (var ed in Edges) ed.condition = Condition.Waiting;
             next_btn.Enabled = curMode == DemoMode.Manual;
@@ -86,10 +93,13 @@ namespace OstovDemo
             if(firstPart)
             {
                 //выделяем и отправляем на проверку
+                currentEdge = SearchForMinEdge(AvailableEdges);
+                AvailableEdges()
             }
             else
             {
                 //перевыделяем и меняем листы
+
             }
         }
 
