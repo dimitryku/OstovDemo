@@ -27,6 +27,7 @@ namespace OstovDemo
             curMode = DemoMode.Slow;
             timer1.Interval = 750;
             numOfMinEdge = SearchForMinEdge(Edges);
+            RecalculateDrawingCoordinates();
         }
 
         public PrimsMethodForm()
@@ -197,6 +198,12 @@ namespace OstovDemo
         private void drawing_panel_Paint(object sender, PaintEventArgs e)
         {
             Form1.DrawGraph(e,Verticles, Edges, false);
+        }
+
+        private void PrimsMethodForm_Resize(object sender, EventArgs e)
+        {
+            RecalculateDrawingCoordinates();
+            drawing_panel.Invalidate();
         }
     }
 }
