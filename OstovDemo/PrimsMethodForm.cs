@@ -16,10 +16,18 @@ namespace OstovDemo
         public List<Verticle> Verticles;
         private DemoState curState = DemoState.NotStarted;
         private DemoMode curMode;
-
+        private int numOfMinEdge = 0;
+        private bool firstPart = true;
         private List<Edge> AvailableEdges;
-        private List<Edge> UsedEdges;
+        private HashSet<Edge> UsedEdges;
         private List<Verticle> UsedVerticles;
+
+        private void PrimsMethodForm_Load(object sender, EventArgs e)
+        {
+            curMode = DemoMode.Slow;
+            timer1.Interval = 750;
+            numOfMinEdge = SearchForMinEdge(Edges);
+        }
 
         public PrimsMethodForm()
         {
@@ -28,6 +36,9 @@ namespace OstovDemo
 
         private void PrepareForMethod()
         {
+            firstPart = true;
+            AvailableEdges.Clear();
+            AvailableEdges.Add(Edges[numOfMinEdge]);
             foreach (var ed in Edges) ed.condition = Condition.Waiting;
             next_btn.Enabled = curMode == DemoMode.Manual;
             start_btn.Enabled = curMode != DemoMode.Manual;
@@ -37,9 +48,32 @@ namespace OstovDemo
             drawing_panel.Refresh();
         }
 
+        private static int SearchForMinEdge(List<Edge> edges)
+        {
+            if (edges.Count() < 1) return -1;
+            var num = 0;
+            int minweight = edges[0].weight;
+            for(var i = 0; i < edges.Count(); i++)
+            {
+                if(edges[i].weight < minweight)
+                {
+                    minweight = edges[i].weight;
+                    num = i;
+                }
+            }
+            return num;
+        }
+
         private void Timer1_Tick(object sender, EventArgs e)
         {
-
+            if(firstPart)
+            {
+                //выделяем и отправляем на проверку
+            }
+            else
+            {
+                //перевыделяем и меняем листы
+            }
         }
 
         private void rb_fast_CheckedChanged(object sender, EventArgs e)
@@ -134,7 +168,6 @@ namespace OstovDemo
             {
                 //TODO reset
                 PrepareForMethod();
-
             }
         }
 
