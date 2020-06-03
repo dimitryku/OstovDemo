@@ -20,6 +20,17 @@ namespace OstovDemo
         public List<Edge> listOfEdges = new List<Edge>();
         public List<Verticle> listOfVerticles = new List<Verticle>();
 
+        // needed for context menu
+        private enum WhereWasClick
+        {
+            DrawingPanel,
+            VertsList,
+            EdgesList, 
+            No
+        }
+
+        private WhereWasClick wwClick = WhereWasClick.No;
+
         public Form1()
         {
             InitializeComponent();
@@ -103,6 +114,7 @@ namespace OstovDemo
                 }
 
                 RecalculateDrawingCoordinates();
+                RandomizeWeightsPositions(listOfEdges);
                 RenewLists();
                 return true;
             }
@@ -128,8 +140,12 @@ namespace OstovDemo
                 listOfVerticles[i].point = new Point((int) x, (int) y);
             }
 
+        }
+
+        public static void RandomizeWeightsPositions(IList<Edge> edges)
+        {
             var rnd = new Random(DateTime.UtcNow.Millisecond);
-            foreach (var edge in listOfEdges) edge.weightPosition = 0.3f + 0.4f * (float) rnd.NextDouble();
+            foreach (var edge in edges) edge.weightPosition = 0.3f + 0.4f * (float) rnd.NextDouble();
         }
 
         private void RenewLists()
@@ -140,6 +156,8 @@ namespace OstovDemo
             lb_edges.Items.Clear();
             foreach (var j in ver) lb_verticle.Items.Add(j);
             foreach (var j in edh) lb_edges.Items.Add(j);
+            label_noverticles.Visible = listOfVerticles.Count == 0;
+            label_noedges.Visible = listOfEdges.Count == 0;
         }
 
         private void lb_verticle_Leave(object sender, EventArgs e)
@@ -151,8 +169,29 @@ namespace OstovDemo
 
         private void VerticleContextMenu_Opening(object sender, CancelEventArgs e)
         {
-            if (_selectedVerticle == null)
-                e.Cancel = true;
+            switch (wwClick)
+            {
+                case WhereWasClick.DrawingPanel:
+                    исправитьНаложениеВесовToolStripMenuItem.Visible = true;
+                    удалитьToolStripMenuItem.Visible = _selectedVerticle != null;
+                    break;
+                case WhereWasClick.VertsList:
+                    исправитьНаложениеВесовToolStripMenuItem.Visible = false;
+                    удалитьToolStripMenuItem.Visible = _selectedVerticle != null;
+                    if (_selectedVerticle == null)
+                        e.Cancel = true;
+                    break;
+                case WhereWasClick.EdgesList:
+                    e.Cancel = true;
+                    break;
+                case WhereWasClick.No:
+                    e.Cancel = true;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            wwClick = WhereWasClick.No;
         }
 
         private void Form1_Click(object sender, EventArgs e)
@@ -215,6 +254,7 @@ namespace OstovDemo
             //}
 
             RecalculateDrawingCoordinates();
+            RandomizeWeightsPositions(listOfEdges);
             RenewLists();
 
             GraphIsConnected(); // тут генерятся недостающие до полного графа грани. Без подтверждения.
@@ -239,6 +279,7 @@ namespace OstovDemo
             var newvwrt = new Verticle("V" + ++_maxVertNum);
             listOfVerticles.Add(newvwrt);
             RecalculateDrawingCoordinates();
+            RandomizeWeightsPositions(listOfEdges);
             RenewLists();
             Drawing_panel.Refresh();
         }
@@ -257,8 +298,8 @@ namespace OstovDemo
             listOfEdges.Add(aef.Return);
             listOfVerticles.Find(x => x.Equals(aef.Return.A)).connections++;
             listOfVerticles.Find(x => x.Equals(aef.Return.B)).connections++;
-            RecalculateDrawingCoordinates();
             RenewLists();
+            RandomizeWeightsPositions(listOfEdges);
             Drawing_panel.Refresh();
         }
 
@@ -436,7 +477,11 @@ namespace OstovDemo
                 lb_verticle.SetSelected(lb_verticle.SelectedIndex, false);
             if (lb_edges.SelectedIndex != -1)
                 lb_edges.SetSelected(lb_edges.SelectedIndex, false);
-            if (e.Button != MouseButtons.Left) return;
+            if (e.Button != MouseButtons.Left)
+            {
+                wwClick = WhereWasClick.DrawingPanel;
+                return;
+            }
             Verticle select = null;
             foreach (var verticle in listOfVerticles)
             {
@@ -474,7 +519,7 @@ namespace OstovDemo
                 listOfEdges.Add(aef.Return);
                 listOfVerticles.Find(x => x.Equals(aef.Return.A)).connections++;
                 listOfVerticles.Find(x => x.Equals(aef.Return.B)).connections++;
-                RecalculateDrawingCoordinates();
+                RandomizeWeightsPositions(listOfEdges);
                 RenewLists();
                 Drawing_panel.Refresh();
                 _selectedVerticle = null;
@@ -483,6 +528,44 @@ namespace OstovDemo
 
         private void Drawing_panel_MouseClick(object sender, MouseEventArgs e)
         {
+        }
+
+        private void lb_verticle_MouseDown(object sender, MouseEventArgs e)
+        {
+            wwClick = WhereWasClick.VertsList;
+        }
+
+        private void lb_edges_MouseDown(object sender, MouseEventArgs e)
+        {
+            wwClick = WhereWasClick.EdgesList;
+        }
+
+        private void EdgeContextMenu_Opening(object sender, CancelEventArgs e)
+        {
+            if (lb_edges.SelectedIndex != -1) return;
+            e.Cancel = true;
+
+        }
+
+        private void удалитьToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Удaлить ребро?", "Вы уверены?",
+                    MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            var del = listOfEdges[lb_edges.SelectedIndex];
+            listOfEdges.Remove(del);
+            del.A.connections--;
+            del.B.connections--;
+
+            _selectedVerticle = null;
+            RenewLists();
+            RecalculateDrawingCoordinates();
+            Drawing_panel.Refresh();
+        }
+
+        private void исправитьНаложениеВесовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RandomizeWeightsPositions(listOfEdges);
+            Drawing_panel.Refresh();
         }
 
         private void Form1_Resize(object sender, EventArgs e)
