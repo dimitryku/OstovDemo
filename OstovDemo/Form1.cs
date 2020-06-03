@@ -456,7 +456,8 @@ namespace OstovDemo
                 listOfEdges.Remove(del);
             }
 
-            _selectedVerticle = null;
+            _selectedVerticle.isSelected = false;
+            _selectedVerticle = null;/////////////////////
             RenewLists();
             RecalculateDrawingCoordinates();
             Drawing_panel.Refresh();
@@ -465,7 +466,8 @@ namespace OstovDemo
         private void lb_verticle_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lb_verticle.SelectedIndex == -1) return;
-            _selectedVerticle = listOfVerticles[lb_verticle.SelectedIndex];
+            _selectedVerticle = listOfVerticles[lb_verticle.SelectedIndex];//////////////////////////
+            _selectedVerticle.isSelected = true;
         }
 
         private void Drawing_panel_MouseDown(object sender, MouseEventArgs e)
@@ -493,6 +495,8 @@ namespace OstovDemo
             if (_selectedVerticle == null)
             {
                 _selectedVerticle = select;
+                if(_selectedVerticle != null)
+                    _selectedVerticle.isSelected = true;
             }
             else
             {
@@ -510,6 +514,8 @@ namespace OstovDemo
                 aef.ShowDialog();
                 if (aef.DialogResult != DialogResult.OK)
                 {
+                    if(_selectedVerticle != null)
+                        _selectedVerticle.isSelected = false;
                     _selectedVerticle = null;
                     return;
                 }
@@ -519,6 +525,8 @@ namespace OstovDemo
                 listOfVerticles.Find(x => x.Equals(aef.Return.B)).connections++;
                 RandomizeWeightsPositions(listOfEdges);
                 RenewLists();
+                if(_selectedVerticle != null)
+                    _selectedVerticle.isSelected = false;
                 Drawing_panel.Refresh();
                 _selectedVerticle = null;
             }
@@ -553,7 +561,9 @@ namespace OstovDemo
             del.A.connections--;
             del.B.connections--;
 
-            _selectedVerticle = null;
+            if(_selectedVerticle != null)
+                _selectedVerticle.isSelected = false;
+            _selectedVerticle = null;///////////////////////////
             RenewLists();
             RecalculateDrawingCoordinates();
             Drawing_panel.Refresh();
