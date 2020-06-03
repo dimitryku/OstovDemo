@@ -38,6 +38,7 @@ namespace OstovDemo
             SortEdgesList(cruscalEdgesList);
             PrepareForMethod();
             RecalculateDrawingCoordinates();
+            Form1.RandomizeWeightsPositions(cruscalEdgesList);
             drawing_panel.Refresh();
         }
 
@@ -78,8 +79,8 @@ namespace OstovDemo
                 Verticles[i].point = new Point((int) x, (int) y);
             }
 
-            var rnd = new Random(DateTime.UtcNow.Millisecond);
-            foreach (var edge in cruscalEdgesList) edge.weightPosition = 0.3f + 0.4f * (float) rnd.NextDouble();
+            //var rnd = new Random(DateTime.UtcNow.Millisecond);
+            //foreach (var edge in cruscalEdgesList) edge.weightPosition = 0.3f + 0.4f * (float) rnd.NextDouble();
         }
 
         private bool CruscalIterations(Edge edge) // возвращает false если не подходит, true если подходит

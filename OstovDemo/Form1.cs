@@ -128,8 +128,12 @@ namespace OstovDemo
                 listOfVerticles[i].point = new Point((int) x, (int) y);
             }
 
+        }
+
+        public static void RandomizeWeightsPositions(IList<Edge> edges)
+        {
             var rnd = new Random(DateTime.UtcNow.Millisecond);
-            foreach (var edge in listOfEdges) edge.weightPosition = 0.3f + 0.4f * (float) rnd.NextDouble();
+            foreach (var edge in edges) edge.weightPosition = 0.3f + 0.4f * (float) rnd.NextDouble();
         }
 
         private void RenewLists()
@@ -215,6 +219,7 @@ namespace OstovDemo
             //}
 
             RecalculateDrawingCoordinates();
+            RandomizeWeightsPositions(listOfEdges);
             RenewLists();
 
             GraphIsConnected(); // тут генерятся недостающие до полного графа грани. Без подтверждения.
@@ -239,6 +244,7 @@ namespace OstovDemo
             var newvwrt = new Verticle("V" + ++_maxVertNum);
             listOfVerticles.Add(newvwrt);
             RecalculateDrawingCoordinates();
+            RandomizeWeightsPositions(listOfEdges);
             RenewLists();
             Drawing_panel.Refresh();
         }
@@ -258,6 +264,7 @@ namespace OstovDemo
             listOfVerticles.Find(x => x.Equals(aef.Return.A)).connections++;
             listOfVerticles.Find(x => x.Equals(aef.Return.B)).connections++;
             RecalculateDrawingCoordinates();
+            RandomizeWeightsPositions(listOfEdges);
             RenewLists();
             Drawing_panel.Refresh();
         }

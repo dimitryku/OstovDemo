@@ -180,6 +180,7 @@
             this.log_tb.Multiline = true;
             this.log_tb.Name = "log_tb";
             this.log_tb.ReadOnly = true;
+            this.log_tb.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.log_tb.Size = new System.Drawing.Size(171, 654);
             this.log_tb.TabIndex = 0;
             // 
@@ -204,7 +205,7 @@
             this.label_sets.Size = new System.Drawing.Size(625, 40);
             this.label_sets.TabIndex = 0;
             this.label_sets.Text = "наборы вершин";
-            this.label_sets.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label_sets.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // timer1
             // 
