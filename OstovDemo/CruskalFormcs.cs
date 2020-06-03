@@ -58,7 +58,7 @@ namespace OstovDemo
             log_tb.Clear();
             firstPart = true;
             start_btn.Text = "Начать";
-
+            RefreshSets();
             drawing_panel.Refresh();
         }
 
@@ -209,6 +209,8 @@ namespace OstovDemo
                 if(curMode != DemoMode.NoAnime)
                     drawing_panel.Invalidate();
 
+                RefreshSets();
+
                 if (cruscalVertsList.Count() == 1)
                 {
                     timer1.Stop();
@@ -275,6 +277,27 @@ namespace OstovDemo
         {
             RecalculateDrawingCoordinates();
             drawing_panel.Refresh();
+        }
+
+        private void RefreshSets()
+        {
+            var s = "";
+            foreach (var lst in cruscalVertsList)
+            {
+                s += "{";
+
+                foreach (var verticle in lst)
+                {
+                    s += verticle.name;
+                    if (!Equals(verticle, lst.Last()))
+                        s += ", ";
+                }
+
+                s += "}";
+                if (!Equals(lst, cruscalVertsList.Last()))
+                    s += ", ";
+            }
+            label_sets.Text = s;
         }
 
         enum DemoState

@@ -117,7 +117,7 @@
             // rb_manual
             // 
             this.rb_manual.AutoSize = true;
-            this.rb_manual.Location = new System.Drawing.Point(11, 86);
+            this.rb_manual.Location = new System.Drawing.Point(11, 110);
             this.rb_manual.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rb_manual.Name = "rb_manual";
             this.rb_manual.Size = new System.Drawing.Size(86, 21);
@@ -216,7 +216,7 @@
             // rb_noanime
             // 
             this.rb_noanime.AutoSize = true;
-            this.rb_noanime.Location = new System.Drawing.Point(11, 112);
+            this.rb_noanime.Location = new System.Drawing.Point(11, 85);
             this.rb_noanime.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rb_noanime.Name = "rb_noanime";
             this.rb_noanime.Size = new System.Drawing.Size(122, 21);
