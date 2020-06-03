@@ -218,8 +218,9 @@ namespace OstovDemo
                     start_btn.Enabled = false;
                     if (currentEdge < Edges.Count() - 1)
                         log_tb.Text += "Остальные ребра не подходят" + Environment.NewLine;
+                    else log_tb.Text += "Конец списка рёбер" + Environment.NewLine;
 
-                    if(curMode != DemoMode.NoAnime)
+                    if (curMode != DemoMode.NoAnime)
                         MessageBox.Show("Метод завершил свою работу, все вершины присоединены.", "Готово!",
                         MessageBoxButtons.OK);
                     drawing_panel.Invalidate();
