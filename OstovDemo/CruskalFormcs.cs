@@ -60,7 +60,7 @@ namespace OstovDemo
 
         private void PrepareForMethod()
         {
-            foreach (var ed in Edges) ed.condition = Condition.Waiting;
+            foreach (var ed in cruscalEdgesList) ed.condition = Condition.Waiting;
             cruscalVertsList = new List<List<Verticle>>();
             for (var i = 0; i < Verticles.Count(); i++)
             {
@@ -151,8 +151,6 @@ namespace OstovDemo
                     MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 PrepareForMethod();
-                foreach (var edge in cruscalEdgesList) edge.condition = Condition.Waiting;
-                drawing_panel.Refresh();
             }
             else
             {
