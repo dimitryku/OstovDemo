@@ -222,6 +222,7 @@
             this.Controls.Add(this.panel2);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(950, 700);
             this.Name = "PrimsMethodForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
