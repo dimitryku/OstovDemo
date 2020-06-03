@@ -21,13 +21,11 @@ namespace OstovDemo
         private bool EdgeApproved = false;
         private bool firstPart = true;
         private List<Edge> AvailableEdges;
-        //private HashSet<Edge> UsedEdges;
         private HashSet<Verticle> UsedVerticles;
         private List<Edge> primEdges;
 
         private void PrimsMethodForm_Load(object sender, EventArgs e)
         {
-            //UsedEdges = new HashSet<Edge>();
             UsedVerticles = new HashSet<Verticle>();
             AvailableEdges = new List<Edge>();
             curMode = DemoMode.Slow;
@@ -45,7 +43,6 @@ namespace OstovDemo
         private void PrepareForMethod()
         {
             if (AvailableEdges.Count() > 0) AvailableEdges.Clear();
-            //if (UsedEdges.Count() > 0)  UsedEdges.Clear();
             if (UsedVerticles.Count() > 0)  UsedVerticles.Clear();
             AvailableEdges.Add(Edges[numOfMinEdge]);
             UsedVerticles.Add(Edges[numOfMinEdge].A);
@@ -126,7 +123,6 @@ namespace OstovDemo
             {
                 //перевыделяем грань и меняем листы, проверяем
                 AvailableEdges[currentEdge].condition = Condition.Accept;
-                //UsedEdges.Add(AvailableEdges[currentEdge]);
                 UsedVerticles.Add(AvailableEdges[currentEdge].A);
                 UsedVerticles.Add(AvailableEdges[currentEdge].B);
                 if(curMode != DemoMode.NoAnime)
@@ -157,6 +153,7 @@ namespace OstovDemo
                 MessageBox.Show("Метод завершил свою работу, все вершины присоединены.", "Готово!",
                 MessageBoxButtons.OK);
             drawing_panel.Invalidate();
+            curState = DemoState.End;
             next_btn.Enabled = false;
             start_btn.Enabled = false;
         }
