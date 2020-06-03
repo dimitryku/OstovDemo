@@ -94,7 +94,7 @@ namespace OstovDemo
             {
                 //выделяем и отправляем на проверку
                 currentEdge = SearchForMinEdge(AvailableEdges);
-                AvailableEdges()
+                //AvailableEdges()
             }
             else
             {
