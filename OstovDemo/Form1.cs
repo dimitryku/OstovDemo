@@ -29,7 +29,9 @@ namespace OstovDemo
 
         private void методToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            _selectedVerticle = null;
             if (!GraphIsConnected(true)) return;
+            foreach (var ve in listOfVerticles) ve.isSelected = false;
             Drawing_panel.Refresh();
             var cmForm = new CruskalFormcs {Verticles = listOfVerticles, Edges = listOfEdges};
             cmForm.Size = Size;
@@ -199,6 +201,9 @@ namespace OstovDemo
 
         private void bibaToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            _selectedVerticle = null;
+            foreach (var ve in listOfVerticles) ve.isSelected = false;
+            Drawing_panel.Invalidate();
             var ggForm = new GraphGenerateForm();
             if (ggForm.ShowDialog() == DialogResult.OK)
             {
@@ -262,6 +267,9 @@ namespace OstovDemo
 
         private void btn_add_edge_Click(object sender, EventArgs e)
         {
+            _selectedVerticle = null;
+            foreach (var ve in listOfVerticles) ve.isSelected = false;
+            Drawing_panel.Invalidate();
             var aef = new AddEdgeForm {Verticles = listOfVerticles, Edges = listOfEdges};
             if (listOfVerticles.Count < 2)
             {
@@ -281,7 +289,10 @@ namespace OstovDemo
 
         private void методПримаToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            _selectedVerticle = null;
             if (!GraphIsConnected(true)) return;
+            foreach (var ve in listOfVerticles) ve.isSelected = false;
+            Drawing_panel.Invalidate();
             Drawing_panel.Refresh();
             var pForm = new PrimsMethodForm {Verticles = listOfVerticles, Edges = listOfEdges};
             pForm.Size = Size;
@@ -293,6 +304,9 @@ namespace OstovDemo
 
         private void помощьToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            _selectedVerticle = null;
+            foreach (var ve in listOfVerticles) ve.isSelected = false;
+            Drawing_panel.Invalidate();
             // TODO help window
             var hForm = new HelpForm();
             hForm.Show();
@@ -300,6 +314,10 @@ namespace OstovDemo
 
         private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            _selectedVerticle = null;
+            foreach (var ve in listOfVerticles) ve.isSelected = false;
+            Drawing_panel.Invalidate();
+            //TODO about window
             var abForm = new AboutForm();
             abForm.Show();
         }
@@ -385,9 +403,11 @@ namespace OstovDemo
                     new Rectangle(verticle.point.X - verticleRadiusDiagonale,
                         verticle.point.Y - verticleRadiusDiagonale,
                         verticleRadius * 2, verticleRadius * 2));
-                e.Graphics.DrawEllipse(new Pen(Color.Black, verticleBorderWidth),
-                    verticle.point.X - verticleRadiusDiagonale, verticle.point.Y - verticleRadiusDiagonale,
-                    verticleRadius * 2, verticleRadius * 2);
+                e.Graphics.DrawEllipse(new Pen(
+                        (!verticle.isSelected ? Color.Black : Color.Red),
+                        verticleBorderWidth),
+                       verticle.point.X - verticleRadiusDiagonale, verticle.point.Y - verticleRadiusDiagonale,
+                       verticleRadius * 2, verticleRadius * 2);
             }
 
 
@@ -452,9 +472,12 @@ namespace OstovDemo
 
         private void lb_verticle_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if(_selectedVerticle != null)
+                _selectedVerticle.isSelected = false;
             if (lb_verticle.SelectedIndex == -1) return;
             _selectedVerticle = listOfVerticles[lb_verticle.SelectedIndex];//////////////////////////
             _selectedVerticle.isSelected = true;
+            Drawing_panel.Invalidate();
         }
 
         private void Drawing_panel_MouseDown(object sender, MouseEventArgs e)
@@ -478,12 +501,23 @@ namespace OstovDemo
                 break;
             }
 
-            if (Equals(_selectedVerticle, select) || select == null) return;
+            if (Equals(_selectedVerticle, select) || select == null)
+            {
+                if(_selectedVerticle != null)
+                {
+                    _selectedVerticle.isSelected = false;
+                    _selectedVerticle = null;
+                    Drawing_panel.Invalidate();
+                }
+                return;
+            }
             if (_selectedVerticle == null)
             {
                 _selectedVerticle = select;
                 if(_selectedVerticle != null)
                     _selectedVerticle.isSelected = true;
+                Drawing_panel.Invalidate();
+                
             }
             else
             {
@@ -503,7 +537,9 @@ namespace OstovDemo
                 {
                     if(_selectedVerticle != null)
                         _selectedVerticle.isSelected = false;
+                    _selectedVerticle.isSelected = false;
                     _selectedVerticle = null;
+                    Drawing_panel.Invalidate();
                     return;
                 }
 
