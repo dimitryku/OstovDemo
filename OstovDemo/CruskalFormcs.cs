@@ -93,12 +93,9 @@ namespace OstovDemo
                 var y = drawingCentreY + radius * Math.Sin(l_deg);
                 Verticles[i].point = new Point((int) x, (int) y);
             }
-
-            //var rnd = new Random(DateTime.UtcNow.Millisecond);
-            //foreach (var edge in cruscalEdgesList) edge.weightPosition = 0.3f + 0.4f * (float) rnd.NextDouble();
         }
 
-        private bool CruscalIterations(Edge edge) // возвращает false если не подходит, true если подходит
+        private bool CruscalIterations(Edge edge)
         {
             var a = false;
             var b = false;
@@ -208,7 +205,6 @@ namespace OstovDemo
             else
             {
                 // Результат проверки
-
                 if (currentEdgeApproved)
                 {
                     cruscalEdgesList[currentEdge].condition = Condition.Accept;
@@ -334,7 +330,6 @@ namespace OstovDemo
             {
                 curMode = DemoMode.NoAnime;
                 timer1.Interval = 1;
-                // TODO
                 if (curState != DemoState.End)
                     start_btn.Enabled = true;
                 next_btn.Enabled = false;
