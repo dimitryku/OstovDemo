@@ -340,5 +340,11 @@ namespace OstovDemo
                 next_btn.Enabled = false;
             }
         }
+
+        private void обновитьПоложениеВесовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form1.RandomizeWeightsPositions(cruscalEdgesList);
+            drawing_panel.Invalidate();
+        }
     }
 }
