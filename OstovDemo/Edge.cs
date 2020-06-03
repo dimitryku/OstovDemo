@@ -62,5 +62,10 @@ namespace OstovDemo
             foreach (Char c in this.B.name) { code += ((int)c * i); i += 1; }
             return code;
         }
+
+        public override string ToString()
+        {
+            return this.A.name + " - " + this.B.name + " (" + this.weight.ToString() + ") ";
+        }
     }
 }

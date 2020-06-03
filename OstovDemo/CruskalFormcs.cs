@@ -184,8 +184,7 @@ namespace OstovDemo
             if (firstPart)
             {
                 cruscalEdgesList[currentEdge].condition = Condition.Checking;
-                log_tb.Text += cruscalEdgesList[currentEdge].A.name + " - " + cruscalEdgesList[currentEdge].B.name +
-                              " (" + cruscalEdgesList[currentEdge].weight.ToString() + ") " + Environment.NewLine;
+                log_tb.Text += cruscalEdgesList[currentEdge].ToString() + Environment.NewLine;
                 if(curMode != DemoMode.NoAnime)
                     drawing_panel.Refresh();
                 currentEdgeApproved = CruscalIterations(cruscalEdgesList[currentEdge]);
