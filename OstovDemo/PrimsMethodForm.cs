@@ -118,7 +118,8 @@ namespace OstovDemo
                     AvailableEdges[currentEdge].condition = Condition.Checking;
                 else
                     TheEnd();
-                drawing_panel.Refresh();
+                if(curMode != DemoMode.NoAnime)
+                    drawing_panel.Refresh();
                 firstPart = !firstPart;
             }
             else
@@ -128,7 +129,8 @@ namespace OstovDemo
                 //UsedEdges.Add(AvailableEdges[currentEdge]);
                 UsedVerticles.Add(AvailableEdges[currentEdge].A);
                 UsedVerticles.Add(AvailableEdges[currentEdge].B);
-                drawing_panel.Refresh();
+                if(curMode != DemoMode.NoAnime)
+                    drawing_panel.Refresh();
                 for(int i = 0; i < primEdges.Count; i++)
                 {
                     if(primEdges[i].A.Equals(AvailableEdges[currentEdge].A) || primEdges[i].A.Equals(AvailableEdges[currentEdge].B) ||
