@@ -129,7 +129,7 @@ namespace OstovDemo
                 UsedVerticles.Add(AvailableEdges[currentEdge].A);
                 UsedVerticles.Add(AvailableEdges[currentEdge].B);
                 drawing_panel.Refresh();
-                for(int i = 0; i < primEdges.Count(); i++)
+                for(int i = 0; i < primEdges.Count; i++)
                 {
                     if(primEdges[i].A.Equals(AvailableEdges[currentEdge].A) || primEdges[i].A.Equals(AvailableEdges[currentEdge].B) ||
                     primEdges[i].B.Equals(AvailableEdges[currentEdge].B) || primEdges[i].B.Equals(AvailableEdges[currentEdge].A))
