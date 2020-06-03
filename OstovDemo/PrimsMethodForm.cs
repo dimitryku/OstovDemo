@@ -18,6 +18,7 @@ namespace OstovDemo
         private DemoMode curMode;
         private int numOfMinEdge = 0;
         private int currentEdge = -1;
+        private bool EdgeApproved = false;
         private bool firstPart = true;
         private List<Edge> AvailableEdges;
         private HashSet<Edge> UsedEdges;
@@ -46,6 +47,7 @@ namespace OstovDemo
             if (UsedEdges.Count() > 0)  UsedEdges.Clear();
             if (UsedVerticles.Count() > 0)  UsedVerticles.Clear();
             AvailableEdges.Add(Edges[numOfMinEdge]);
+            UsedVerticles.Add(Edges[numOfMinEdge].A);
             foreach (var ed in Edges) ed.condition = Condition.Waiting;
             next_btn.Enabled = curMode == DemoMode.Manual;
             start_btn.Enabled = curMode != DemoMode.Manual;
@@ -92,14 +94,26 @@ namespace OstovDemo
         {
             if(firstPart)
             {
-                //выделяем и отправляем на проверку
+                //выделяем и проверяем, что грань только одним концом в массиве использованных вершин
                 currentEdge = SearchForMinEdge(AvailableEdges);
-                //AvailableEdges()
+                AvailableEdges[currentEdge].condition = Condition.Checking;
+                EdgeApproved = (UsedVerticles.Contains(AvailableEdges[currentEdge].A) != 
+                    UsedVerticles.Contains(AvailableEdges[currentEdge].B));
+
+                drawing_panel.Refresh();
+
             }
             else
             {
                 //перевыделяем и меняем листы
-
+                if (EdgeApproved)
+                {
+                    //TODO берем ребро
+                }
+                else
+                {
+                    //TODO если не берем
+                }
             }
         }
 
