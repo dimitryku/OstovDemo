@@ -294,11 +294,14 @@ namespace OstovDemo
         private void помощьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // TODO help window
+            var hForm = new HelpForm();
+            hForm.Show();
         }
 
         private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //TODO about window
+            var abForm = new AboutForm();
+            abForm.Show();
         }
 
         private void очиститьToolStripMenuItem_Click(object sender, EventArgs e)
