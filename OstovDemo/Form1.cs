@@ -86,7 +86,6 @@ namespace OstovDemo
                 var rnd = new Random(DateTime.UtcNow.Millisecond);
                 while (checkVertsList.Count() != 1)
                 {
-                    //Console.WriteLine("connecting " + i.ToString());
                     var iter1 = -1;
                     var iter2 = -1;
                     while (iter1 == iter2)
@@ -230,24 +229,11 @@ namespace OstovDemo
                         ++listOfVerticles[j].connections;
                     }
 
-            //foreach (var verticle in listOfVerticles) // по сути эта часть получилась не нужна
-            //{
-            //    if (verticle.connections == 0)
-            //    {
-            //        var ptr = -1;
-            //        while (ptr == -1 || listOfVerticles[ptr] == verticle)
-            //            ptr = rnd.Next() % listOfVerticles.Count();
-            //        listOfEdges.Add(new Edge(verticle, listOfVerticles[ptr], (rnd.Next() % 49) + 1));
-            //        ++verticle.connections;
-            //        ++listOfVerticles[ptr].connections;
-            //    }
-            //}
-
             RecalculateDrawingCoordinates();
             RandomizeWeightsPositions(listOfEdges);
             RenewLists();
 
-            GraphIsConnected(); // тут генерятся недостающие до полного графа грани. Без подтверждения.
+            GraphIsConnected();
         }
 
         private void ClearGraph()
@@ -324,8 +310,6 @@ namespace OstovDemo
                 listOfVerticles.Clear();
                 RenewLists();
                 Drawing_panel.Refresh();
-
-                // TODO добавить надписи на нижний уровень, что ничего нет.
             }
         }
 
