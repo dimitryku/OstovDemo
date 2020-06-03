@@ -269,5 +269,11 @@ namespace OstovDemo
             RecalculateDrawingCoordinates();
             drawing_panel.Invalidate();
         }
+
+        private void обновитьПоложениеВесовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form1.RandomizeWeightsPositions(Edges);
+            drawing_panel.Invalidate();
+        }
     }
 }
