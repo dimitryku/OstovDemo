@@ -20,15 +20,6 @@ namespace OstovDemo
         public List<Edge> listOfEdges = new List<Edge>();
         public List<Verticle> listOfVerticles = new List<Verticle>();
 
-        // needed for context menu
-        private enum WhereWasClick
-        {
-            DrawingPanel,
-            VertsList,
-            EdgesList, 
-            No
-        }
-
         private WhereWasClick wwClick = WhereWasClick.No;
 
         public Form1()
@@ -139,7 +130,6 @@ namespace OstovDemo
                 var y = _drawingCentreY + radius * Math.Sin(l_deg);
                 listOfVerticles[i].point = new Point((int) x, (int) y);
             }
-
         }
 
         public static void RandomizeWeightsPositions(IList<Edge> edges)
@@ -489,6 +479,7 @@ namespace OstovDemo
                 wwClick = WhereWasClick.DrawingPanel;
                 return;
             }
+
             Verticle select = null;
             foreach (var verticle in listOfVerticles)
             {
@@ -551,7 +542,6 @@ namespace OstovDemo
         {
             if (lb_edges.SelectedIndex != -1) return;
             e.Cancel = true;
-
         }
 
         private void удалитьToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -579,6 +569,15 @@ namespace OstovDemo
         {
             RecalculateDrawingCoordinates();
             Drawing_panel.Refresh();
+        }
+
+        // needed for context menu
+        private enum WhereWasClick
+        {
+            DrawingPanel,
+            VertsList,
+            EdgesList,
+            No
         }
     }
 }

@@ -1,27 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace OstovDemo
 {
     public partial class AddEdgeForm : Form
     {
-        public AddEdgeForm()
-        {
-            InitializeComponent();
-        }
+        public List<Edge> Edges;
+        public Edge Return;
 
         public bool SetDefaultVerticles = false;
         public Verticle Va, Vb;
         public List<Verticle> Verticles;
-        public List<Edge> Edges;
-        public Edge Return;
+
+        public AddEdgeForm()
+        {
+            InitializeComponent();
+        }
 
         private void AddEdgeForm_Load(object sender, EventArgs e)
         {
@@ -35,7 +31,6 @@ namespace OstovDemo
 
             if (SetDefaultVerticles)
             {
-
                 cb_selectA.Items.Add(Va.name);
                 cb_selectB.Items.Add(Vb.name);
                 cb_selectA.Text = Va.name;
@@ -48,10 +43,7 @@ namespace OstovDemo
                 return;
             }
 
-            foreach (var verticle in Verticles)
-            {
-                cb_selectA.Items.Add(verticle.name);
-            }
+            foreach (var verticle in Verticles) cb_selectA.Items.Add(verticle.name);
             numericUpDown1.Value = 1 + rnd.Next(50);
         }
 
@@ -66,23 +58,24 @@ namespace OstovDemo
             // при выборе вршины А, в выбиралке вершины Б будут только те вершина, до которых из А нет рёбер
             cb_selectB.SelectedIndex = -1;
             cb_selectB.Items.Clear();
-            var selectedVerticle = Verticles.First((verticle) => verticle.name == cb_selectA.Text);
-            foreach (var verticle in from verticle in Verticles 
-                let skip = Edges.Any(edge => Equals(edge.A.name, verticle.name) && Equals(edge.B.name, selectedVerticle.name) 
-                                             || Equals(edge.A.name, selectedVerticle.name) && Equals(edge.B.name, verticle.name))
-                                             || Equals(verticle.name, selectedVerticle.name) where !skip select verticle)
-            {
+            var selectedVerticle = Verticles.First(verticle => verticle.name == cb_selectA.Text);
+            foreach (var verticle in from verticle in Verticles
+                let skip = Edges.Any(edge =>
+                               Equals(edge.A.name, verticle.name) && Equals(edge.B.name, selectedVerticle.name)
+                               || Equals(edge.A.name, selectedVerticle.name) && Equals(edge.B.name, verticle.name))
+                           || Equals(verticle.name, selectedVerticle.name)
+                where !skip
+                select verticle)
                 cb_selectB.Items.Add(verticle.name);
-            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var VerticleA = Verticles.First((v) => v.name.Equals(cb_selectA.Text));
-            var VerticleB = Verticles.First((v) => v.name.Equals(cb_selectB.Text));
-            Return = new Edge(VerticleA, VerticleB, (int)numericUpDown1.Value);
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            var VerticleA = Verticles.First(v => v.name.Equals(cb_selectA.Text));
+            var VerticleB = Verticles.First(v => v.name.Equals(cb_selectB.Text));
+            Return = new Edge(VerticleA, VerticleB, (int) numericUpDown1.Value);
+            DialogResult = DialogResult.OK;
+            Close();
         }
     }
 }

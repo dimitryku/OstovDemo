@@ -1,28 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace OstovDemo
 {
     public partial class PrimsMethodForm : Form
     {
-        public List<Edge> Edges;
-        public List<Verticle> Verticles;
-        private DemoState curState = DemoState.NotStarted;
-        private DemoMode curMode;
-        private int numOfMinEdge = 0;
-        private int currentEdge = -1;
-        private bool EdgeApproved = false;
-        private bool firstPart = true;
         private List<Edge> AvailableEdges;
-        private HashSet<Verticle> UsedVerticles;
+        private DemoMode curMode;
+        private int currentEdge = -1;
+        private DemoState curState = DemoState.NotStarted;
+        private bool EdgeApproved;
+        public List<Edge> Edges;
+        private bool firstPart = true;
+        private int numOfMinEdge;
         private List<Edge> primEdges;
+        private HashSet<Verticle> UsedVerticles;
+        public List<Verticle> Verticles;
+
+        public PrimsMethodForm()
+        {
+            InitializeComponent();
+        }
 
         private void PrimsMethodForm_Load(object sender, EventArgs e)
         {
@@ -35,15 +36,10 @@ namespace OstovDemo
             RecalculateDrawingCoordinates();
         }
 
-        public PrimsMethodForm()
-        {
-            InitializeComponent();
-        }
-
         private void PrepareForMethod()
         {
-            if (AvailableEdges.Count() > 0) AvailableEdges.Clear();
-            if (UsedVerticles.Count() > 0)  UsedVerticles.Clear();
+            if (AvailableEdges.Any()) AvailableEdges.Clear();
+            if (UsedVerticles.Any()) UsedVerticles.Clear();
             AvailableEdges.Add(Edges[numOfMinEdge]);
             UsedVerticles.Add(Edges[numOfMinEdge].A);
 
@@ -65,17 +61,16 @@ namespace OstovDemo
 
         private static int SearchForMinEdge(List<Edge> edges)
         {
-            if (edges.Count() < 1) return -1;
+            if (!edges.Any()) return -1;
             var num = 0;
-            int minweight = edges[0].weight;
-            for(var i = 0; i < edges.Count(); i++)
-            {
-                if(edges[i].weight < minweight)
+            var minweight = edges[0].weight;
+            for (var i = 0; i < edges.Count(); i++)
+                if (edges[i].weight < minweight)
                 {
                     minweight = edges[i].weight;
                     num = i;
                 }
-            }
+
             return num;
         }
 
@@ -98,7 +93,7 @@ namespace OstovDemo
 
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            if(firstPart)
+            if (firstPart)
             {
                 EdgeApproved = false;
                 //выделяем и проверяем, что грань только одним концом в массиве использованных вершин
@@ -106,8 +101,8 @@ namespace OstovDemo
                 {
                     currentEdge = SearchForMinEdge(AvailableEdges);
                     if (currentEdge == -1) break;
-                    EdgeApproved = (UsedVerticles.Contains(AvailableEdges[currentEdge].A) !=
-                    UsedVerticles.Contains(AvailableEdges[currentEdge].B));
+                    EdgeApproved = UsedVerticles.Contains(AvailableEdges[currentEdge].A) !=
+                                   UsedVerticles.Contains(AvailableEdges[currentEdge].B);
                     if (!EdgeApproved) AvailableEdges.RemoveAt(currentEdge);
                 }
 
@@ -115,7 +110,7 @@ namespace OstovDemo
                     AvailableEdges[currentEdge].condition = Condition.Checking;
                 else
                     TheEnd();
-                if(curMode != DemoMode.NoAnime)
+                if (curMode != DemoMode.NoAnime)
                     drawing_panel.Refresh();
                 firstPart = !firstPart;
             }
@@ -125,18 +120,19 @@ namespace OstovDemo
                 AvailableEdges[currentEdge].condition = Condition.Accept;
                 UsedVerticles.Add(AvailableEdges[currentEdge].A);
                 UsedVerticles.Add(AvailableEdges[currentEdge].B);
-                if(curMode != DemoMode.NoAnime)
+                if (curMode != DemoMode.NoAnime)
                     drawing_panel.Refresh();
-                for(int i = 0; i < primEdges.Count; i++)
-                {
-                    if(primEdges[i].A.Equals(AvailableEdges[currentEdge].A) || primEdges[i].A.Equals(AvailableEdges[currentEdge].B) ||
-                    primEdges[i].B.Equals(AvailableEdges[currentEdge].B) || primEdges[i].B.Equals(AvailableEdges[currentEdge].A))
+                for (var i = 0; i < primEdges.Count; i++)
+                    if (primEdges[i].A.Equals(AvailableEdges[currentEdge].A) ||
+                        primEdges[i].A.Equals(AvailableEdges[currentEdge].B) ||
+                        primEdges[i].B.Equals(AvailableEdges[currentEdge].B) ||
+                        primEdges[i].B.Equals(AvailableEdges[currentEdge].A))
                     {
                         AvailableEdges.Add(primEdges[i]);
                         primEdges.Remove(primEdges[i]);
                         --i;
                     }
-                }
+
                 AvailableEdges.RemoveAt(currentEdge);
 
                 if (UsedVerticles.Count() == Verticles.Count())
@@ -151,7 +147,7 @@ namespace OstovDemo
             timer1.Stop();
             if (curMode != DemoMode.NoAnime)
                 MessageBox.Show("Метод завершил свою работу, все вершины присоединены.", "Готово!",
-                MessageBoxButtons.OK);
+                    MessageBoxButtons.OK);
             drawing_panel.Invalidate();
             curState = DemoState.End;
             next_btn.Enabled = false;
@@ -234,7 +230,6 @@ namespace OstovDemo
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
         }
 
         private void next_btn_Click(object sender, EventArgs e)
@@ -248,9 +243,7 @@ namespace OstovDemo
             timer1.Stop();
             if (MessageBox.Show("Вы действительно хотите сбросить текущий прогресс?", "Сброс прогресса метода",
                     MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
                 PrepareForMethod();
-            }
         }
 
         private void button1_Click(object sender, EventArgs e) //close
@@ -261,7 +254,7 @@ namespace OstovDemo
 
         private void drawing_panel_Paint(object sender, PaintEventArgs e)
         {
-            Form1.DrawGraph(e,Verticles, Edges, false);
+            Form1.DrawGraph(e, Verticles, Edges, false);
         }
 
         private void PrimsMethodForm_Resize(object sender, EventArgs e)

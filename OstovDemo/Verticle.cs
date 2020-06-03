@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
-
+﻿using System.Drawing;
 
 public class Verticle
 {
     private string _name;
-    public string name { get { return _name; } set { _name = value + ""; } }
-    public Point point { get; set; }
     public int connections;
 
     public Verticle(string name)
@@ -22,29 +14,37 @@ public class Verticle
 
     public Verticle(Verticle verticle)
     {
-        this.name = verticle.name;
-        this.point = new Point(verticle.point.X, verticle.point.Y);
+        name = verticle.name;
+        point = new Point(verticle.point.X, verticle.point.Y);
         connections = 0;
     }
 
+    public string name
+    {
+        get => _name;
+        set => _name = value + "";
+    }
+
+    public Point point { get; set; }
+
     public void SetPoint(int a, int b)
     {
-        this.point = new Point(a, b);
+        point = new Point(a, b);
     }
 
     public override bool Equals(object obj)
     {
-        Verticle newWert = obj as Verticle;
+        var newWert = obj as Verticle;
         if (newWert == null)
             return false;
-        return (this.name.Equals(newWert.name) || this.point.Equals(newWert.point));
+        return name.Equals(newWert.name) || point.Equals(newWert.point);
     }
 
     public override int GetHashCode()
     {
-        int code = 0;
-        foreach (char c in name)
-            code += (int)c;
+        var code = 0;
+        foreach (var c in name)
+            code += c;
         return code;
     }
 }

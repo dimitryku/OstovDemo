@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace OstovDemo
 {
-    enum DemoState
+    internal enum DemoState
     {
         NotStarted,
         Going,
@@ -17,7 +17,7 @@ namespace OstovDemo
     }
 
 
-    enum DemoMode
+    internal enum DemoMode
     {
         Fast,
         Slow,
@@ -27,16 +27,15 @@ namespace OstovDemo
 
     public partial class CruskalFormcs : Form
     {
-        public List<Edge> Edges;
-        public List<Verticle> Verticles;
-        private DemoMode curMode;
-        private DemoState curState = DemoState.NotStarted;
-        private int currentEdge = -1;
-        private bool currentEdgeApproved;
-
         private List<Edge> cruscalEdgesList;
         private List<List<Verticle>> cruscalVertsList;
+        private DemoMode curMode;
+        private int currentEdge = -1;
+        private bool currentEdgeApproved;
+        private DemoState curState = DemoState.NotStarted;
+        public List<Edge> Edges;
         private bool firstPart = true;
+        public List<Verticle> Verticles;
 
         public CruskalFormcs()
         {
@@ -199,8 +198,8 @@ namespace OstovDemo
             if (firstPart)
             {
                 cruscalEdgesList[currentEdge].condition = Condition.Checking;
-                log_tb.AppendText(cruscalEdgesList[currentEdge].ToString() + Environment.NewLine);
-                if(curMode != DemoMode.NoAnime)
+                log_tb.AppendText(cruscalEdgesList[currentEdge] + Environment.NewLine);
+                if (curMode != DemoMode.NoAnime)
                     drawing_panel.Refresh();
                 currentEdgeApproved = CruscalIterations(cruscalEdgesList[currentEdge]);
 
@@ -209,7 +208,7 @@ namespace OstovDemo
             else
             {
                 // Результат проверки
-                
+
                 if (currentEdgeApproved)
                 {
                     cruscalEdgesList[currentEdge].condition = Condition.Accept;
@@ -224,7 +223,8 @@ namespace OstovDemo
                     log_tb.SelectionStart = log_tb.Text.Length;
                     log_tb.ScrollToCaret();
                 }
-                if(curMode != DemoMode.NoAnime)
+
+                if (curMode != DemoMode.NoAnime)
                     drawing_panel.Invalidate();
 
                 RefreshSets();
@@ -244,7 +244,7 @@ namespace OstovDemo
 
                     if (curMode != DemoMode.NoAnime)
                         MessageBox.Show("Метод завершил свою работу, все вершины присоединены.", "Готово!",
-                        MessageBoxButtons.OK);
+                            MessageBoxButtons.OK);
                     drawing_panel.Invalidate();
                 }
 
@@ -318,10 +318,10 @@ namespace OstovDemo
                 if (!Equals(lst, cruscalVertsList.Last()))
                     s += ", ";
             }
+
             label_sets.Text = s;
         }
 
-        
 
         private void CruskalFormcs_FormClosing(object sender, FormClosingEventArgs e)
         {

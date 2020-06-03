@@ -1,22 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-
-namespace OstovDemo
+﻿namespace OstovDemo
 {
     public enum Condition
     {
         Waiting,
         Checking,
-        Accept,
-    };
+        Accept
+    }
 
     public class Edge
     {
+        public Edge(Verticle A, Verticle B, int weight)
+        {
+            this.weight = weight;
+            this.A = A;
+            this.B = B;
+            condition = Condition.Waiting;
+        }
+
+        public Edge(Edge edge)
+        {
+            weight = edge.weight;
+            A = edge.A;
+            B = edge.B;
+            condition = Condition.Waiting;
+        }
 
         public Verticle A { get; set; }
 
@@ -28,44 +35,37 @@ namespace OstovDemo
 
         public float weightPosition { get; set; }
 
-        public Edge(Verticle A, Verticle B, int weight)
-        {
-            this.weight = weight;
-            this.A = A;
-            this.B = B;
-            this.condition = Condition.Waiting;
-        }
-
-        public Edge(Edge edge)
-        {
-            this.weight = edge.weight;
-            this.A = edge.A;
-            this.B = edge.B;
-            this.condition = Condition.Waiting;
-        }
-
         public override bool Equals(object obj)
         {
-            Edge newEdge = obj as Edge;
+            var newEdge = obj as Edge;
             if (newEdge == null) return false;
-            if ((this.A == newEdge.A && this.B == newEdge.B) || (this.B == newEdge.A && this.A == newEdge.B))
+            if (A == newEdge.A && B == newEdge.B || B == newEdge.A && A == newEdge.B)
                 return true;
-            else
-                return false;
+            return false;
         }
 
         public override int GetHashCode()
         {
-            int code = this.weight;
-            int i = 1;
-            foreach (Char c in this.A.name) { code += ((int)c * i); i += 1; }
-            foreach (Char c in this.B.name) { code += ((int)c * i); i += 1; }
+            var code = weight;
+            var i = 1;
+            foreach (var c in A.name)
+            {
+                code += c * i;
+                i += 1;
+            }
+
+            foreach (var c in B.name)
+            {
+                code += c * i;
+                i += 1;
+            }
+
             return code;
         }
 
         public override string ToString()
         {
-            return this.A.name + " - " + this.B.name + " (" + this.weight.ToString() + ") ";
+            return A.name + " - " + B.name + " (" + weight + ") ";
         }
     }
 }
