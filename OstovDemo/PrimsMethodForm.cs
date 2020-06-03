@@ -21,12 +21,13 @@ namespace OstovDemo
         private bool EdgeApproved = false;
         private bool firstPart = true;
         private List<Edge> AvailableEdges;
-        private HashSet<Edge> UsedEdges;
+        //private HashSet<Edge> UsedEdges;
         private HashSet<Verticle> UsedVerticles;
+        private List<Edge> primEdges;
 
         private void PrimsMethodForm_Load(object sender, EventArgs e)
         {
-            UsedEdges = new HashSet<Edge>();
+            //UsedEdges = new HashSet<Edge>();
             UsedVerticles = new HashSet<Verticle>();
             AvailableEdges = new List<Edge>();
             curMode = DemoMode.Slow;
@@ -42,19 +43,25 @@ namespace OstovDemo
 
         private void PrepareForMethod()
         {
-            firstPart = true;
             if (AvailableEdges.Count() > 0) AvailableEdges.Clear();
-            if (UsedEdges.Count() > 0)  UsedEdges.Clear();
+            //if (UsedEdges.Count() > 0)  UsedEdges.Clear();
             if (UsedVerticles.Count() > 0)  UsedVerticles.Clear();
             AvailableEdges.Add(Edges[numOfMinEdge]);
             UsedVerticles.Add(Edges[numOfMinEdge].A);
+
             foreach (var ed in Edges) ed.condition = Condition.Waiting;
             next_btn.Enabled = curMode == DemoMode.Manual;
             start_btn.Enabled = curMode != DemoMode.Manual;
             curState = DemoState.NotStarted;
+            firstPart = true;
+
             log_tb.Clear();
             start_btn.Text = "Начать";
             drawing_panel.Refresh();
+
+            primEdges = new List<Edge>();
+            primEdges.AddRange(Edges);
+            primEdges.RemoveAt(numOfMinEdge);
         }
 
         private static int SearchForMinEdge(List<Edge> edges)
@@ -94,27 +101,65 @@ namespace OstovDemo
         {
             if(firstPart)
             {
+                EdgeApproved = false;
                 //выделяем и проверяем, что грань только одним концом в массиве использованных вершин
-                currentEdge = SearchForMinEdge(AvailableEdges);
-                AvailableEdges[currentEdge].condition = Condition.Checking;
-                EdgeApproved = (UsedVerticles.Contains(AvailableEdges[currentEdge].A) != 
-                    UsedVerticles.Contains(AvailableEdges[currentEdge].B));
-
-                drawing_panel.Refresh();
-
-            }
-            else
-            {
-                //перевыделяем и меняем листы
-                if (EdgeApproved)
+                while (!EdgeApproved)
                 {
-                    //TODO берем ребро
+                    currentEdge = SearchForMinEdge(AvailableEdges);
+                    if (currentEdge == -1) break;
+                    EdgeApproved = (UsedVerticles.Contains(AvailableEdges[currentEdge].A) !=
+                    UsedVerticles.Contains(AvailableEdges[currentEdge].B));
+                    if (!EdgeApproved) AvailableEdges.RemoveAt(currentEdge);
+                }
+
+                if (currentEdge != -1)
+                {
+                    AvailableEdges[currentEdge].condition = Condition.Checking;
+                    EdgeApproved = (UsedVerticles.Contains(AvailableEdges[currentEdge].A) !=
+                        UsedVerticles.Contains(AvailableEdges[currentEdge].B));
                 }
                 else
                 {
-                    //TODO если не берем
+                    TheEnd();
                 }
+                drawing_panel.Refresh();
+                firstPart = !firstPart;
             }
+            else
+            {
+                //перевыделяем грань и меняем листы, проверяем
+                AvailableEdges[currentEdge].condition = Condition.Accept;
+                //UsedEdges.Add(AvailableEdges[currentEdge]);
+                UsedVerticles.Add(AvailableEdges[currentEdge].A);
+                UsedVerticles.Add(AvailableEdges[currentEdge].B);
+                drawing_panel.Refresh();
+                for(int i = 0; i < primEdges.Count(); i++)
+                {
+                    if(primEdges[i].A == AvailableEdges[currentEdge].A || primEdges[i].A == AvailableEdges[currentEdge].B ||
+                    primEdges[i].B == AvailableEdges[currentEdge].B || primEdges[i].B == AvailableEdges[currentEdge].A)
+                    {
+                        AvailableEdges.Add(primEdges[i]);
+                        primEdges.Remove(primEdges[i]);
+                    }
+                }
+                AvailableEdges.RemoveAt(currentEdge);
+
+                if (UsedVerticles.Count() == Verticles.Count())
+                    TheEnd();
+
+                firstPart = !firstPart;
+            }
+        }
+
+        private void TheEnd()
+        {
+            timer1.Stop();
+            if (curMode != DemoMode.NoAnime)
+                MessageBox.Show("Метод завершил свою работу, все вершины присоединены.", "Готово!",
+                MessageBoxButtons.OK);
+            drawing_panel.Invalidate();
+            next_btn.Enabled = false;
+            start_btn.Enabled = false;
         }
 
         private void rb_fast_CheckedChanged(object sender, EventArgs e)
