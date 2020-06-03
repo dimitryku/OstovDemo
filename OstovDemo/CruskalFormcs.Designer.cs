@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.rb_noanime = new System.Windows.Forms.RadioButton();
             this.button4 = new System.Windows.Forms.Button();
             this.next_btn = new System.Windows.Forms.Button();
             this.start_btn = new System.Windows.Forms.Button();
@@ -39,15 +40,17 @@
             this.rb_fast = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.log_tb = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.drawing_panel = new System.Windows.Forms.Panel();
             this.label_sets = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.rb_noanime = new System.Windows.Forms.RadioButton();
-            this.label2 = new System.Windows.Forms.Label();
-            this.log_tb = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.обновитьПоложениеВесовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.drawing_panel.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel2
@@ -68,6 +71,18 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(149, 661);
             this.panel2.TabIndex = 1;
+            // 
+            // rb_noanime
+            // 
+            this.rb_noanime.AutoSize = true;
+            this.rb_noanime.Location = new System.Drawing.Point(11, 85);
+            this.rb_noanime.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rb_noanime.Name = "rb_noanime";
+            this.rb_noanime.Size = new System.Drawing.Size(122, 21);
+            this.rb_noanime.TabIndex = 8;
+            this.rb_noanime.Text = "Без анимации";
+            this.rb_noanime.UseVisualStyleBackColor = true;
+            this.rb_noanime.CheckedChanged += new System.EventHandler(this.rb_noanime_CheckedChanged);
             // 
             // button4
             // 
@@ -174,9 +189,36 @@
             this.panel1.Size = new System.Drawing.Size(171, 661);
             this.panel1.TabIndex = 3;
             // 
+            // log_tb
+            // 
+            this.log_tb.BackColor = System.Drawing.Color.White;
+            this.log_tb.Cursor = System.Windows.Forms.Cursors.Default;
+            this.log_tb.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.log_tb.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.log_tb.Location = new System.Drawing.Point(0, 17);
+            this.log_tb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.log_tb.Multiline = true;
+            this.log_tb.Name = "log_tb";
+            this.log_tb.ReadOnly = true;
+            this.log_tb.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.log_tb.Size = new System.Drawing.Size(169, 642);
+            this.log_tb.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(169, 17);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Процесс выполнения:";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // drawing_panel
             // 
             this.drawing_panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.drawing_panel.ContextMenuStrip = this.contextMenuStrip1;
             this.drawing_panel.Controls.Add(this.label_sets);
             this.drawing_panel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.drawing_panel.Location = new System.Drawing.Point(149, 0);
@@ -201,43 +243,20 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // rb_noanime
+            // contextMenuStrip1
             // 
-            this.rb_noanime.AutoSize = true;
-            this.rb_noanime.Location = new System.Drawing.Point(11, 85);
-            this.rb_noanime.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.rb_noanime.Name = "rb_noanime";
-            this.rb_noanime.Size = new System.Drawing.Size(122, 21);
-            this.rb_noanime.TabIndex = 8;
-            this.rb_noanime.Text = "Без анимации";
-            this.rb_noanime.UseVisualStyleBackColor = true;
-            this.rb_noanime.CheckedChanged += new System.EventHandler(this.rb_noanime_CheckedChanged);
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.обновитьПоложениеВесовToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(276, 28);
             // 
-            // label2
+            // обновитьПоложениеВесовToolStripMenuItem
             // 
-            this.label2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label2.Location = new System.Drawing.Point(0, 0);
-            this.label2.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(169, 17);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Процесс выполнения:";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // log_tb
-            // 
-            this.log_tb.BackColor = System.Drawing.Color.White;
-            this.log_tb.Cursor = System.Windows.Forms.Cursors.Default;
-            this.log_tb.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.log_tb.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.log_tb.Location = new System.Drawing.Point(0, 17);
-            this.log_tb.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.log_tb.Multiline = true;
-            this.log_tb.Name = "log_tb";
-            this.log_tb.ReadOnly = true;
-            this.log_tb.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.log_tb.Size = new System.Drawing.Size(169, 642);
-            this.log_tb.TabIndex = 2;
+            this.обновитьПоложениеВесовToolStripMenuItem.Name = "обновитьПоложениеВесовToolStripMenuItem";
+            this.обновитьПоложениеВесовToolStripMenuItem.Size = new System.Drawing.Size(275, 24);
+            this.обновитьПоложениеВесовToolStripMenuItem.Text = "Обновить положение весов";
+            this.обновитьПоложениеВесовToolStripMenuItem.Click += new System.EventHandler(this.обновитьПоложениеВесовToolStripMenuItem_Click);
             // 
             // CruskalFormcs
             // 
@@ -256,6 +275,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Метод Крускала";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CruskalFormcs_FormClosing);
             this.Load += new System.EventHandler(this.CruskalFormcs_Load);
@@ -265,6 +285,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.drawing_panel.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -287,5 +308,7 @@
         private System.Windows.Forms.RadioButton rb_noanime;
         private System.Windows.Forms.TextBox log_tb;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem обновитьПоложениеВесовToolStripMenuItem;
     }
 }

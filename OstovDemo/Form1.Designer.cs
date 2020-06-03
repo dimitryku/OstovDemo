@@ -200,7 +200,7 @@
             this.удалитьToolStripMenuItem,
             this.исправитьНаложениеВесовToolStripMenuItem});
             this.VerticleContextMenu.Name = "VerticleContextMenu";
-            this.VerticleContextMenu.Size = new System.Drawing.Size(281, 80);
+            this.VerticleContextMenu.Size = new System.Drawing.Size(276, 80);
             this.VerticleContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.VerticleContextMenu_Opening);
             // 
             // удалитьToolStripMenuItem
@@ -260,8 +260,8 @@
             // исправитьНаложениеВесовToolStripMenuItem
             // 
             this.исправитьНаложениеВесовToolStripMenuItem.Name = "исправитьНаложениеВесовToolStripMenuItem";
-            this.исправитьНаложениеВесовToolStripMenuItem.Size = new System.Drawing.Size(280, 24);
-            this.исправитьНаложениеВесовToolStripMenuItem.Text = "Исправить наложение весов";
+            this.исправитьНаложениеВесовToolStripMenuItem.Size = new System.Drawing.Size(275, 24);
+            this.исправитьНаложениеВесовToolStripMenuItem.Text = "Изменить положение весов";
             this.исправитьНаложениеВесовToolStripMenuItem.Click += new System.EventHandler(this.исправитьНаложениеВесовToolStripMenuItem_Click);
             // 
             // EdgeContextMenu
