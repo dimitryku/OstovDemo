@@ -39,10 +39,10 @@
             this.rb_fast = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.log_tb = new System.Windows.Forms.TextBox();
             this.drawing_panel = new System.Windows.Forms.Panel();
             this.label_sets = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.log_tb = new System.Windows.Forms.TextBox();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.drawing_panel.SuspendLayout();
@@ -170,21 +170,6 @@
             this.panel1.Size = new System.Drawing.Size(128, 537);
             this.panel1.TabIndex = 3;
             // 
-            // log_tb
-            // 
-            this.log_tb.BackColor = System.Drawing.Color.White;
-            this.log_tb.Cursor = System.Windows.Forms.Cursors.Default;
-            this.log_tb.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.log_tb.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.log_tb.Location = new System.Drawing.Point(0, 0);
-            this.log_tb.Margin = new System.Windows.Forms.Padding(2);
-            this.log_tb.Multiline = true;
-            this.log_tb.Name = "log_tb";
-            this.log_tb.ReadOnly = true;
-            this.log_tb.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.log_tb.Size = new System.Drawing.Size(128, 537);
-            this.log_tb.TabIndex = 0;
-            // 
             // drawing_panel
             // 
             this.drawing_panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -212,6 +197,21 @@
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // log_tb
+            // 
+            this.log_tb.BackColor = System.Drawing.Color.White;
+            this.log_tb.Cursor = System.Windows.Forms.Cursors.Default;
+            this.log_tb.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.log_tb.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.log_tb.Location = new System.Drawing.Point(0, 0);
+            this.log_tb.Margin = new System.Windows.Forms.Padding(2);
+            this.log_tb.Multiline = true;
+            this.log_tb.Name = "log_tb";
+            this.log_tb.ReadOnly = true;
+            this.log_tb.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.log_tb.Size = new System.Drawing.Size(128, 537);
+            this.log_tb.TabIndex = 0;
             // 
             // CruskalFormcs
             // 
@@ -250,7 +250,6 @@
         private System.Windows.Forms.RadioButton rb_slow;
         private System.Windows.Forms.RadioButton rb_fast;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox log_tb;
         private System.Windows.Forms.Panel drawing_panel;
         private System.Windows.Forms.Label label_sets;
         private System.Windows.Forms.Button start_btn;
@@ -258,5 +257,6 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button next_btn;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.TextBox log_tb;
     }
 }
