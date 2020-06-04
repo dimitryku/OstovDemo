@@ -165,6 +165,7 @@ namespace OstovDemo
             curState = DemoState.End;
             next_btn.Enabled = false;
             start_btn.Enabled = false;
+            log_tb.AppendText("Метод закончил работу");
             if (curMode != DemoMode.NoAnime)
                 MessageBox.Show("Метод завершил свою работу, все вершины присоединены.", "Готово!",
                     MessageBoxButtons.OK);
