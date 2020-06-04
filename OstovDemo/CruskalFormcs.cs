@@ -163,7 +163,6 @@ namespace OstovDemo
         //next button
         private void next_btn_Click(object sender, EventArgs e)
         {
-            curState = DemoState.Going;
             timer1_Tick(null, null);
         }
 
@@ -265,8 +264,7 @@ namespace OstovDemo
             {
                 curMode = DemoMode.Fast;
                 timer1.Interval = 250;
-                if (curState != DemoState.End)
-                    start_btn.Enabled = true;
+                start_btn.Enabled = curState != DemoState.End;
                 next_btn.Enabled = false;
             }
         }
@@ -278,8 +276,7 @@ namespace OstovDemo
             {
                 curMode = DemoMode.Slow;
                 timer1.Interval = 750;
-                if (curState != DemoState.End)
-                    start_btn.Enabled = true;
+                start_btn.Enabled = curState != DemoState.End;
                 next_btn.Enabled = false;
             }
         }
@@ -291,8 +288,7 @@ namespace OstovDemo
             {
                 timer1.Stop();
                 curMode = DemoMode.Manual;
-                if (curState != DemoState.End)
-                    next_btn.Enabled = true;
+                next_btn.Enabled = curState != DemoState.End;
                 start_btn.Enabled = false;
             }
         }
@@ -344,8 +340,7 @@ namespace OstovDemo
             {
                 curMode = DemoMode.NoAnime;
                 timer1.Interval = 1;
-                if (curState != DemoState.End)
-                    start_btn.Enabled = true;
+                start_btn.Enabled = curState != DemoState.End;
                 next_btn.Enabled = false;
             }
         }
