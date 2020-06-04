@@ -51,7 +51,7 @@ namespace OstovDemo
             currentEdge = 0;
 
             log_tb.Clear();
-            log_tb.AppendText("Начало:" + Environment.NewLine + "Ребро " + Edges[currentEdge].ToString() + Environment.NewLine + Environment.NewLine);
+            log_tb.AppendText("Начало:" + Environment.NewLine + "Ребро " + Edges[numOfMinEdge].ToString() + Environment.NewLine + Environment.NewLine);
             start_btn.Text = "Начать";
             drawing_panel.Refresh();
 
