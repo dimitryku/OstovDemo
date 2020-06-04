@@ -51,7 +51,7 @@ namespace OstovDemo
             next_btn.Enabled = curMode == DemoMode.Manual;
             start_btn.Enabled = curMode != DemoMode.Manual;
             curState = DemoState.NotStarted;
-            firstPart = false;
+            firstPart = true;
             currentEdge = 0;
 
             log_tb.Clear();
@@ -156,13 +156,13 @@ namespace OstovDemo
         private void TheEnd()
         {
             timer1.Stop();
-            if (curMode != DemoMode.NoAnime)
-                MessageBox.Show("Метод завершил свою работу, все вершины присоединены.", "Готово!",
-                    MessageBoxButtons.OK);
             drawing_panel.Invalidate();
             curState = DemoState.End;
             next_btn.Enabled = false;
             start_btn.Enabled = false;
+            if (curMode != DemoMode.NoAnime)
+                MessageBox.Show("Метод завершил свою работу, все вершины присоединены.", "Готово!",
+                    MessageBoxButtons.OK);
         }
 
         //fast mode
@@ -251,6 +251,8 @@ namespace OstovDemo
         private void next_btn_Click(object sender, EventArgs e)
         {
             curState = DemoState.Going;
+            Timer1_Tick(null, null);
+            System.Threading.Thread.Sleep(100);
             Timer1_Tick(null, null);
         }
 
