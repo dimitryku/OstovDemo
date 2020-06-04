@@ -307,9 +307,8 @@ namespace OstovDemo
             _selectedVerticle = null;
             foreach (var ve in listOfVerticles) ve.isSelected = false;
             Drawing_panel.Invalidate();
-            // TODO help window
             var hForm = new HelpForm();
-            hForm.Show();
+            hForm.ShowDialog();
         }
 
         private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
@@ -317,9 +316,8 @@ namespace OstovDemo
             _selectedVerticle = null;
             foreach (var ve in listOfVerticles) ve.isSelected = false;
             Drawing_panel.Invalidate();
-            //TODO about window
             var abForm = new AboutForm();
-            abForm.Show();
+            abForm.ShowDialog();
         }
 
         private void очиститьToolStripMenuItem_Click(object sender, EventArgs e)
