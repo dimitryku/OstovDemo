@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
+
+// all methods without comments is additional methods, needen for drawing
 namespace OstovDemo
 {
     public partial class PrimsMethodForm : Form
@@ -25,6 +27,7 @@ namespace OstovDemo
             InitializeComponent();
         }
 
+        // Start delegate
         private void PrimsMethodForm_Load(object sender, EventArgs e)
         {
             UsedVerticles = new HashSet<Verticle>();
@@ -36,6 +39,7 @@ namespace OstovDemo
             RecalculateDrawingCoordinates();
         }
 
+        // preparing to perform Prim method
         private void PrepareForMethod()
         {
             if (AvailableEdges.Any()) AvailableEdges.Clear();
@@ -60,6 +64,7 @@ namespace OstovDemo
             primEdges.RemoveAt(numOfMinEdge);
         }
 
+        // searching for edge with minimal weight
         private static int SearchForMinEdge(List<Edge> edges)
         {
             if (!edges.Any()) return -1;
@@ -92,12 +97,13 @@ namespace OstovDemo
             }
         }
 
+        //Tick. Every tick performing its part of algorithm
         private void Timer1_Tick(object sender, EventArgs e)
         {
             if (firstPart)
             {
                 EdgeApproved = false;
-                //выделяем и проверяем, что грань только одним концом в массиве использованных вершин
+                // checking
                 while (!EdgeApproved)
                 {
                     currentEdge = SearchForMinEdge(AvailableEdges);
@@ -120,7 +126,7 @@ namespace OstovDemo
             }
             else
             {
-                //перевыделяем грань и меняем листы, проверяем
+                // if check was successfull
                 AvailableEdges[currentEdge].condition = Condition.Accept;
                 UsedVerticles.Add(AvailableEdges[currentEdge].A);
                 UsedVerticles.Add(AvailableEdges[currentEdge].B);
@@ -146,6 +152,7 @@ namespace OstovDemo
             }
         }
 
+        // finishing method
         private void TheEnd()
         {
             timer1.Stop();
@@ -158,6 +165,7 @@ namespace OstovDemo
             start_btn.Enabled = false;
         }
 
+        //fast mode
         private void rb_fast_CheckedChanged(object sender, EventArgs e)
         {
             if (rb_fast.Checked)
@@ -170,6 +178,7 @@ namespace OstovDemo
             }
         }
 
+        //slow mode
         private void rb_slow_CheckedChanged(object sender, EventArgs e)
         {
             if (rb_slow.Checked)
@@ -182,6 +191,7 @@ namespace OstovDemo
             }
         }
 
+        //skip animation mode
         private void rb_noanime_CheckedChanged(object sender, EventArgs e)
         {
             if (rb_noanime.Checked)
@@ -194,6 +204,7 @@ namespace OstovDemo
             }
         }
 
+        //manual mode
         private void rb_manual_CheckedChanged(object sender, EventArgs e)
         {
             if (rb_manual.Checked)
@@ -206,6 +217,7 @@ namespace OstovDemo
             }
         }
 
+        //start + pause + continue button
         private void start_btn_Click(object sender, EventArgs e)
         {
             switch (curState)
@@ -235,13 +247,15 @@ namespace OstovDemo
             }
         }
 
+        // next button
         private void next_btn_Click(object sender, EventArgs e)
         {
             curState = DemoState.Going;
             Timer1_Tick(null, null);
         }
 
-        private void button4_Click(object sender, EventArgs e) //reset
+        // reset button
+        private void button4_Click(object sender, EventArgs e)
         {
             timer1.Stop();
             if (MessageBox.Show("Вы действительно хотите сбросить текущий прогресс?", "Сброс прогресса метода",
@@ -249,7 +263,8 @@ namespace OstovDemo
                 PrepareForMethod();
         }
 
-        private void button1_Click(object sender, EventArgs e) //close
+        // close button
+        private void button1_Click(object sender, EventArgs e)
         {
             GC.Collect();
             Close();

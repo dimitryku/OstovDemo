@@ -7,6 +7,8 @@ using System.Drawing.Text;
 using System.Linq;
 using System.Windows.Forms;
 
+
+// all methods without comments is additional methods, needen for drawing
 namespace OstovDemo
 {
     public partial class Form1 : Form
@@ -41,8 +43,8 @@ namespace OstovDemo
             RecalculateDrawingCoordinates();
         }
 
-
-        private bool GraphIsConnected(bool askForAccept = false) // по умолчанию граф дополняется автоматически
+        //checking is all graph verticles connected
+        private bool GraphIsConnected(bool askForAccept = false)
         {
             if (!listOfVerticles.Any()) return false;
             var checkVertsList = new List<List<Verticle>>();
@@ -76,7 +78,7 @@ namespace OstovDemo
                 if (checkVertsList.Count() == 1) return true;
             }
 
-            var acceptAuto = !askForAccept; // если есть идеи как будет лучше, ду ит)
+            var acceptAuto = !askForAccept;
             if (askForAccept)
                 if (MessageBox.Show("Вы хотите, чтобы он был дополнен автоматически?", "Граф не является связным",
                         MessageBoxButtons.YesNo) ==
@@ -199,6 +201,7 @@ namespace OstovDemo
                 lb_edges.SetSelected(lb_edges.SelectedIndex, false);
         }
 
+        //graph autogeneration
         private void bibaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _selectedVerticle = null;
@@ -241,6 +244,7 @@ namespace OstovDemo
             GraphIsConnected();
         }
 
+        //reset graph
         private void ClearGraph()
         {
             listOfEdges.Clear();
@@ -249,6 +253,7 @@ namespace OstovDemo
             RenewLists();
         }
 
+        //adding verticle
         private void AddVerticle_btn_Click(object sender, EventArgs e)
         {
             if (listOfVerticles.Count >= 15)
@@ -265,6 +270,7 @@ namespace OstovDemo
             Drawing_panel.Refresh();
         }
 
+        //adding edge
         private void btn_add_edge_Click(object sender, EventArgs e)
         {
             _selectedVerticle = null;
@@ -287,6 +293,7 @@ namespace OstovDemo
             Drawing_panel.Refresh();
         }
 
+        //starting Prim method
         private void методПримаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _selectedVerticle = null;
@@ -302,6 +309,7 @@ namespace OstovDemo
             RecalculateDrawingCoordinates();
         }
 
+        // help
         private void помощьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _selectedVerticle = null;
@@ -311,6 +319,7 @@ namespace OstovDemo
             hForm.ShowDialog();
         }
 
+        // about
         private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _selectedVerticle = null;
@@ -320,6 +329,7 @@ namespace OstovDemo
             abForm.ShowDialog();
         }
 
+        //clear all
         private void очиститьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Удалить все элементы графа?", "Вы уверены?", MessageBoxButtons.YesNo) ==
@@ -447,6 +457,7 @@ namespace OstovDemo
             }
         }
 
+        //delete verticle
         private void удалитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Удaлить вершину?", "Вы уверены?",
@@ -462,7 +473,7 @@ namespace OstovDemo
             }
 
             _selectedVerticle.isSelected = false;
-            _selectedVerticle = null;/////////////////////
+            _selectedVerticle = null;
             RenewLists();
             RecalculateDrawingCoordinates();
             Drawing_panel.Refresh();
@@ -473,7 +484,7 @@ namespace OstovDemo
             if(_selectedVerticle != null)
                 _selectedVerticle.isSelected = false;
             if (lb_verticle.SelectedIndex == -1) return;
-            _selectedVerticle = listOfVerticles[lb_verticle.SelectedIndex];//////////////////////////
+            _selectedVerticle = listOfVerticles[lb_verticle.SelectedIndex];
             _selectedVerticle.isSelected = true;
             Drawing_panel.Invalidate();
         }
@@ -573,6 +584,7 @@ namespace OstovDemo
             e.Cancel = true;
         }
 
+        //delete edge
         private void удалитьToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Удaлить ребро?", "Вы уверены?",
@@ -584,7 +596,7 @@ namespace OstovDemo
 
             if(_selectedVerticle != null)
                 _selectedVerticle.isSelected = false;
-            _selectedVerticle = null;///////////////////////////
+            _selectedVerticle = null;
             RenewLists();
             RecalculateDrawingCoordinates();
             Drawing_panel.Refresh();

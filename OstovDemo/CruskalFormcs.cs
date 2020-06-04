@@ -4,8 +4,9 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-// ReSharper disable ArrangeTypeMemberModifiers
 
+// ReSharper disable ArrangeTypeMemberModifiers
+// all methods without comments is additional methods, needen for drawing
 namespace OstovDemo
 {
     internal enum DemoState
@@ -42,7 +43,7 @@ namespace OstovDemo
             InitializeComponent();
         }
 
-
+        // Start delegate
         private void CruskalFormcs_Load(object sender, EventArgs e)
         {
             curMode = DemoMode.Slow;
@@ -57,6 +58,7 @@ namespace OstovDemo
             drawing_panel.Refresh();
         }
 
+        // preparing to perform Kruscal method
         private void PrepareForMethod()
         {
             foreach (var ed in cruscalEdgesList) ed.condition = Condition.Waiting;
@@ -95,6 +97,7 @@ namespace OstovDemo
             }
         }
 
+        // checking method for edges
         private bool CruscalIterations(Edge edge)
         {
             var a = false;
@@ -118,6 +121,7 @@ namespace OstovDemo
             return true;
         }
 
+        // sort method. Using bubble sort because of its speed on small Lists
         private static void SortEdgesList(IList<Edge> edges)
         {
             var wasChanged = true;
@@ -135,12 +139,14 @@ namespace OstovDemo
             }
         }
 
-        private void button1_Click(object sender, EventArgs e) //close
+        //close button
+        private void button1_Click(object sender, EventArgs e) 
         {
             Close();
         }
 
-        private void button4_Click(object sender, EventArgs e) //reset
+        //reset button
+        private void button4_Click(object sender, EventArgs e) 
         {
             timer1.Stop();
             if (MessageBox.Show("Вы действительно хотите сбросить текущий прогресс?", "Сброс прогресса метода",
@@ -154,12 +160,14 @@ namespace OstovDemo
             }
         }
 
+        //next button
         private void next_btn_Click(object sender, EventArgs e)
         {
             curState = DemoState.Going;
             timer1_Tick(null, null);
         }
 
+        //start + pause + continue button
         private void start_btn_Click(object sender, EventArgs e)
         {
             switch (curState)
@@ -189,9 +197,10 @@ namespace OstovDemo
             }
         }
 
+        //Tick. Every tick performing its part of algorithm
         private void timer1_Tick(object sender, EventArgs e)
         {
-            // Проверка
+            // Checking
             if (firstPart)
             {
                 cruscalEdgesList[currentEdge].condition = Condition.Checking;
@@ -204,7 +213,7 @@ namespace OstovDemo
             }
             else
             {
-                // Результат проверки
+                // Checking result
                 if (currentEdgeApproved)
                 {
                     cruscalEdgesList[currentEdge].condition = Condition.Accept;
@@ -249,6 +258,7 @@ namespace OstovDemo
             }
         }
 
+        //fast mode
         private void rb_fast_CheckedChanged(object sender, EventArgs e)
         {
             if (rb_fast.Checked)
@@ -261,6 +271,7 @@ namespace OstovDemo
             }
         }
 
+        //slow mode
         private void rb_slow_CheckedChanged(object sender, EventArgs e)
         {
             if (rb_slow.Checked)
@@ -273,6 +284,7 @@ namespace OstovDemo
             }
         }
 
+        //manual mode
         private void rb_manual_CheckedChanged(object sender, EventArgs e)
         {
             if (rb_manual.Checked)
@@ -285,6 +297,7 @@ namespace OstovDemo
             }
         }
 
+        //special additional methods
         private void drawing_panel_Paint(object sender, PaintEventArgs e)
         {
             Form1.DrawGraph(e, Verticles, cruscalEdgesList, false);
@@ -324,6 +337,7 @@ namespace OstovDemo
             timer1.Stop();
         }
 
+        //skip animation mode
         private void rb_noanime_CheckedChanged(object sender, EventArgs e)
         {
             if (rb_noanime.Checked)
