@@ -27,7 +27,7 @@ namespace OstovDemo
             InitializeComponent();
         }
 
-        // Start delegate
+        // Start form
         private void PrimsMethodForm_Load(object sender, EventArgs e)
         {
             UsedVerticles = new HashSet<Verticle>();

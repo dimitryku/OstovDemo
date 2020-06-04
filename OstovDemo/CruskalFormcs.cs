@@ -43,7 +43,7 @@ namespace OstovDemo
             InitializeComponent();
         }
 
-        // Start delegate
+        // Start form
         private void CruskalFormcs_Load(object sender, EventArgs e)
         {
             curMode = DemoMode.Slow;
@@ -97,7 +97,7 @@ namespace OstovDemo
             }
         }
 
-        // checking method for edges
+        // checking edge
         private bool CruscalIterations(Edge edge)
         {
             var a = false;
@@ -142,6 +142,7 @@ namespace OstovDemo
         //close button
         private void button1_Click(object sender, EventArgs e) 
         {
+            GC.Collect();
             Close();
         }
 
