@@ -56,6 +56,10 @@
   <PropertyGroup>
     <ManifestKeyFile>OstovDemo_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\lb1к.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -175,6 +179,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Screenshot_72.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\favicon4.ico" />
+    <Content Include="Resources\lb1к.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
