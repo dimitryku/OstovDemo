@@ -267,6 +267,7 @@ namespace OstovDemo
                 timer1.Interval = 250;
                 start_btn.Enabled = curState != DemoState.End;
                 next_btn.Enabled = false;
+                if (curState == DemoState.Going) timer1.Start();
             }
         }
 
@@ -279,6 +280,7 @@ namespace OstovDemo
                 timer1.Interval = 750;
                 start_btn.Enabled = curState != DemoState.End;
                 next_btn.Enabled = false;
+                if (curState == DemoState.Going) timer1.Start();
             }
         }
 
@@ -343,6 +345,7 @@ namespace OstovDemo
                 timer1.Interval = 1;
                 start_btn.Enabled = curState != DemoState.End;
                 next_btn.Enabled = false;
+                if (curState == DemoState.Going) timer1.Start();
             }
         }
 
