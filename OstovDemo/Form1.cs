@@ -337,6 +337,7 @@ namespace OstovDemo
             {
                 listOfEdges.Clear();
                 listOfVerticles.Clear();
+                _maxVertNum = 0;
                 RenewLists();
                 Drawing_panel.Refresh();
             }
