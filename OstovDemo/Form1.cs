@@ -46,7 +46,7 @@ namespace OstovDemo
         //checking is all graph verticles connected
         private bool GraphIsConnected(bool askForAccept = false)
         {
-            if (!listOfVerticles.Any()) return false;
+            if (!listOfVerticles.Any() || listOfEdges.Count() < 2) return false;
             var checkVertsList = new List<List<Verticle>>();
             for (var i = 0; i < listOfVerticles.Count(); i++)
             {
