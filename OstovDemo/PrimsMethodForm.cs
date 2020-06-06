@@ -290,5 +290,10 @@ namespace OstovDemo
             Form1.RandomizeWeightsPositions(Edges);
             drawing_panel.Invalidate();
         }
+
+        private void PrimsMethodForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            timer1.Stop();
+        }
     }
 }

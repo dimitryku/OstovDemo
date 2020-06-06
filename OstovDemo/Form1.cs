@@ -219,6 +219,7 @@ namespace OstovDemo
             if (MessageBox.Show("Развернуть окно для лучшего отображения графа?", "Большой граф",
                     MessageBoxButtons.YesNo) == DialogResult.Yes)
                 WindowState = FormWindowState.Maximized;
+            AddVerticle_btn.Enabled = (listOfVerticles.Count < 15);
         }
 
         private void GenerateGraph(int count, bool gedges)
@@ -247,6 +248,7 @@ namespace OstovDemo
         //reset graph
         private void ClearGraph()
         {
+            AddVerticle_btn.Enabled = true;
             listOfEdges.Clear();
             listOfVerticles.Clear();
             _maxVertNum = 0;
@@ -335,10 +337,7 @@ namespace OstovDemo
             if (MessageBox.Show("Удалить все элементы графа?", "Вы уверены?", MessageBoxButtons.YesNo) ==
                 DialogResult.Yes)
             {
-                listOfEdges.Clear();
-                listOfVerticles.Clear();
-                _maxVertNum = 0;
-                RenewLists();
+                ClearGraph();
                 Drawing_panel.Refresh();
             }
         }
@@ -475,6 +474,7 @@ namespace OstovDemo
 
             _selectedVerticle.isSelected = false;
             _selectedVerticle = null;
+            AddVerticle_btn.Enabled = true;
             RenewLists();
             RecalculateDrawingCoordinates();
             Drawing_panel.Refresh();
