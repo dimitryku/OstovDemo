@@ -8,7 +8,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 
-// all methods without comments is additional methods, needen for drawing
+// all methods without comments is additional methods, necessary for drawing
 namespace OstovDemo
 {
     public partial class Form1 : Form

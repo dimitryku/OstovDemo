@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 
 // ReSharper disable ArrangeTypeMemberModifiers
-// all methods without comments is additional methods, needen for drawing
+// all methods without comments is additional methods, necessary for drawing
 namespace OstovDemo
 {
     internal enum DemoState
